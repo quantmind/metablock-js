@@ -1,15 +1,19 @@
 {
   "name": "@metablock/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "private": false,
   "description": "Metablock core library",
   "main": "src/index.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/quantmind/metaweb.git",
+    "url": "https://github.com/quantmind/metablock-js.git",
     "directory": "packages/metablock-core"
   },
   "author": "Quantmind",
-  "license": "MIT",
+  "license": "ISC",
+  "keywords": [
+    "metablock"
+  ],
   "dependencies": {
     "debug": "^4.1.1",
     "query-string": "^6.12.1"

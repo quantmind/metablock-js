@@ -5,7 +5,7 @@ import useStyles from "./styles";
 
 interface SectionProps {
   component?: React.ElementType;
-  children: React.ReactNode;
+  children: any;
 }
 
 const Section = (props: SectionProps) => {

@@ -1,17 +1,21 @@
 {
   "name": "@metablock/store",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Metablock MobX store",
   "main": "src/index.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/quantmind/metaweb.git",
+    "url": "https://github.com/quantmind/metablock-js.git",
     "directory": "packages/metablock-store"
   },
   "author": "Quantmind",
-  "license": "MIT",
+  "license": "ISC",
+  "keywords": [
+    "mobx",
+    "metablock"
+  ],
   "dependencies": {
-    "@metablock/core": "./packages/metablock-core",
+    "@metablock/core": "0.1.1",
     "mobx": "^5.15.4"
   },
   "scripts": {

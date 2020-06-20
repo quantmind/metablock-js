@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "license": "ISC",
   "name": "metablock",
@@ -29,12 +29,15 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@types/child-process-promise": "^2.2.1",
     "@types/debug": "^4.1.5",
     "@types/fs-extra": "^9.0.1",
     "@types/jest": "^25.2.3",
     "@types/lodash": "^4.14.155",
     "@typescript-eslint/eslint-plugin": "^3.1.0",
     "@typescript-eslint/parser": "^3.1.0",
+    "chalk": "^4.1.0",
+    "child-process-promise": "^2.2.1",
     "codecov": "^3.7.0",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
@@ -69,6 +72,7 @@
     "store:build": "yarn workspace @metablock/store build",
     "react:build": "yarn workspace @metablock/react build",
     "update-version": "ts-node ./scripts/cli.ts update",
+    "publish-all": "ts-node ./scripts/cli.ts publish",
     "cli:dev": "yarn workspace metablock-cli dev",
     "build": "npm-run-all --parallel cli:build core:build store:build react:build",
     "test": "jest -c --coverage --forceExit --detectOpenHandles"
