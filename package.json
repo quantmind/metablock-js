@@ -60,8 +60,8 @@
   },
   "scripts": {
     "codecov": "codecov",
-    "lint": "eslint 'packages/**/*'",
-    "fix": "eslint 'packages/**/*' --fix",
+    "lint": "eslint 'packages/**/*' 'scripts/*'",
+    "fix": "eslint 'packages/**/*' 'scripts/*' --fix",
     "precommit": "lint-staged",
     "cli": "node ./packages/metablock-cli/dist/metablock.js",
     "cli:build": "yarn workspace @metablock/cli build",
