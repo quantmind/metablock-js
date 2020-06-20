@@ -3,7 +3,8 @@
   "version": "0.1.1",
   "private": false,
   "description": "Metablock core library",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/quantmind/metablock-js.git",

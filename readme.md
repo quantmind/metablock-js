@@ -2,18 +2,7 @@
 
 Metablock tooling for metablock cloud.
 
-## @metablock/core
-
-A client for [metablock Rest API](https://api.metablock.io/v1/docs), works for node and the browser.
-
-## @metablock/cli
-
-Command line client for interacting with metablock API.
-
-## @metablock/store
-
-[MobX](https://mobx.js.org/) stores for metablock authentication plugins.
-
-## @metablock/react
-
-Reusable React components.
+- [@metablock/core](./packages/metablock-core): a client for [metablock Rest API](https://api.metablock.io/v1/docs) for both node and the browser.
+- [\*@metablock/cli](./packages/metablock-cli): command line client for interacting with metablock API.
+- [@metablock/store](./packages/metablock-store): [MobX](https://mobx.js.org/) stores for metablock authentication plugin.
+- [@metablock/react](./packages/metablock-react): Reusable React components.
