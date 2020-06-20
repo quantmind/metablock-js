@@ -1,6 +1,6 @@
 {
   "name": "@metablock/store",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Metablock MobX store",
   "main": "src/index.ts",
   "repository": {

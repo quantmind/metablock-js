@@ -1,5 +1,5 @@
 {
-  "name": "metablock-cli",
+  "name": "@metablock/cli",
   "version": "0.1.0",
   "description": "A node client for interacting with metablock cloud",
   "main": "index.ts",

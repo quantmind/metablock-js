@@ -1,6 +1,6 @@
 {
   "name": "@metablock/core",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Metablock core library",
   "main": "src/index.ts",
   "repository": {
