@@ -1,0 +1,20 @@
+{
+  "name": "@metablock/core",
+  "version": "1.0.0",
+  "description": "Metablock core library",
+  "main": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quantmind/metaweb.git",
+    "directory": "packages/metablock-core"
+  },
+  "author": "Quantmind",
+  "license": "MIT",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "query-string": "^6.12.1"
+  },
+  "scripts": {
+    "build": "export NODE_ENV=production && tsc"
+  }
+}
