@@ -1,6 +1,6 @@
 # [Metablock](https://Metablock.io/) &middot; [![GitHub license](https://img.shields.io/badge/license-IOC-blue.svg)](https://github.com/quantmind/metablock-js/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/@metablock/core.svg?style=flat)](https://www.npmjs.com/package/@metablock/core) [![build](https://github.com/quantmind/metablock-js/workflows/build/badge.svg)](https://github.com/quantmind/metablock-js/actions?query=workflow%3Abuild)
 
-Metablock tooling for metablock cloud.
+Tooling for metablock cloud.
 
 - [@metablock/core](./packages/metablock-core): a Metablock client for both node and the browser.
 - [@metablock/cli](./packages/metablock-cli): command line client for interacting with metablock API.
