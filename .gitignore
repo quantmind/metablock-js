@@ -2,12 +2,12 @@
 # javascript
 node_modules
 bin
-build
 package-lock.json
 
 # directories
 coverage
 dist
+esm
 .tmp
 
 #
