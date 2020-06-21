@@ -1,7 +1,6 @@
 import colors from "colors";
 import { Command } from "commander";
 import emoji from "node-emoji";
-import { version } from "../package.json";
 import safe from "./safe";
 import ship from "./ship";
 
@@ -18,7 +17,6 @@ const error = (msg: string) => {
 
 const createClient = () => {
   const program = new Command();
-  program.version(version);
   program.arguments("[cmd]").action((cmd) => program.help());
 
   program

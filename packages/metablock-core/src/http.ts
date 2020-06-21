@@ -33,14 +33,12 @@ class HttpClient implements HttpClientInterface {
     return await this.request(url, { ...options, method: "GET" });
   }
 
-  async patch(url: string, options: any = {}): Promise<HttpResponse> {
-    options.method = "PATCH";
-    return await this.request(url, options);
+  async patch(url: string, options?: any): Promise<HttpResponse> {
+    return await this.request(url, { ...options, method: "PATCH" });
   }
 
-  async post(url: string, options: any = {}): Promise<HttpResponse> {
-    options.method = "POST";
-    return await this.request(url, options);
+  async post(url: string, options?: any): Promise<HttpResponse> {
+    return await this.request(url, { ...options, method: "POST" });
   }
 
   async request(url: string, options: Options): Promise<HttpResponse> {
@@ -68,8 +66,10 @@ class HttpClient implements HttpClientInterface {
       headers: { ...this.defaultHeaders, ...options.headers },
     };
     if (options.body) {
-      opts.body = JSON.stringify(options.body);
-      opts.headers["content-type"] = "application/json";
+      if (typeof options.body === "object") {
+        opts.body = JSON.stringify(options.body);
+        opts.headers["content-type"] = "application/json";
+      } else opts.body = options.body;
     }
     return opts;
   }

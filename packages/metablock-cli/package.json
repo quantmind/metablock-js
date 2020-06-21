@@ -22,11 +22,11 @@
     "metablock"
   ],
   "bin": {
-    "metablock": "./dist/metablock"
+    "metablock": "dist/metablock"
   },
   "scripts": {
     "build": "export NODE_ENV=production && tsc",
-    "dev": "ts-node metablock.ts"
+    "dev": "ts-node src/metablock.ts"
   },
   "devDependencies": {
     "@types/archiver": "^3.1.0",
