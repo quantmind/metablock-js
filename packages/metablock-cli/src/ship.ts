@@ -1,29 +1,15 @@
 import { Metablock } from "@metablock/core";
 import archiver from "archiver";
-import child from "child_process";
 import fs from "fs";
 import prettyBytes from "pretty-bytes";
 import log from "./log";
 import settings from "./settings";
 
-interface UploadOptions {
-  bundle: string;
-  block: string;
-  token: string;
-}
-
-const uploadOptions = {
-  bundle: settings.BUNDLE_LOCATION,
-  block: settings.METABLOCK_BLOCK_ID,
-  token: settings.METABLOCK_API_TOKEN,
-};
-
 const ship = async (options: any) => {
-  const { bundle, block, token } = {
-    ...uploadOptions,
-    ...options,
-  } as UploadOptions;
-  const sha = child.execSync("git rev-parse HEAD").toString().trim();
+  const block = options.block || settings.METABLOCK_BLOCK_ID;
+  const bundle = options.bundle || settings.BUNDLE_LOCATION;
+  const token = options.token || settings.METABLOCK_API_TOKEN;
+  const name = settings.GIT_SHA || "new-deployment";
   const env = options.env || settings.METABLOCK_ENV;
   if (fs.existsSync(bundle)) {
     const stats = fs.lstatSync(bundle);
@@ -32,7 +18,7 @@ const ship = async (options: any) => {
   } else {
     throw new Error(`${bundle} directory does not exist!`);
   }
-  const fileName = `${sha}.zip`;
+  const fileName = `${name}.zip`;
   const fullPath = process.env.PWD + `/${fileName}`;
   log(`:package: creating ${fullPath} archive from ${bundle}`);
   const output = fs.createWriteStream(fullPath);
@@ -58,7 +44,7 @@ const ship = async (options: any) => {
   const data: any = await waiter;
   const form = new FormData();
   form.append("env", env);
-  form.append("name", sha);
+  form.append("name", name);
   form.append("bundle", data);
   log(`:rocket: shipping "${env}" deployment to block "${block}"`);
   try {
