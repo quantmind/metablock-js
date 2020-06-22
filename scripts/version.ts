@@ -30,3 +30,20 @@ export const updateVersion = async () => {
     })
   );
 };
+
+export const devVersion = async () => {
+  const dirs = getPackages();
+  const packages: string[] = dirs.map((dir) => `@${dir.replace("-", "/")}`);
+  await Promise.all(
+    dirs.map(async (dir: string) => {
+      const packagePath = join(getPackagePath(dir), "package.json");
+      const packageJSON = await readJson(packagePath);
+      const { dependencies } = packageJSON;
+      packages.forEach((pkg) => {
+        if (dependencies && dependencies[pkg])
+          dependencies[pkg] = pkg.replace("/", "-").replace("@", "./packages/");
+      });
+      await writeJson(packagePath, packageJSON, { spaces: 2 });
+    })
+  );
+};

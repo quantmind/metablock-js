@@ -2,11 +2,16 @@
 import { Command } from "commander";
 import { version } from "../package.json";
 import { publish } from "./publish";
-import { updateVersion } from "./version";
+import { updateVersion, devVersion } from "./version";
 
 const program = new Command();
 program.version(version);
 program.arguments("[cmd]").action((cmd) => program.help());
+
+program
+  .command("dev")
+  .description("Set dev dependencies - for development")
+  .action(() => devVersion());
 
 program
   .command("update")

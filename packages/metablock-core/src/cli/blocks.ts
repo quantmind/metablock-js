@@ -57,6 +57,18 @@ class Blocks extends HttpComponent {
       headers: this.cli.withToken(),
     });
   }
+
+  async ship(
+    block_id: string,
+    body: FormData
+  ): Promise<Record<string, string>> {
+    const url = `${this.cli.apiUrl}/services/${block_id}/deployments`;
+    const response = await this.cli.post(url, {
+      body,
+      headers: this.cli.withToken(),
+    });
+    return response.data;
+  }
 }
 
 export default Blocks;

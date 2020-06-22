@@ -1,19 +1,13 @@
-import colors from "colors";
 import { Command } from "commander";
-import emoji from "node-emoji";
+import fetch from "cross-fetch";
+import FormData from "form-data";
 import safe from "./safe";
 import ship from "./ship";
 
+global.fetch = fetch as any;
+global.FormData = FormData as any;
+
 const safeShip = safe(ship);
-
-const log = (msg: string) => {
-  console.log(colors.green(emoji.emojify(msg)));
-};
-
-const error = (msg: string) => {
-  console.log(colors.red(emoji.emojify(msg)));
-  process.exit(1);
-};
 
 const createClient = () => {
   const program = new Command();
@@ -25,21 +19,17 @@ const createClient = () => {
     .option("--bundle <bundle>", "Bundle location (default is ./dist)")
     .option(
       "--block <block>",
-      "Meta block ID to override the METABLOCK_SERVICE_ID env variable"
+      "Meta block ID to override the METABLOCK_BLOCK_ID env variable"
     )
     .option(
       "--token <token>",
       "Meta block authentication token to override the METABLOCK_API_TOKEN env variable"
     )
-    .action((options) =>
-      safeShip({
-        bundle: options.bundle,
-        block: options.block,
-        token: options.token,
-        log,
-        error,
-      })
-    );
+    .option(
+      "--env <env>",
+      "Metablock environment to override the METABLOCK_ENV env variable"
+    )
+    .action(safeShip);
 
   return program;
 };

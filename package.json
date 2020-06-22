@@ -1,5 +1,5 @@
 {
-  "version": "0.1.5",
+  "version": "0.1.8",
   "private": true,
   "license": "ISC",
   "name": "metablock",
@@ -71,6 +71,7 @@
     "core:build": "yarn workspace @metablock/core build",
     "store:build": "yarn workspace @metablock/store build",
     "react:build": "yarn workspace @metablock/react build",
+    "dev-version": "export TS_NODE_PROJECT=./scripts/tsconfig.json && ts-node ./scripts/cli.ts dev",
     "update-version": "export TS_NODE_PROJECT=./scripts/tsconfig.json && ts-node ./scripts/cli.ts update",
     "publish-all": "export TS_NODE_PROJECT=./scripts/tsconfig.json && ts-node ./scripts/cli.ts publish",
     "cli:dev": "yarn workspace metablock-cli dev",

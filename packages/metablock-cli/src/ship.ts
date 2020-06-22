@@ -1,76 +1,74 @@
+import { Metablock } from "@metablock/core";
 import archiver from "archiver";
 import child from "child_process";
 import fs from "fs";
 import prettyBytes from "pretty-bytes";
-import request from "request";
+import log from "./log";
 import settings from "./settings";
-
-const passthrough = () => undefined;
 
 interface UploadOptions {
   bundle: string;
   block: string;
   token: string;
-  log: (msg: string) => void;
-  error: (msg: string) => void;
 }
 
 const uploadOptions = {
   bundle: settings.BUNDLE_LOCATION,
-  block: settings.METABLOCK_SERVICE_ID,
+  block: settings.METABLOCK_BLOCK_ID,
   token: settings.METABLOCK_API_TOKEN,
-  log: passthrough,
-  error: passthrough,
 };
 
-const ship = (options: any) => {
-  const opts: UploadOptions = { ...uploadOptions, ...options };
+const ship = async (options: any) => {
+  const { bundle, block, token } = {
+    ...uploadOptions,
+    ...options,
+  } as UploadOptions;
   const sha = child.execSync("git rev-parse HEAD").toString().trim();
-  const loc = opts.bundle;
-  if (fs.existsSync(loc)) {
-    const stats = fs.lstatSync(loc);
+  const env = options.env || settings.METABLOCK_ENV;
+  if (fs.existsSync(bundle)) {
+    const stats = fs.lstatSync(bundle);
     if (!stats.isDirectory)
-      throw new Error(`${loc} is not a directory cannot upload bundle`);
+      throw new Error(`${bundle} is not a directory cannot upload bundle`);
   } else {
-    throw new Error(`${loc} directory does not exist!`);
+    throw new Error(`${bundle} directory does not exist!`);
   }
   const fileName = `${sha}.zip`;
   const fullPath = process.env.PWD + `/${fileName}`;
-  opts.log(`:rocket: create ${fullPath} archive from ${loc}`);
+  log(`:package: creating ${fullPath} archive from ${bundle}`);
   const output = fs.createWriteStream(fullPath);
   const archive = archiver("zip", {
     zlib: { level: 9 },
   });
-  output.on("close", () => {
-    opts.log(
-      `:rocket: bundle of ${prettyBytes(archive.pointer())} is ready to ship!`
-    );
-    post(sha, fullPath, opts);
+  const waiter = new Promise((resolve) => {
+    output.on("close", () => {
+      log(
+        `:heavy_check_mark:  bundle of ${prettyBytes(
+          archive.pointer()
+        )} is ready to ship!`
+      );
+      resolve(fs.createReadStream(fullPath));
+    });
   });
   archive.pipe(output);
-  archive.directory(loc, false);
+  archive.directory(bundle, false);
   archive.finalize();
-};
-
-const post = (sha: string, fullPath: string, opts: UploadOptions) => {
-  const formData = { name: sha, bundle: fs.createReadStream(fullPath) };
-  const url = `${settings.METABLOCK_API_URL}/v1/services/${opts.block}/deployments`;
-  const headers = { "x-metablock-api-key": opts.token };
-  opts.log(`:rocket: shipping to ${url}`);
-  request.post(
-    { url, formData, headers },
-    (err: any, httpResponse: any, body: any) => {
-      if (err) opts.error(`upload failed: ${err}`);
-      const response = JSON.stringify(JSON.parse(body), null, 1);
-      if (httpResponse.statusCode === 201) {
-        opts.log(`:tada: upload successful!\n${response}`);
-      } else {
-        opts.error(
-          `:broken_heart: upload failed with status ${httpResponse.statusCode}\n${response}`
-        );
-      }
-    }
-  );
+  //
+  const cli = new Metablock(settings.METABLOCK_API_URL);
+  cli.token = token;
+  const data: any = await waiter;
+  const form = new FormData();
+  form.append("env", env);
+  form.append("name", sha);
+  form.append("bundle", data);
+  log(`:rocket: shipping "${env}" deployment to block "${block}"`);
+  try {
+    const body = await cli.blocks.ship(block, form);
+    const response = JSON.stringify(body, null, 1);
+    log(`:tada: upload successful!\n${response}`);
+  } catch (err) {
+    const response = JSON.stringify(err.data, null, 1);
+    throw new Error(`upload failed with status ${err.status}\n${response}`);
+  }
 };
 
 export default ship;

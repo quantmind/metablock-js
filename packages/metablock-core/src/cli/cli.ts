@@ -37,6 +37,7 @@ export class Metablock extends HttpClient {
   withToken(headers?: Record<string, string>): Record<string, string> {
     if (!headers) headers = {};
     if (this.jwt) headers["authorization"] = `Bearer ${this.jwt}`;
+    else if (this.token) headers["x-metablock-api-key"] = this.token;
     return headers;
   }
 

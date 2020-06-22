@@ -66,7 +66,7 @@ class HttpClient implements HttpClientInterface {
       headers: { ...this.defaultHeaders, ...options.headers },
     };
     if (options.body) {
-      if (typeof options.body === "object") {
+      if (options.body.constructor === Object) {
         opts.body = JSON.stringify(options.body);
         opts.headers["content-type"] = "application/json";
       } else opts.body = options.body;
