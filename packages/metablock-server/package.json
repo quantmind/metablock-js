@@ -1,0 +1,18 @@
+{
+  "name": "@metablock/server",
+  "version": "0.1.10",
+  "description": "Metablock dev server",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "export NODE_ENV=production && tsc"
+  },
+  "dependencies": {
+    "@metablock/core": "^0.1.10",
+    "@types/express": "^4.17.6",
+    "@types/unsplash-js": "^6.0.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "unsplash-js": "^6.0.0"
+  }
+}

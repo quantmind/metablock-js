@@ -8,10 +8,8 @@ help:
 
 
 clean:		## remove generated files
-	@rm -rf packages/metablock-core/dist
-	@rm -rf packages/metablock-cli/dist
-	@rm -rf packages/metablock-store/dist
-	@rm -rf packages/metablock-react/dist
+	find . -name 'dist' | xargs rm -rf
+	find . -name 'node_modules' | xargs rm -rf
 
 
 version:	## update version

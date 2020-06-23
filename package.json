@@ -70,12 +70,13 @@
     "cli:build": "yarn workspace @metablock/cli build",
     "core:build": "yarn workspace @metablock/core build",
     "store:build": "yarn workspace @metablock/store build",
+    "server:build": "yarn workspace @metablock/server build",
     "react:build": "yarn workspace @metablock/react build",
     "dev-version": "export TS_NODE_PROJECT=./scripts/tsconfig.json && ts-node ./scripts/cli.ts dev",
     "update-version": "export TS_NODE_PROJECT=./scripts/tsconfig.json && ts-node ./scripts/cli.ts update",
     "publish-all": "export TS_NODE_PROJECT=./scripts/tsconfig.json && ts-node ./scripts/cli.ts publish",
     "cli:dev": "yarn workspace metablock-cli dev",
-    "build": "yarn core:build && yarn store:build && yarn cli:build && yarn react:build",
+    "build": "yarn core:build && yarn store:build && yarn cli:build && yarn server:build && yarn react:build",
     "test": "jest -c --coverage --forceExit --detectOpenHandles"
   }
 }
