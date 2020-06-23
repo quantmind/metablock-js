@@ -1,18 +1,33 @@
 {
   "name": "@metablock/server",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Metablock dev server",
-  "main": "src/index.ts",
-  "license": "MIT",
+  "main": "dist/index.js",
+  "license": "ISC",
   "scripts": {
-    "build": "export NODE_ENV=production && tsc"
+    "build": "export NODE_ENV=production && tsc",
+    "watch": "nodemon"
   },
   "dependencies": {
-    "@metablock/core": "^0.1.10",
-    "@types/express": "^4.17.6",
-    "@types/unsplash-js": "^6.0.1",
+    "@metablock/core": "0.1.11",
     "body-parser": "^1.19.0",
+    "btoa": "^1.2.1",
+    "cross-fetch": "^3.0.5",
     "express": "^4.17.1",
+    "mime-types": "^2.1.27",
     "unsplash-js": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/btoa": "^1.2.3",
+    "@types/express": "^4.17.6",
+    "@types/mime-types": "^2.1.0",
+    "@types/unsplash-js": "^6.0.1"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "exec": "tsc",
+    "ext": "ts"
   }
 }

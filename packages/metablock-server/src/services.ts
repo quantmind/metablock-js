@@ -1,12 +1,15 @@
-import { Metablock } from "@metablock/core";
+import { HttpClient, Metablock } from "@metablock/core";
 import Unsplash, { toJson } from "unsplash-js";
 import settings from "./settings";
+import { Context } from "./interfaces";
 
 class Services {
+  cli: HttpClient;
   mb: Metablock;
   unsplash: Unsplash;
 
   constructor() {
+    this.cli = new HttpClient();
     this.mb = new Metablock(
       settings.METABLOCK_API_URL,
       "",
@@ -18,8 +21,11 @@ class Services {
     });
   }
 
-  async getConfig(req: any) {
-    return {};
+  async getConfig(req: any): Promise<Context> {
+    const response = await this.cli.get(
+      `${settings.METABLOCK_WEB_URL}/.api/config`
+    );
+    return response.data as Context;
   }
 
   async getPhoto(key: string): Promise<Record<string, any>> {

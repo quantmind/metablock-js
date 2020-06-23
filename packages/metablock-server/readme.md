@@ -6,6 +6,6 @@ Use it with webpack
 import { devServer } from "@metablock/server";
 
 {
-  devServer: devServer();
+  devServer: devServer({ hot: true });
 }
 ```

@@ -8,6 +8,7 @@ export const getPackagePath = (dir: string) => join(rootDir, "packages", dir);
 export const getPackages = (): string[] => [
   "metablock-core",
   "metablock-cli",
+  "metablock-server",
   "metablock-store",
   "metablock-react",
 ];
