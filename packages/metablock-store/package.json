@@ -1,9 +1,8 @@
 {
   "name": "@metablock/store",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Metablock MobX store",
   "main": "dist/index.js",
-  "types": "src/index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/quantmind/metablock-js.git",
@@ -16,7 +15,7 @@
     "metablock"
   ],
   "dependencies": {
-    "@metablock/core": "0.1.9",
+    "@metablock/core": "0.1.10",
     "mobx": "^5.15.4"
   },
   "scripts": {

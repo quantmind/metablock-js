@@ -1,5 +1,5 @@
 {
-  "version": "0.1.9",
+  "version": "0.1.10",
   "private": true,
   "license": "ISC",
   "name": "metablock",
@@ -75,7 +75,7 @@
     "update-version": "export TS_NODE_PROJECT=./scripts/tsconfig.json && ts-node ./scripts/cli.ts update",
     "publish-all": "export TS_NODE_PROJECT=./scripts/tsconfig.json && ts-node ./scripts/cli.ts publish",
     "cli:dev": "yarn workspace metablock-cli dev",
-    "build": "npm-run-all --parallel cli:build core:build store:build react:build",
+    "build": "yarn core:build && yarn store:build && yarn cli:build && yarn react:build",
     "test": "jest -c --coverage --forceExit --detectOpenHandles"
   }
 }

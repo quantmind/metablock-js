@@ -1,10 +1,9 @@
 {
   "name": "@metablock/core",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "private": false,
   "description": "Metablock core library",
   "main": "dist/index.js",
-  "types": "src/index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/quantmind/metablock-js.git",

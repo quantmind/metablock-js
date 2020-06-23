@@ -1,5 +1,5 @@
 import fetch from "jest-fetch-mock";
-import { createStores } from "./index";
+import { createStores } from "../src";
 
 describe("Test MobX stores", () => {
   const stores = createStores("https://api.com");
