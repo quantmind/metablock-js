@@ -1,11 +1,18 @@
 # A dev server for metablock
 
-Use it with webpack
+Install via
+
+```bash
+yarn add @metablock/server
+```
+
+and use it with webpack
 
 ```javascript
 import { devServer } from "@metablock/server";
 
-{
-  devServer: devServer({ hot: true });
-}
+const webPackConfig = {
+  devServer: devServer("https://myblock.mblock.sh", { hot: true }),
+  ...
+};
 ```

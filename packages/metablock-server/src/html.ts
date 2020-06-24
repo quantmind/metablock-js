@@ -27,8 +27,10 @@ export const isHtml = (req: Request): boolean => {
 
 export const rawHtml = (ctx: Context) => {
   const init = JSON.stringify(ctx.web);
-  const scripts = ctx.html.scripts.map(
-    (script) => `<script src="${script}"></script>`
+  const scripts = [
+    `<script type="application/javascript">__metablock_assets_url__="${ctx.web.assetsUrl}/";</script>`,
+  ].concat(
+    ctx.html.scripts.map((script) => `<script src="${script}"></script>`)
   );
   const head = ctx.html.meta
     .concat([`<meta name="mb:state" content="${btoa(init)}">`])
