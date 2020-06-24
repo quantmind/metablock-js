@@ -7,7 +7,7 @@ import { Router } from "react-router-dom";
 import { BlockContext } from "./block";
 import history from "./history";
 
-const dom = async (Component: React.FC, theme: Theme) => {
+const dom = (Component: React.FC, theme: Theme) => {
   const root = document.getElementById("__metablock");
   const config = getBlock();
 

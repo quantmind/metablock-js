@@ -58,6 +58,14 @@ class Blocks extends HttpComponent {
     });
   }
 
+  async plugins(block_id: string): Promise<any[]> {
+    const url = `${this.cli.apiUrl}/services/${block_id}/plugins`;
+    const response = await this.cli.get(url, {
+      headers: this.cli.withToken(),
+    });
+    return response.data as any[];
+  }
+
   async ship(
     block_id: string,
     body: FormData
