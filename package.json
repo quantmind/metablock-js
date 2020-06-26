@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "license": "ISC",
   "name": "metablock",
@@ -79,6 +79,8 @@
     "cli:dev": "yarn workspace metablock-cli dev",
     "build": "yarn core:build && yarn store:build && yarn cli:build && yarn server:build && yarn react:build",
     "test": "jest -c --coverage --forceExit --detectOpenHandles",
-    "watch": "yarn workspace @metablock/server watch"
+    "watch": "npm-run-all --parallel watch:server watch:core",
+    "watch:core": "yarn workspace @metablock/core watch",
+    "watch:server": "yarn workspace @metablock/server watch"
   }
 }

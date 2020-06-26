@@ -1,3 +1,4 @@
+export { default as assetUrl } from "./assetUrl";
 export { default as getBlock } from "./block";
 export * from "./cli";
 export { default as HttpClient } from "./http";

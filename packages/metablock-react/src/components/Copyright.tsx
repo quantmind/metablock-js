@@ -1,17 +1,27 @@
 import Typography from "@material-ui/core/Typography";
+import { Link } from "@metablock/react";
 import React from "react";
-import { useBlock } from "../dom";
-import Link from "./Link";
 
-const Copyright = () => {
-  const block = useBlock();
+interface CopyProps {
+  title: string;
+  rights?: React.ReactNode;
+  linkColor?: string;
+}
+
+const Copyright = (props: CopyProps) => {
+  const {
+    linkColor = "inherit",
+    rights = "All rights reserved.",
+    title,
+  } = props;
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" to="/">
-        {block.title}
+      {new Date().getFullYear()}{" "}
+      <Link color={linkColor} to="/">
+        {title}
       </Link>{" "}
-      {new Date().getFullYear()}. All rights reserved.
+      {rights}
     </Typography>
   );
 };

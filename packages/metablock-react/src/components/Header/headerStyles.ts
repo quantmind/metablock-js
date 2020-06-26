@@ -30,7 +30,6 @@ const headerStyles = makeStyles(() =>
     transparent: {
       backgroundColor: "transparent !important",
       boxShadow: "none",
-      paddingTop: "25px",
       color: "#FFFFFF",
     },
     appResponsive: {

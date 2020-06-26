@@ -1,6 +1,6 @@
 {
   "name": "@metablock/core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "description": "Metablock core library",
   "main": "dist/index.js",
@@ -19,6 +19,14 @@
     "query-string": "^6.12.1"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && tsc"
+    "build": "export NODE_ENV=production && tsc",
+    "watch": "nodemon"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "exec": "tsc",
+    "ext": "ts"
   }
 }
