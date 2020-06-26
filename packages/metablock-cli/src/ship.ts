@@ -2,7 +2,7 @@ import { Metablock } from "@metablock/core";
 import archiver from "archiver";
 import fs from "fs";
 import prettyBytes from "pretty-bytes";
-import log from "./log";
+import { log } from "./log";
 import settings from "./settings";
 
 const ship = async (options: any) => {

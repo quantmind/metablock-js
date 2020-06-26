@@ -1,8 +1,10 @@
 import colors from "colors";
 import emoji from "node-emoji";
 
-const log = (msg: string) => {
+export const log = (msg: string) => {
   console.log(colors.green(emoji.emojify(msg)));
 };
 
-export default log;
+export const err = (exc: any) => {
+  console.log(colors.red(emoji.emojify(`:broken_heart: ${exc}`)));
+};
