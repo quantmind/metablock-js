@@ -13,6 +13,7 @@ const pagination = async (
   const index = targets.map((entry) => ({
     title: entry.title,
     author: entry.author,
+    date: entry.date,
     image: entry.indexImage || entry.image,
     description: entry.description,
     slug: entry.slug,

@@ -61,15 +61,17 @@ class HttpClient implements HttpClientInterface {
   }
 
   getOptions(options: any): Options {
+    const { body, method, headers, ...extra } = options;
     const opts: Options = {
-      method: options.method || "GET",
-      headers: { ...this.defaultHeaders, ...options.headers },
+      method: method || "GET",
+      headers: { ...this.defaultHeaders, ...headers },
+      ...extra,
     };
-    if (options.body) {
-      if (options.body.constructor === Object) {
-        opts.body = JSON.stringify(options.body);
+    if (body) {
+      if (body.constructor === Object) {
+        opts.body = JSON.stringify(body);
         opts.headers["content-type"] = "application/json";
-      } else opts.body = options.body;
+      } else opts.body = body;
     }
     return opts;
   }
