@@ -2,7 +2,8 @@ import getBlock from "./block";
 
 const assetUrl = (fileName: string) => {
   const block = getBlock();
-  return `https://assets.metablock.io/blocks/${block.id}/assets/${fileName}`;
+  const base = `https://assets.metablock.io/blocks/${block.id}/assets`;
+  return fileName ? `${base}/${fileName}` : base;
 };
 
 export default assetUrl;

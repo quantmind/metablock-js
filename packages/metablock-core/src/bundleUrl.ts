@@ -2,7 +2,8 @@ import getBlock from "./block";
 
 const bundleUrl = (fileName: string) => {
   const block = getBlock();
-  return `${block.assetsUrl}/${fileName}`;
+  const base = block.assetsUrl;
+  return fileName ? `${base}/${fileName}` : base;
 };
 
 export default bundleUrl;

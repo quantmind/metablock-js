@@ -54,6 +54,7 @@ const compilePath = async (
   let targets: Record<string, any> = {};
   if (!prevConfig.output) config.output = resolve(config.output || "dist");
   else config.output = resolve(prevConfig.output, basename(source));
+  config.source = source;
 
   const files = fs.readdirSync(source);
   for (let i = 0; i < files.length; ++i) {

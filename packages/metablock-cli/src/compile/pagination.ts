@@ -7,9 +7,10 @@ const pagination = async (
   config: Record<string, any>
 ) => {
   if (!config.content || !config.index) return;
+  console.log(config.source);
   const targets = Object.keys(entries)
     .map((key) => entries[key])
-    .filter((entry) => entry.source === config.source && entry.config.index);
+    .filter((entry) => entry.config.source === config.source);
   const index = targets.map((entry) => ({
     title: entry.title,
     author: entry.author,
@@ -20,7 +21,7 @@ const pagination = async (
   }));
   const file = resolve(config.output, `index.json`);
   writeJson(file, index);
-  log(`:package: written index ${file}`);
+  log(`:package: written ${index.length} entries in the index ${file}`);
 };
 
 export default pagination;
