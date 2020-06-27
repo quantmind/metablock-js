@@ -54,7 +54,6 @@ const compilePath = async (
   let targets: Record<string, any> = {};
   if (!prevConfig.output) config.output = resolve(config.output || "dist");
   else config.output = resolve(prevConfig.output, basename(source));
-  fs.mkdirSync(config.output, { recursive: true });
 
   const files = fs.readdirSync(source);
   for (let i = 0; i < files.length; ++i) {
@@ -69,12 +68,13 @@ const compilePath = async (
     } else if (config.content) {
       const type = mime.lookup(fullPath);
       if (type && contents.has(type)) {
+        fs.mkdirSync(config.output, { recursive: true });
         const data = await compileFile(fullPath, config);
         targets[fullPath] = { ...data, config };
       }
     }
   }
-  if (config.content) await pagination(targets, config);
+  await pagination(targets, config);
   return targets;
 };
 

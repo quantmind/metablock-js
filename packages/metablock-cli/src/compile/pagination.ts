@@ -6,16 +6,16 @@ const pagination = async (
   entries: Record<string, any>,
   config: Record<string, any>
 ) => {
+  if (!config.content || !config.index) return;
   const targets = Object.keys(entries)
     .map((key) => entries[key])
     .filter((entry) => entry.source === config.source && entry.config.index);
-  targets.sort((a: any, b: any) => (a.date > b.date ? 1 : 0));
   const index = targets.map((entry) => ({
     title: entry.title,
     author: entry.author,
-    date: entry.date.toString(),
     image: entry.indexImage || entry.image,
     description: entry.description,
+    slug: entry.slug,
   }));
   const file = resolve(config.output, `index.json`);
   writeJson(file, index);

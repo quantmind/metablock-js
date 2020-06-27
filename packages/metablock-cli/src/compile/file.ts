@@ -1,7 +1,8 @@
 import fs from "fs";
 import { writeJson } from "fs-extra";
 import mime from "mime-types";
-import { basename, dirname, resolve } from "path";
+import { basename, resolve } from "path";
+import slugify from "slugify";
 import { err, log } from "../log";
 
 const compileFile = async (
@@ -47,22 +48,12 @@ const write = async (
   filePath: string,
   config: Record<string, any>
 ): Promise<Record<string, any>> => {
-  const pathBits = (config.path || "slug").split("/");
-  const date = new Date(json.date);
   const bits = basename(filePath).split(".");
   const name = bits.slice(0, bits.length - 1).join(".");
-  const slug = json.slug || name;
-  const values: Record<string, string> = {
-    yyyy: "" + date.getFullYear(),
-    mm: "" + date.getMonth(),
-    slug,
-  };
-  const fullPath =
-    resolve(config.output, ...pathBits.map((bit: string) => values[bit])) +
-    ".json";
-  fs.mkdirSync(dirname(fullPath), { recursive: true });
+  json.slug = json.slug || slugify(name);
+  const fullPath = resolve(config.output, `${json.slug}.json`);
   await writeJson(fullPath, json);
-  return { ...json, date, fullPath };
+  return { ...json, fullPath };
 };
 
 export default compileFile;
