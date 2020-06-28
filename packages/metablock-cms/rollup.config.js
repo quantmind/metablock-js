@@ -12,7 +12,7 @@ const externals = [
   "@metablock/core",
   "@metablock/store",
   "@metablock/react",
-  "@loadable/coponent",
+  "react-markdown",
   "d3-time-format",
   "mobx",
 ];

@@ -4,8 +4,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Link } from "@metablock/react";
 import React from "react";
+import Link from "./Link";
 
 type Direction = "vertical" | "horizontal";
 type Align = "left" | "right";

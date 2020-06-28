@@ -1,6 +1,6 @@
 import Typography from "@material-ui/core/Typography";
-import { Link } from "@metablock/react";
 import React from "react";
+import Link from "./Link";
 
 interface CopyProps {
   title: string;
