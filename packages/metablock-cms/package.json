@@ -11,7 +11,8 @@
     "directory": "packages/metablock-cms"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && rollup -c"
+    "build": "export NODE_ENV=production && rollup -c",
+    "watch": "rollup -c -w"
   },
   "dependencies": {
     "@metablock/core": "0.2.8",

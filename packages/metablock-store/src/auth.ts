@@ -1,22 +1,13 @@
+import { HttpResponse } from "@metablock/core";
 import { action, observable } from "mobx";
 import CommonStore from "./common";
 import UserStore from "./user";
 
-export interface Auth {
-  inProgress: boolean;
-  login: () => Promise<void>;
-  setValue: (name: string, value: string) => void;
-}
-
-class AuthStore implements Auth {
+class AuthStore {
   commonStore: CommonStore;
   userStore: UserStore;
   @observable inProgress = false;
-  @observable errors = undefined;
-  @observable values: Record<string, string> = {
-    email: "",
-    password: "",
-  };
+  @observable errors?: HttpResponse = undefined;
 
   constructor(commonStore: CommonStore, userStore: UserStore) {
     this.commonStore = commonStore;
@@ -28,25 +19,15 @@ class AuthStore implements Auth {
   }
 
   @action
-  setValue(name: string, value: string) {
-    this.values[name] = value;
-  }
-
-  @action
-  async login(): Promise<void> {
+  async login(data: Record<string, string>): Promise<void> {
     this.inProgress = true;
     this.errors = undefined;
     try {
-      const jwt = await this.cli.auth.login({
-        email: this.values.email,
-        password: this.values.password,
-      });
+      const jwt = await this.cli.auth.login(data);
       this.commonStore.setToken(jwt);
       await this.userStore.getUser();
-    } catch (err) {
-      this.errors =
-        err.response && err.response.body && err.response.body.errors;
-      throw err;
+    } catch (errors) {
+      this.errors = errors;
     } finally {
       this.inProgress = false;
     }

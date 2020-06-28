@@ -1,16 +1,13 @@
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { getBlock } from "@metablock/core";
 import React from "react";
 import Link from "../components/Link";
-import { useBlock } from "../dom";
-import { FormEvents } from "../interfaces/forms";
+import { CheckBoxField, TextField, useForm } from "../forms";
 import AppForm from "../views/AppForm";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,10 +24,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = (props: FormEvents) => {
+const SignIn = (props: any) => {
   const classes = useStyles();
-  const block = useBlock();
-  const { onSubmit, ...inputProps } = props;
+  const block = getBlock();
+  const { onSubmit } = props;
+  const form = useForm({ handleSubmit: onSubmit });
 
   return (
     <AppForm>
@@ -40,20 +38,20 @@ const SignIn = (props: FormEvents) => {
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
-      <form className={classes.form} onSubmit={onSubmit} noValidate>
+      <form className={classes.form} onSubmit={form.onSubmit()} noValidate>
         <TextField
+          form={form}
           variant="outlined"
           margin="normal"
           required
           fullWidth
-          id="email"
           label="Email Address"
           name="email"
           autoComplete="email"
           autoFocus
-          inputProps={inputProps}
         />
         <TextField
+          form={form}
           variant="outlined"
           margin="normal"
           required
@@ -63,10 +61,13 @@ const SignIn = (props: FormEvents) => {
           type="password"
           id="password"
           autoComplete="current-password"
-          inputProps={inputProps}
         />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
+        <CheckBoxField
+          form={form}
+          fullWidth
+          margin="normal"
+          name="remember"
+          color="primary"
           label="Remember me"
         />
         <Button

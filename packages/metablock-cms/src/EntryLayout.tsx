@@ -9,15 +9,14 @@ import { dateFormat } from "./op";
 
 const EntryLayout = (props: CmsData) => {
   const maxWidth = "md";
-  const { body, author, ...extra } = props;
   const formatDate =
     props.date instanceof Date ? ` on ${dateFormat()(props.date)}` : "";
   return (
-    <Page {...extra} prefix={false}>
+    <Page {...props} prefix={false}>
       <Parallax small>
         <Container maxWidth={maxWidth}>
           <Typography component="h1" variant="h3" align="center" paragraph>
-            {extra.title}
+            {props.title}
           </Typography>
           <Typography
             component="h5"
@@ -25,7 +24,7 @@ const EntryLayout = (props: CmsData) => {
             align="center"
             paragraph
           >
-            by {author}
+            by {props.author}
             {formatDate}
           </Typography>
           {props.description ? (
@@ -37,11 +36,16 @@ const EntryLayout = (props: CmsData) => {
       </Parallax>
       <Container maxWidth={maxWidth}>
         <Box pt={3} pb={4}>
-          <ReactMarkdown source={body} />
+          <Markdown {...props} />
         </Box>
       </Container>
     </Page>
   );
+};
+
+export const Markdown = (props: any) => {
+  const { escapeHtml = false, body } = props;
+  return <ReactMarkdown escapeHtml={escapeHtml} source={body} />;
 };
 
 export default EntryLayout;

@@ -28,10 +28,7 @@ describe("Test MobX stores", () => {
         };
       }
     });
-    authStore.setValue("username", "pippo");
-    authStore.setValue("password", "hcvdhgcvds");
-
-    await authStore.login();
+    await authStore.login({ username: "pippo", password: "hcvdhgcvds" });
     expect(commonStore.token).toBe("abc");
     expect(userStore.current?.username).toBe("pippo");
 

@@ -1,7 +1,6 @@
-import { Block } from "@metablock/core";
+import { Block, getBlock } from "@metablock/core";
 import React from "react";
 import { Helmet } from "react-helmet";
-import { useBlock } from "../dom";
 
 function buildTitle(block: Block, text: string, prefix: boolean) {
   if (text) return prefix ? `${block.title} - ${text}` : text;
@@ -28,7 +27,7 @@ interface PageProps {
 }
 
 const Page = (props: PageProps) => {
-  const block = useBlock();
+  const block = getBlock();
   const {
     title = "",
     children,
@@ -48,20 +47,16 @@ const Page = (props: PageProps) => {
           name="description"
           content={buildDescription(block, description)}
         />
-        <meta property="og:description" content={description} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:card" content={twitter_card} />
         {keywords ? <meta name="keywords" content={keywords} /> : null}
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={url} />
         <meta property="og:title" content={title} />
         <meta property="og:site_name" content={title} />
         <meta property="og:type" content={content} />
-        <meta property="og:url" content={url} />
-        {image ? (
-          <>
-            <meta property="og:image" content={image} />
-            <meta property="twitter:image" content={image} />
-          </>
-        ) : null}
+        {image ? <meta property="og:image" content={image} /> : null}
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:card" content={twitter_card} />
+        {image ? <meta property="twitter:image" content={image} /> : null}
       </Helmet>
       {children}
     </>

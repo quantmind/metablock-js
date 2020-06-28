@@ -15,7 +15,7 @@ const compileFile = async (
   try {
     const json = compileHeaders(bits[0]);
     json.contentType = mime.lookup(filePath);
-    json.body = bits.slice(1).join("---");
+    json.body = bits.slice(1).join("---").trim();
     const data = await write(json, filePath, config, name);
     log(`:tada: created JSON file ${data.fullPath}`);
     return data;

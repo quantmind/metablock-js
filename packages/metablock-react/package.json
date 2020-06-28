@@ -30,7 +30,8 @@
     "react-router-dom": "^5.2.0"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && rollup -c"
+    "build": "export NODE_ENV=production && rollup -c",
+    "watch": "rollup -c -w"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.10.1",
