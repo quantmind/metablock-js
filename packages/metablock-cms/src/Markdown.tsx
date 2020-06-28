@@ -6,29 +6,35 @@ import { coy } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const useStyles = makeStyles((theme: Theme) => ({
   markdown: (props: any) => {
-    const { anchor = "primary" } = props;
+    const { anchor = "primary", codePadding = 1 } = props;
     const palette: any = theme.palette;
     return {
       "& a": {
         textDecoration: "none",
         color: palette[anchor].main,
       },
+      "& pre": {
+        padding: theme.spacing(codePadding),
+        overflowX: "scroll",
+      },
     };
   },
 }));
 
-const CodeBlock = (props: any) => {
-  const { language, value } = props;
-  return (
-    <SyntaxHighlighter language={language} style={coy}>
-      {value}
-    </SyntaxHighlighter>
-  );
-};
-
 const Markdown = (props: any) => {
-  const { escapeHtml = false, anchor = "primary", body } = props;
-  const classes = useStyles({ anchor });
+  const { escapeHtml = false, body, ...extra } = props;
+  const classes = useStyles(extra);
+
+  const CodeBlock = (props: any) => {
+    const { language, value } = props;
+    console.log(props);
+    return (
+      <SyntaxHighlighter language={language} style={coy} {...extra}>
+        {value}
+      </SyntaxHighlighter>
+    );
+  };
+
   return (
     <ReactMarkdown
       className={classes.markdown}

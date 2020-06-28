@@ -11,6 +11,7 @@ interface CmsProps {
   NotFoundComponent?: any;
   ListComponent?: any;
   EntryComponent?: any;
+  [x: string]: any;
 }
 
 const CmsRoute = (props: CmsProps) => {
@@ -20,6 +21,7 @@ const CmsRoute = (props: CmsProps) => {
     NotFoundComponent = NotFound,
     ListComponent,
     EntryComponent,
+    ...extra
   } = props;
   let { topic = "" } = props;
   if (!topic) topic = match.url.substring(1);
@@ -40,6 +42,7 @@ const CmsRoute = (props: CmsProps) => {
               slug={slug}
               Component={EntryComponent}
               NotFoundComponent={NotFoundComponent}
+              {...extra}
             />
           )}
         />
@@ -67,6 +70,7 @@ const CmsRoute = (props: CmsProps) => {
             slug={slug}
             Component={EntryComponent}
             NotFoundComponent={NotFoundComponent}
+            {...extra}
           />
         )}
       />

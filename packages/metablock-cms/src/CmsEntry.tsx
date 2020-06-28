@@ -22,13 +22,14 @@ const CmsEntry = (props: CmsProps) => {
     slug,
     NotFoundComponent,
     Component = EntryLayout,
+    ...extra
   } = props;
   const url = bundleUrl(`${topic}/${params.slug}.json`);
   const data = useFetch(() => store.get(url), url);
   if (!data) return null;
   const entry = render(data) as CmsData;
   if (!matchSlug(entry, slug, params)) return <NotFoundComponent />;
-  return <Component {...entry} />;
+  return <Component {...extra} {...entry} />;
 };
 
 export default CmsEntry;
