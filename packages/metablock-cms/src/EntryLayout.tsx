@@ -3,8 +3,8 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { Page, Parallax } from "@metablock/react";
 import React from "react";
-import ReactMarkdown from "react-markdown";
 import { CmsData } from "./interfaces";
+import Markdown from "./Markdown";
 import { dateFormat } from "./op";
 
 const EntryLayout = (props: CmsData) => {
@@ -41,11 +41,6 @@ const EntryLayout = (props: CmsData) => {
       </Container>
     </Page>
   );
-};
-
-export const Markdown = (props: any) => {
-  const { escapeHtml = false, body } = props;
-  return <ReactMarkdown escapeHtml={escapeHtml} source={body} />;
 };
 
 export default EntryLayout;
