@@ -9,11 +9,13 @@ export interface Block {
   description: string; // default description
   apiUrl: string; // metablock api url
   assetsUrl: string; // base url of the javascript bundle
+  date_format: string;
   login_url: string;
   signin_url: string;
   signup_url: string;
   forgot_password_url: string;
   space: Space;
+  [x: string]: any;
 }
 
 class Blocks extends HttpComponent {

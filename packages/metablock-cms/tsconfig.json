@@ -2,8 +2,8 @@
   "extends": "../../tsconfig",
   "compilerOptions": {
     "outDir": "dist",
-    "moduleResolution": "node",
+    "jsx": "react",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/*.ts"]
+  "include": ["src/*.ts", "src/*.tsx"]
 }

@@ -7,3 +7,4 @@ Tooling for metablock cloud.
 - [@metablock/server](./packages/metablock-server): a dev server for metablocks.
 - [@metablock/store](./packages/metablock-store): stores for metablock authentication plugin.
 - [@metablock/react](./packages/metablock-react): Reusable React components.
+- [@metablock/cms](./packages/metablock-cms): A lightweight CMS

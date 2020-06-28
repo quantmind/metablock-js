@@ -19,6 +19,7 @@ const getBlock = (): Block => {
     title: "metablock",
     description: "metablock",
     apiUrl: "",
+    date_format: "%B %d, %Y",
     login_url: "/login",
     signin_url: "/signin",
     signup_url: "/signup",

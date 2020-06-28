@@ -18,8 +18,13 @@ interface PageProps {
   title?: string;
   prefix?: boolean;
   description?: string;
+  keywords?: string;
+  content?: string;
+  twitter_card?: string;
   url?: string;
+  image?: string;
   children: React.ReactNode;
+  [x: string]: any;
 }
 
 const Page = (props: PageProps) => {
@@ -27,6 +32,10 @@ const Page = (props: PageProps) => {
   const {
     title = "",
     children,
+    image,
+    keywords,
+    twitter_card = "summary",
+    content = "website",
     prefix = true,
     description = "",
     url = window.location.href,
@@ -41,10 +50,18 @@ const Page = (props: PageProps) => {
         />
         <meta property="og:description" content={description} />
         <meta name="twitter:description" content={description} />
+        <meta name="twitter:card" content={twitter_card} />
+        {keywords ? <meta name="keywords" content={keywords} /> : null}
         <meta property="og:title" content={title} />
         <meta property="og:site_name" content={title} />
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content={content} />
         <meta property="og:url" content={url} />
+        {image ? (
+          <>
+            <meta property="og:image" content={image} />
+            <meta property="twitter:image" content={image} />
+          </>
+        ) : null}
       </Helmet>
       {children}
     </>

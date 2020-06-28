@@ -7,7 +7,8 @@ import { err, log } from "../log";
 
 const compileFile = async (
   filePath: string,
-  config: Record<string, any>
+  config: Record<string, any>,
+  name?: string
 ): Promise<Record<string, any> | undefined> => {
   const text = fs.readFileSync(filePath, { encoding: "utf-8" });
   const bits = text.split("---");
@@ -15,7 +16,7 @@ const compileFile = async (
     const json = compileHeaders(bits[0]);
     json.contentType = mime.lookup(filePath);
     json.body = bits.slice(1).join("---");
-    const data = await write(json, filePath, config);
+    const data = await write(json, filePath, config, name);
     log(`:tada: created JSON file ${data.fullPath}`);
     return data;
   } catch (exc) {
@@ -27,29 +28,31 @@ const compileHeaders = (text: string): Record<string, any> => {
   return text
     .split("\n")
     .filter((text) => text.length > 0)
-    .reduce(
-      (headers: Record<string, any>, header: string) => ({
-        ...headers,
-        ...compileHeader(header),
-      }),
-      {}
-    );
+    .reduce((headers: Record<string, any>, header: string) => {
+      const [key, value] = compileHeader(header);
+      if (key in headers) {
+        if (headers[key].constructor !== Array) headers[key] = [headers[key]];
+        headers[key].push(value);
+      } else headers[key] = value;
+      return headers;
+    }, {});
 };
 
-const compileHeader = (text: string): Record<string, any> => {
+const compileHeader = (text: string): string[] => {
   const bits = text.split(":");
   const name = bits[0].trim();
   if (!name || bits.length < 2) throw new Error(`Bad header ${text}`);
-  return { [name]: bits.slice(1).join(":").trim() };
+  return [name, bits.slice(1).join(":").trim()];
 };
 
 const write = async (
   json: any,
   filePath: string,
-  config: Record<string, any>
+  config: Record<string, any>,
+  name?: string
 ): Promise<Record<string, any>> => {
   const bits = basename(filePath).split(".");
-  const name = bits.slice(0, bits.length - 1).join(".");
+  name = name ? name : bits.slice(0, bits.length - 1).join(".");
   json.slug = json.slug || slugify(name);
   const fullPath = resolve(config.output, `${json.slug}.json`);
   await writeJson(fullPath, json);

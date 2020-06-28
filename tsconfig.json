@@ -6,7 +6,8 @@
     "target": "es5",
     "allowJs": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "declaration": true
   },
   "exclude": ["node_modules"]
 }

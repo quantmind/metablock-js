@@ -6,8 +6,16 @@ const globals = {
   "react-dom": "ReactDOM",
   "react-router-dom": "ReactRouterDOM",
   "react-helmet": "ReactHelmet",
+  "d3-time-format": "d3",
 };
-const externals = ["clsx", "history", "@metablock/core", "@metablock/store"];
+const externals = [
+  "@metablock/core",
+  "@metablock/store",
+  "@metablock/react",
+  "@loadable/coponent",
+  "d3-time-format",
+  "mobx",
+];
 
 const external = Object.keys(globals).concat(externals);
 
@@ -33,7 +41,7 @@ const config = [
     output: {
       file: pkg.main,
       format: "cjs",
-      name: "MetablockReact",
+      name: "MetablockCms",
       sourcemap: true,
       globals,
     },
@@ -46,7 +54,7 @@ const config = [
     output: {
       file: pkg.module,
       format: "esm",
-      name: "MetablockReact",
+      name: "MetablockCms",
       sourcemap: true,
       globals,
     },

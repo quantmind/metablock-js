@@ -1,0 +1,30 @@
+{
+  "name": "@metablock/cms",
+  "version": "0.2.8",
+  "description": "Metablock lightweight CMS",
+  "main": "dist/index.js",
+  "module": "esm/index.js",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quantmind/metablock-js.git",
+    "directory": "packages/metablock-cms"
+  },
+  "scripts": {
+    "build": "export NODE_ENV=production && rollup -c"
+  },
+  "dependencies": {
+    "@metablock/core": "0.2.8",
+    "@metablock/react": "0.2.8",
+    "@types/d3-time-format": "^2.1.1",
+    "d3-time-format": "^2.2.3",
+    "mobx": "^5.15.4",
+    "react-markdown": "^4.3.1"
+  },
+  "devDependencies": {
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.4",
+    "rollup": "^2.18.1",
+    "rollup-plugin-typescript2": "^0.27.1"
+  }
+}

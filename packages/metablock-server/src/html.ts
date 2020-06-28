@@ -20,7 +20,7 @@ export default (app: Express, services: Services) => {
 export const isHtml = (req: Request): boolean => {
   if (req.accepts("text/html")) {
     const type = mime.lookup(req.path);
-    return type === false || type === "text/html";
+    return type === false;
   }
   return false;
 };

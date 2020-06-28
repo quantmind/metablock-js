@@ -15,7 +15,7 @@ const compile = async (
   source = resolve(source || ".");
   if (fs.existsSync(source)) {
     const stats = fs.lstatSync(source);
-    if (!stats.isDirectory)
+    if (!stats.isDirectory())
       throw new Error(`${source} is not a directory cannot compile`);
   } else {
     throw new Error(`${source} directory does not exist!`);
@@ -61,22 +61,37 @@ const compilePath = async (
     const name = files[i];
     if (config.skip && config.skip.indexOf(name) > -1) continue;
     const fullPath = resolve(source, name);
-    const stats = fs.lstatSync(fullPath);
     if (options.verbose) console.debug(fullPath);
-    if (stats.isDirectory()) {
+    if (config.content) {
+      const data = await compileContent(fullPath, config);
+      if (data) targets[fullPath] = { ...data, config };
+    } else if (fs.lstatSync(fullPath).isDirectory()) {
       const extra = await compilePath(fullPath, options, config);
       targets = { ...targets, ...extra };
-    } else if (config.content) {
-      const type = mime.lookup(fullPath);
-      if (type && contents.has(type)) {
-        fs.mkdirSync(config.output, { recursive: true });
-        const data = await compileFile(fullPath, config);
-        targets[fullPath] = { ...data, config };
-      }
     }
   }
   await pagination(targets, config);
   return targets;
+};
+
+const compileContent = async (
+  fullPath: string,
+  config: Record<string, any>
+): Promise<Record<string, any> | undefined> => {
+  if (fs.lstatSync(fullPath).isDirectory()) {
+    const index = resolve(fullPath, "index.md");
+    if (fs.existsSync(index)) {
+      fs.mkdirSync(config.output, { recursive: true });
+      const data = await compileFile(index, config, basename(fullPath));
+      return data;
+    }
+  } else {
+    const type = mime.lookup(fullPath);
+    if (type && contents.has(type)) {
+      fs.mkdirSync(config.output, { recursive: true });
+      return await compileFile(fullPath, config);
+    }
+  }
 };
 
 const sleep = (milliseconds: number) => {

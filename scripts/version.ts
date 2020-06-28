@@ -11,6 +11,7 @@ export const getPackages = (): string[] => [
   "metablock-server",
   "metablock-store",
   "metablock-react",
+  "metablock-cms",
 ];
 
 export const updateVersion = async () => {
