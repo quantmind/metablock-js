@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     const { anchor = "primary", codePadding = 1 } = props;
     const palette: any = theme.palette;
     return {
+      "& p": {
+        fontSize: theme.typography.body1.fontSize,
+        fontFamily: theme.typography.body1.fontFamily,
+      },
       "& a": {
         textDecoration: "none",
         color: palette[anchor].main,

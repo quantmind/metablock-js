@@ -1,6 +1,6 @@
 import React from "react";
 
-const useFetch = (fetchData: () => Promise<any>, key?: any) => {
+const useFetch = (fetchData: () => Promise<any>, key?: any): any => {
   const [data, render] = React.useState();
   const target = React.useRef(key);
   const tries = React.useRef(0);
