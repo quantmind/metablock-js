@@ -4,6 +4,13 @@ React components and views
 
 ## Components
 
+### Header
+
+```js
+import {Header} from "@metablock/react";
+<Header paddingTop={1}, paddingBottom={1}/>
+```
+
 ### Image
 
 Progressively load background images
