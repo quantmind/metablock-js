@@ -31,8 +31,11 @@ const CmsEntry = (props: CmsProps) => {
   const data = useFetch(() => store.get(url), url);
   if (!data) return <Loading />;
   const entry = render(data) as CmsData;
+  const baseUrl = entry.index
+    ? bundleUrl(`${topic}/${params.slug}`)
+    : bundleUrl(topic);
   if (!matchSlug(entry, slug, params)) return <NotFoundComponent />;
-  return <Component {...extra} {...entry} />;
+  return <Component {...extra} {...entry} url={url} baseUrl={baseUrl} />;
 };
 
 export default CmsEntry;

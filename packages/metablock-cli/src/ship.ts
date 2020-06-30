@@ -2,7 +2,7 @@ import { Metablock } from "@metablock/core";
 import archiver from "archiver";
 import fs from "fs";
 import prettyBytes from "pretty-bytes";
-import { log } from "./log";
+import { info } from "./log";
 import settings from "./settings";
 
 const ship = async (options: any) => {
@@ -20,14 +20,14 @@ const ship = async (options: any) => {
   }
   const fileName = `${name}.zip`;
   const fullPath = process.env.PWD + `/${fileName}`;
-  log(`:package: creating ${fullPath} archive from ${bundle}`);
+  info(`:package: creating ${fullPath} archive from ${bundle}`);
   const output = fs.createWriteStream(fullPath);
   const archive = archiver("zip", {
     zlib: { level: 9 },
   });
   const waiter = new Promise((resolve) => {
     output.on("close", () => {
-      log(
+      info(
         `:heavy_check_mark:  bundle of ${prettyBytes(
           archive.pointer()
         )} is ready to ship!`
@@ -46,11 +46,11 @@ const ship = async (options: any) => {
   form.append("env", env);
   form.append("name", name);
   form.append("bundle", data);
-  log(`:rocket: shipping "${env}" deployment to block "${block}"`);
+  info(`:rocket: shipping "${env}" deployment to block "${block}"`);
   try {
     const body = await cli.blocks.ship(block, form);
     const response = JSON.stringify(body, null, 1);
-    log(`:tada: upload successful!\n${response}`);
+    info(`:tada: upload successful!\n${response}`);
   } catch (err) {
     const response = JSON.stringify(err.data, null, 1);
     throw new Error(`upload failed with status ${err.status}\n${response}`);

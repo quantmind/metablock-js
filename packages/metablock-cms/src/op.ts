@@ -42,11 +42,17 @@ export const dateFormat = () => {
   return d3TimeFormat(getBlock().date_format);
 };
 
+const renderTypes = new Set([String, Array]);
+
 export const render = (entry: Record<string, any>): Record<string, any> => {
   return Object.keys(entry).reduce(
     (newEntry: Record<string, any>, key: string) => {
       let value = entry[key];
-      if (typeof entry.date === "string") {
+      if (
+        value &&
+        typeof entry.date === "string" &&
+        renderTypes.has(value.constructor)
+      ) {
         let single = false;
         if (value.constructor !== Array) {
           value = [value];
