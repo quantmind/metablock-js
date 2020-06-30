@@ -12,7 +12,8 @@
   "author": "Quantmind",
   "license": "ISC",
   "keywords": [
-    "metablock"
+    "metablock",
+    "client"
   ],
   "dependencies": {
     "debug": "^4.1.1",

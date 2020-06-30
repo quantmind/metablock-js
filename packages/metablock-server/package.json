@@ -8,6 +8,13 @@
     "build": "export NODE_ENV=production && tsc",
     "watch": "nodemon"
   },
+  "keywords": [
+    "metablock",
+    "node",
+    "webpack",
+    "server",
+    "dev"
+  ],
   "dependencies": {
     "@metablock/core": "0.2.13",
     "body-parser": "^1.19.0",

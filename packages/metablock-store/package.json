@@ -12,7 +12,8 @@
   "license": "ISC",
   "keywords": [
     "mobx",
-    "metablock"
+    "metablock",
+    "store"
   ],
   "dependencies": {
     "@metablock/core": "0.2.13",
