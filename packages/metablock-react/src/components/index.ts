@@ -5,7 +5,7 @@ export { default as Image } from "./Image";
 export { default as Link } from "./Link";
 export { default as List } from "./List";
 export { default as ListItemLink } from "./ListItemLink";
-export { default as NoSsr } from "./NoSsr";
+export { default as NoSsr, isSsr } from "./NoSsr";
 export { default as Parallax } from "./Parallax";
 export { default as Section } from "./Section";
 export * from "./Table";

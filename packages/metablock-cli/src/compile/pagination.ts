@@ -9,7 +9,7 @@ const pagination = async (
   if (!config.content || !config.index) return;
   const targets = Object.keys(entries)
     .map((key) => entries[key])
-    .filter((entry) => entry.config.source === config.source);
+    .filter((entry) => entry.config.source === config.source && entry.paginate);
   const index = targets.map((entry) => ({
     title: entry.title,
     author: entry.author,
