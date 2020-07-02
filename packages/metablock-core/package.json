@@ -20,14 +20,7 @@
     "query-string": "^6.12.1"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && tsc",
-    "watch": "nodemon"
-  },
-  "nodemonConfig": {
-    "watch": [
-      "src"
-    ],
-    "exec": "tsc",
-    "ext": "ts"
+    "build": "export NODE_ENV=production && rollup -c",
+    "watch": "rollup -c -w"
   }
 }
