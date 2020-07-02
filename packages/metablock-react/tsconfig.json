@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "jsx": "react",
+    "module": "esnext",
     "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]

@@ -4,7 +4,6 @@
     "sourceMap": true,
     "strict": true,
     "moduleResolution": "node",
-    "module": "esnext",
     "target": "es5",
     "allowJs": true,
     "experimentalDecorators": true,
