@@ -1,11 +1,9 @@
-import resolve from "@rollup/plugin-node-resolve";
 import typescript from "rollup-plugin-typescript2";
+import resolve from "@rollup/plugin-node-resolve";
 import pkg from "./package.json";
 
-const globals = { debug: "debug", "query-string": "queryString" };
-const externals = ["tslib"];
-
-const external = Object.keys(globals).concat(externals);
+const globals = {};
+const external = ["tslib"].concat(Object.keys(pkg.dependencies));
 
 const plugins = [
   resolve(),
@@ -19,7 +17,8 @@ const config = [
     input: "src/index.ts",
     output: {
       file: pkg.main,
-      format: "umd",
+      format: "cjs",
+      // format: "es",
       name: "metablock",
       sourcemap: true,
       globals,

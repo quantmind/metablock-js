@@ -3,7 +3,6 @@
   "version": "0.2.14",
   "description": "Metablock lightweight CMS",
   "main": "dist/index.js",
-  "module": "esm/index.js",
   "license": "ISC",
   "repository": {
     "type": "git",
@@ -22,14 +21,11 @@
   "dependencies": {
     "@metablock/core": "0.2.14",
     "@metablock/react": "0.2.14",
-    "@types/d3-time-format": "^2.1.1",
     "d3-time-format": "^2.2.3",
-    "mobx": "^5.15.4",
-    "prismjs": "^1.20.0",
-    "react-markdown": "^4.3.1",
-    "react-syntax-highlighter": "^12.2.1"
+    "mobx": "^5.15.4"
   },
   "devDependencies": {
+    "@types/d3-time-format": "^2.1.1",
     "@types/react-syntax-highlighter": "^11.0.4",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4"

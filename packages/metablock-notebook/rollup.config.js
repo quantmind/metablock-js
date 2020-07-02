@@ -3,7 +3,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import pkg from "./package.json";
 
 const globals = {};
-const externals = [];
+const externals = ["tslib"];
 
 const external = Object.keys(globals).concat(externals);
 

@@ -6,8 +6,10 @@ const globals = {
   "react-dom": "ReactDOM",
   "react-router-dom": "ReactRouterDOM",
   "react-helmet": "ReactHelmet",
+  "@metablock/core": "metablock",
+  "@metablock/store": "metablock",
 };
-const externals = ["clsx", "history", "@metablock/core", "@metablock/store"];
+const externals = ["tslib", "clsx", "history"];
 
 const external = Object.keys(globals).concat(externals);
 

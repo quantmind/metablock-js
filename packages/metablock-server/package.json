@@ -4,10 +4,6 @@
   "description": "Metablock dev server",
   "main": "dist/index.js",
   "license": "ISC",
-  "scripts": {
-    "build": "export NODE_ENV=production && tsc",
-    "watch": "nodemon"
-  },
   "keywords": [
     "metablock",
     "node",
@@ -28,11 +24,8 @@
     "@types/express": "^4.17.6",
     "@types/mime-types": "^2.1.0"
   },
-  "nodemonConfig": {
-    "watch": [
-      "src"
-    ],
-    "exec": "tsc",
-    "ext": "ts"
+  "scripts": {
+    "build": "export NODE_ENV=production && rollup -c",
+    "watch": "rollup -c -w"
   }
 }

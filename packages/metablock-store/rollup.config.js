@@ -2,7 +2,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
-const globals = { debug: "debug", "query-string": "queryString" };
+const globals = { mobx: "mobx", "@metablock/core": "metablock" };
 const externals = ["tslib"];
 
 const external = Object.keys(globals).concat(externals);

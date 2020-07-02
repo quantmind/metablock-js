@@ -6,16 +6,12 @@ const globals = {
   "react-dom": "ReactDOM",
   "react-router-dom": "ReactRouterDOM",
   "react-helmet": "ReactHelmet",
+  "@metablock/core": "metablock",
+  "@metablock/store": "metablock",
+  "@metablock/react": "metablock",
   "d3-time-format": "d3",
 };
-const externals = [
-  "@metablock/core",
-  "@metablock/store",
-  "@metablock/react",
-  "react-markdown",
-  "d3-time-format",
-  "mobx",
-];
+const externals = ["mobx", "tslib"];
 
 const external = Object.keys(globals).concat(externals);
 
@@ -41,19 +37,6 @@ const config = [
     output: {
       file: pkg.main,
       format: "cjs",
-      name: "MetablockCms",
-      sourcemap: true,
-      globals,
-    },
-    external,
-    plugins,
-  },
-  {
-    input: "src/index.ts",
-    onwarn,
-    output: {
-      file: pkg.module,
-      format: "esm",
       name: "MetablockCms",
       sourcemap: true,
       globals,

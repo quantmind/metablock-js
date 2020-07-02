@@ -1,10 +1,8 @@
-import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { Page, Parallax } from "@metablock/react";
 import React from "react";
 import { CmsData } from "./interfaces";
-import Markdown from "./Markdown";
 import { dateFormat } from "./op";
 
 const EntryLayout = (props: CmsData) => {
@@ -34,11 +32,6 @@ const EntryLayout = (props: CmsData) => {
           ) : null}
         </Container>
       </Parallax>
-      <Container maxWidth={maxWidth}>
-        <Box pt={3} pb={4}>
-          <Markdown {...props} />
-        </Box>
-      </Container>
     </Page>
   );
 };
