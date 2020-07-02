@@ -1,0 +1,28 @@
+{
+  "name": "@metablock/notebook",
+  "version": "0.2.13",
+  "private": false,
+  "description": "Metablock Notebook",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quantmind/metablock-js.git",
+    "directory": "packages/metablock-notebook"
+  },
+  "author": "Quantmind",
+  "license": "ISC",
+  "keywords": [
+    "metablock",
+    "notebook"
+  ],
+  "dependencies": {
+    "d3-require": "^1.2.4"
+  },
+  "scripts": {
+    "build": "export NODE_ENV=production && rollup -c",
+    "watch": "rollup -c -w"
+  },
+  "devDependencies": {
+    "@types/d3-require": "^1.2.0"
+  }
+}

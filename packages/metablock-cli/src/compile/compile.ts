@@ -67,13 +67,15 @@ const compileContent = async (
     const compiler = getCompiler(index);
     if (fs.existsSync(index) && compiler) {
       const json = await compiler(index, config, basename(fullPath), true);
-      add(targets, config, json);
-      const newConfig = {
-        ...config,
-        paginate: false,
-        output: resolve(config.output, json.slug),
-      };
-      await compileContentDir(fullPath, newConfig, targets);
+      if (json) {
+        add(targets, config, json);
+        const newConfig = {
+          ...config,
+          paginate: false,
+          output: resolve(config.output, json.slug),
+        };
+        await compileContentDir(fullPath, newConfig, targets);
+      }
     } else {
       warning(
         `path ${fullPath} is a content directory without a ${indexFile} file, skipping.`
@@ -82,6 +84,7 @@ const compileContent = async (
   } else {
     const compiler = getCompiler(fullPath);
     if (compiler) add(targets, config, await compiler(fullPath, config));
+    else warning(`Unsupported file type ${fullPath}`);
   }
 };
 
@@ -103,6 +106,7 @@ const compileContentDir = async (
     }
     const compiler = getCompiler(fullPath);
     if (compiler) add(targets, config, await compiler(fullPath, config));
+    else warning(`Unsupported file type ${fullPath}`);
   }
 };
 

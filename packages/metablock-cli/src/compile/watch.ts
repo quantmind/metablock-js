@@ -6,6 +6,8 @@ import pagination from "./pagination";
 
 export const contentCompilers: Record<string, any> = {
   "text/markdown": compileFile,
+  "text/html": copyFile,
+  "text/plain": copyFile,
   "application/javascript": copyFile,
 };
 
@@ -21,9 +23,9 @@ const watch = async (targets: Record<string, any>) => {
     srcFiles.forEach((srcPath) => {
       fs.watch(srcPath, async () => {
         info(`:keyboard:  changes on ${srcPath}`);
-        const { config, name, index } = targets[srcPath];
+        const { config, slug, index } = targets[srcPath];
         const compiler = getCompiler(srcPath);
-        const json = await compiler(srcPath, config, name, index);
+        const json = await compiler(srcPath, config, slug, index);
         if (json.paginate) pagination(targets, config);
       });
     });
