@@ -2,8 +2,10 @@ import fs from "fs";
 import { readJson } from "fs-extra";
 import { basename, resolve } from "path";
 import { warning } from "../log";
+import getCompiler from "./compiler";
 import pagination from "./pagination";
-import watch, { getCompiler } from "./watch";
+import compileBundle from "./svelte";
+import watch from "./watch";
 
 const configName = "collection.json";
 const indexFile = "index.md";
@@ -65,16 +67,19 @@ const compileContent = async (
   if (fs.lstatSync(fullPath).isDirectory()) {
     const index = resolve(fullPath, indexFile);
     const compiler = getCompiler(index);
+    // build the main markdown file
     if (fs.existsSync(index) && compiler) {
-      const json = await compiler(index, config, basename(fullPath), true);
-      if (json) {
-        add(targets, config, json);
-        const newConfig = {
+      const output = await compiler(index, config, basename(fullPath), true);
+      if (output) {
+        add(targets, config, output);
+        const newConfig: any = {
           ...config,
           paginate: false,
-          output: resolve(config.output, json.slug),
+          output: resolve(config.output, output.slug),
         };
+        if (output.sources) newConfig.sources = output.sources;
         await compileContentDir(fullPath, newConfig, targets);
+        if (newConfig.sources) await compileBundle(newConfig);
       }
     } else {
       warning(

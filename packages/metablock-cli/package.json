@@ -1,6 +1,6 @@
 {
   "name": "@metablock/cli",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "description": "A node client for interacting with metablock cloud",
   "main": "dist/index.js",
   "repository": {
@@ -11,18 +11,22 @@
   "author": "Quantmind",
   "license": "ISC",
   "dependencies": {
-    "@metablock/core": "0.2.14",
+    "@metablock/core": "0.2.15",
+    "@rollup/plugin-node-resolve": "^8.1.0",
     "archiver": "^4.0.1",
     "colors": "^1.4.0",
     "commander": "^5.1.0",
     "cross-fetch": "^3.0.5",
     "form-data": "^3.0.0",
     "fs-extra": "^9.0.1",
-    "marked": "^1.1.0",
     "mime-types": "^2.1.27",
     "node-emoji": "^1.10.0",
     "pretty-bytes": "^5.3.0",
-    "slugify": "^1.4.2"
+    "rollup": "^2.18.2",
+    "rollup-plugin-svelte": "^5.2.3",
+    "slugify": "^1.4.2",
+    "svelte": "^3.23.2",
+    "tmp": "^0.2.1"
   },
   "keywords": [
     "metablock"
@@ -34,11 +38,18 @@
     "@types/archiver": "^3.1.0",
     "@types/mime-types": "^2.1.0",
     "@types/node-emoji": "^1.8.1",
-    "@types/request": "^2.48.5",
-    "svelte": "^3.23.2"
+    "@types/tmp": "^0.2.0"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && rollup -c",
-    "watch": "rollup -c -w"
+    "build": "export NODE_ENV=production && tsc",
+    "dev": "ts-node src/metablock.ts",
+    "watch": "nodemon"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "exec": "tsc",
+    "ext": "ts"
   }
 }

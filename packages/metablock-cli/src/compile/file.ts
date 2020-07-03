@@ -58,7 +58,7 @@ const write = async (
   slug = slug ? slug : bits.slice(0, bits.length - 1).join(".");
   json.slug = json.slug || slugify(slug);
   json.paginate = config.paginate === false ? false : true;
-  info(JSON.stringify(json, null, 2));
+  // info(JSON.stringify(json, null, 2));
   fs.mkdirSync(config.output, { recursive: true });
   const outPath = resolve(config.output, `${json.slug}.json`);
   const options = production ? {} : { spaces: 2 };

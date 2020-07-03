@@ -1,5 +1,5 @@
-import typescript from "rollup-plugin-typescript2";
 import resolve from "@rollup/plugin-node-resolve";
+import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
 const globals = {};
@@ -12,20 +12,19 @@ const plugins = [
   }),
 ];
 
-const config = [
-  {
-    input: "src/index.ts",
-    output: {
-      file: pkg.main,
-      format: "cjs",
-      // format: "es",
-      name: "metablock",
-      sourcemap: true,
-      globals,
-    },
-    external,
-    plugins,
+export default {
+  input: "src/index.ts",
+  output: {
+    file: pkg.main,
+    format: "cjs",
+    // format: "es",
+    name: "metablock",
+    sourcemap: true,
+    globals,
   },
-];
-
-export default config;
+  external,
+  plugins,
+  watch: {
+    clearScreen: false,
+  },
+};

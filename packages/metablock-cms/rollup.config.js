@@ -30,20 +30,19 @@ function onwarn(warning, warn) {
   warn(warning);
 }
 
-const config = [
-  {
-    input: "src/index.ts",
-    onwarn,
-    output: {
-      file: pkg.main,
-      format: "cjs",
-      name: "MetablockCms",
-      sourcemap: true,
-      globals,
-    },
-    external,
-    plugins,
+export default {
+  input: "src/index.ts",
+  onwarn,
+  output: {
+    file: pkg.main,
+    format: "cjs",
+    name: "MetablockCms",
+    sourcemap: true,
+    globals,
   },
-];
-
-export default config;
+  external,
+  plugins,
+  watch: {
+    clearScreen: false,
+  },
+};

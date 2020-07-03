@@ -1,14 +1,14 @@
 import { require as requireDefault, requireFrom, resolver } from "d3-require";
 import code from "./code";
+import { asArray } from "./lib/utils";
 import Markdown, { defaultMarkdownExtensions } from "./markdown";
 import math from "./math";
 import jsmod from "./module";
-import svelte from "./svelte";
+import style from "./style";
 
 defaultMarkdownExtensions.push(math);
 defaultMarkdownExtensions.push(code);
 defaultMarkdownExtensions.push(jsmod);
-defaultMarkdownExtensions.push(svelte);
 
 class Notebook {
   require: any;
@@ -37,6 +37,21 @@ class Notebook {
     script.appendChild(body);
     const target = element || document.body;
     target.appendChild(script);
+  }
+
+  async render(text: string, element: any, options?: any): Promise<any> {
+    const opts = options || {};
+    if (opts.stylesheet) {
+      await Promise.all(
+        asArray(opts.stylesheet).map(async (stylesheet: string) => {
+          if (!this.cache[stylesheet]) {
+            await style(stylesheet);
+            this.cache[stylesheet] = true;
+          }
+        })
+      );
+    }
+    return await this.md.render(text, element, opts);
   }
 }
 

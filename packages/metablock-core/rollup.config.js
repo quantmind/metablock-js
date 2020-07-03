@@ -14,19 +14,18 @@ const plugins = [
   }),
 ];
 
-const config = [
-  {
-    input: "src/index.ts",
-    output: {
-      file: pkg.main,
-      format: "umd",
-      name: "metablock",
-      sourcemap: true,
-      globals,
-    },
-    external,
-    plugins,
+export default {
+  input: "src/index.ts",
+  output: {
+    file: pkg.main,
+    format: "umd",
+    name: "metablock",
+    sourcemap: true,
+    globals,
   },
-];
-
-export default config;
+  external,
+  plugins,
+  watch: {
+    clearScreen: false,
+  },
+};

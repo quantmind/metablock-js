@@ -1,20 +1,8 @@
 import fs from "fs";
-import mime from "mime-types";
 import { info } from "../log";
-import compileFile, { copyFile } from "./file";
+import getCompiler from "./compiler";
 import pagination from "./pagination";
-
-export const contentCompilers: Record<string, any> = {
-  "text/markdown": compileFile,
-  "text/html": copyFile,
-  "text/plain": copyFile,
-  "application/javascript": copyFile,
-};
-
-export const getCompiler = (fileName: string) => {
-  const type = mime.lookup(fileName);
-  return type ? contentCompilers[type] : null;
-};
+import compileBundle from "./svelte";
 
 const watch = async (targets: Record<string, any>) => {
   const srcFiles = Object.keys(targets);
@@ -25,8 +13,9 @@ const watch = async (targets: Record<string, any>) => {
         info(`:keyboard:  changes on ${srcPath}`);
         const { config, slug, index } = targets[srcPath];
         const compiler = getCompiler(srcPath);
-        const json = await compiler(srcPath, config, slug, index);
-        if (json.paginate) pagination(targets, config);
+        const output = await compiler(srcPath, config, slug, index);
+        if (config.sources && !output.index) await compileBundle(config);
+        if (output.paginate) pagination(targets, config);
       });
     });
     let keepSleep = 1000;

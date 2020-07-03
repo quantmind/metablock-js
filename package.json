@@ -1,5 +1,5 @@
 {
-  "version": "0.2.14",
+  "version": "0.2.15",
   "private": true,
   "license": "ISC",
   "name": "metablock",
@@ -58,6 +58,7 @@
     "prettier": "^2.0.5",
     "progress-estimator": "^0.2.2",
     "rollup": "^2.18.2",
+    "rollup-plugin-sourcemaps": "^0.6.2",
     "rollup-plugin-typescript2": "^0.27.1",
     "source-map-loader": "^1.0.0",
     "ts-jest": "^26.1.0",
@@ -84,7 +85,7 @@
     "build:react": "yarn workspace @metablock/react build",
     "build:cms": "yarn workspace @metablock/cms build",
     "build:notebook": "yarn workspace @metablock/notebook build",
-    "watch": "npm-run-all --parallel watch:server watch:core watch:cli watch:store watch:react watch:cms",
+    "watch": "npm-run-all --parallel watch:server watch:core watch:cli watch:store watch:react watch:cms watch:notebook",
     "watch:cli": "yarn workspace @metablock/cli watch",
     "watch:core": "yarn workspace @metablock/core watch",
     "watch:store": "yarn workspace @metablock/store watch",

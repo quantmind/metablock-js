@@ -28,7 +28,7 @@ function onwarn(warning, warn) {
   warn(warning);
 }
 
-const config = [
+export default [
   {
     input: "src/index.ts",
     onwarn,
@@ -41,6 +41,9 @@ const config = [
     },
     external,
     plugins,
+    watch: {
+      clearScreen: false,
+    },
   },
   {
     input: "src/index.ts",
@@ -54,7 +57,8 @@ const config = [
     },
     external,
     plugins,
+    watch: {
+      clearScreen: false,
+    },
   },
 ];
-
-export default config;

@@ -1,14 +1,19 @@
 import colors from "colors";
-import emoji from "node-emoji";
+import { emojify } from "node-emoji";
 
-export const info = (msg: string) => {
-  console.info(colors.green(emoji.emojify(msg)));
+export const info = (msg: any) => {
+  console.info(colors.green(asMessage(msg)));
 };
 
-export const warning = (msg: string) => {
-  console.warn(colors.yellow(emoji.emojify(msg)));
+export const warning = (msg: any) => {
+  console.warn(colors.yellow(asMessage(msg)));
 };
 
 export const error = (exc: any) => {
-  console.error(colors.red(emoji.emojify(`:broken_heart: ${exc}`)));
+  console.error(colors.red(asMessage(exc, ":broken_heart:")));
+};
+
+const asMessage = (msg: any, emoji = ""): string => {
+  if (msg.constructor === String) return emojify(`${emoji}${msg}`);
+  else return JSON.stringify(msg, null, 2);
 };
