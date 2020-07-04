@@ -1,6 +1,6 @@
 {
   "name": "@metablock/server",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "description": "Metablock dev server",
   "main": "dist/index.js",
   "license": "ISC",
@@ -12,7 +12,7 @@
     "dev"
   ],
   "dependencies": {
-    "@metablock/core": "0.2.16",
+    "@metablock/core": "0.2.17",
     "body-parser": "^1.19.0",
     "btoa": "^1.2.1",
     "cross-fetch": "^3.0.5",

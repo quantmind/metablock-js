@@ -1,6 +1,6 @@
 {
   "name": "@metablock/store",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "description": "Metablock MobX store",
   "main": "dist/index.js",
   "repository": {
@@ -16,7 +16,7 @@
     "store"
   ],
   "dependencies": {
-    "@metablock/core": "0.2.16",
+    "@metablock/core": "0.2.17",
     "mobx": "^5.15.4"
   },
   "scripts": {

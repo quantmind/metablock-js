@@ -66,7 +66,8 @@ const compileDirectory = async (
       targets = { ...targets, ...extra };
     }
   }
-  if (config.content) await pagination(targets, config.outputDir);
+  if (config.content && config.paginate)
+    await pagination(targets, config.outputDir);
   return targets;
 };
 
