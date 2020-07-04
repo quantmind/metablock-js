@@ -8,4 +8,4 @@ Tooling for metablock cloud.
 - [@metablock/store](./packages/metablock-store): stores for metablock authentication plugin.
 - [@metablock/react](./packages/metablock-react): Reusable React components.
 - [@metablock/cms](./packages/metablock-cms): A lightweight CMS
-- [@metablock/cms](./packages/metablock-notebook): Experimental notebook app
+- [@metablock/notebook](./packages/metablock-notebook): Experimental notebook app

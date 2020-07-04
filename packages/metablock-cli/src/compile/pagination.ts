@@ -2,14 +2,10 @@ import { writeJson } from "fs-extra";
 import { resolve } from "path";
 import { info } from "../log";
 
-const pagination = async (
-  entries: Record<string, any>,
-  config: Record<string, any>
-) => {
-  if (!config.content || !config.index) return;
+const pagination = async (entries: Record<string, any>, outputDir: string) => {
   const targets = Object.keys(entries)
     .map((key) => entries[key])
-    .filter((entry) => entry.config.source === config.source && entry.paginate);
+    .filter((entry) => entry.config.indexDir === outputDir && entry.paginate);
   const index = targets.map((entry) => ({
     title: entry.title,
     author: entry.author,
@@ -18,7 +14,7 @@ const pagination = async (
     description: entry.description,
     slug: entry.slug,
   }));
-  const file = resolve(config.output, `index.json`);
+  const file = resolve(outputDir, `index.json`);
   writeJson(file, index);
   info(`:package: written ${index.length} entries in the index ${file}`);
 };

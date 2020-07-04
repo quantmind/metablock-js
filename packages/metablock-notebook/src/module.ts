@@ -1,11 +1,11 @@
-import html from "./html";
+import html from "./lib/html";
 import getAttrs from "./lib/attrs";
 import Markdown from "./markdown";
 
 const renderer = {
   html(raw: string) {
     const dom = html(raw);
-    if (dom.tagName === "SCRIPT") {
+    if (dom && dom.tagName === "SCRIPT") {
       const attrs = getAttrs(dom);
       if (attrs.src) {
         const ar = attrs.aspectratio;

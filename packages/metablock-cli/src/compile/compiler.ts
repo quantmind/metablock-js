@@ -11,9 +11,13 @@ export const contentCompilers: Record<string, any> = {
   "application/svelte": copyFile,
 };
 
+export const contentType = (fileName: string): any => {
+  return mime.lookup(fileName);
+};
+
 const getCompiler = (fileName: string) => {
-  const type = mime.lookup(fileName);
-  return type ? contentCompilers[type] : null;
+  const type = contentType(fileName);
+  return contentCompilers[type];
 };
 
 export default getCompiler;

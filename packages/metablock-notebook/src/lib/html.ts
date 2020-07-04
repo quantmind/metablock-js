@@ -1,4 +1,4 @@
-import { logger } from "./lib/utils";
+import { logger } from "./utils";
 
 const html = (html: string, ownerDocument?: any) => {
   const doc = ownerDocument || document;

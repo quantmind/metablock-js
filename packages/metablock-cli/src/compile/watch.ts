@@ -1,21 +1,26 @@
 import fs from "fs";
+import { resolve } from "path";
 import { info } from "../log";
 import getCompiler from "./compiler";
 import pagination from "./pagination";
 import compileBundle from "./svelte";
 
 const watch = async (targets: Record<string, any>) => {
-  const srcFiles = Object.keys(targets);
-  if (srcFiles.length) {
-    info(`:eyes: watching ${srcFiles.length} files for changes...`);
-    srcFiles.forEach((srcPath) => {
-      fs.watch(srcPath, async () => {
-        info(`:keyboard:  changes on ${srcPath}`);
-        const { config, slug, index } = targets[srcPath];
-        const compiler = getCompiler(srcPath);
-        const output = await compiler(srcPath, config, slug, index);
-        if (config.sources && !output.index) await compileBundle(config);
-        if (output.paginate) pagination(targets, config);
+  const sourcePaths = Object.keys(targets);
+  if (sourcePaths.length) {
+    info(`:eyes: watching ${sourcePaths.length} paths for changes...`);
+    sourcePaths.forEach((sourcePath) => {
+      fs.watch(sourcePath, async (type, file) => {
+        const sourceFile = fs.lstatSync(sourcePath).isDirectory()
+          ? resolve(sourcePath, file)
+          : sourcePath;
+        info(`:keyboard:  ${type} on ${sourceFile}`);
+        const { config, srcPath, index, outputDir } = targets[sourcePath];
+        const isIndex = sourceFile === srcPath ? index : false;
+        const compiler = getCompiler(sourceFile);
+        const output = await compiler(sourceFile, config, isIndex);
+        if (output.paginate) pagination(targets, outputDir);
+        if (config.js_source) await compileBundle(config, sourceFile);
       });
     });
     let keepSleep = 1000;
