@@ -15,9 +15,9 @@ const useFetch = (fetchData: () => Promise<any>, key?: any): any => {
   React.useEffect(() => {
     if (tries.current === 0) {
       tries.current += 1;
-      fetchData().then((d) => render(d));
+      fetchData().then(render, render);
     }
-  });
+  }, [fetchData]);
   return result;
 };
 

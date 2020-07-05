@@ -46,11 +46,17 @@ const compileDirectory = async (
     ? await readJson(configPath)
     : {};
   let targets: Record<string, any> = {};
+  let path = config.path || "";
   if (!prevConfig.output)
     config.outputDir = resolve(config.outputDir || "dist");
-  else config.outputDir = resolve(prevConfig.output, basename(sourceDir));
+  else {
+    path = config.path || basename(sourceDir);
+    config.outputDir = resolve(prevConfig.output, path);
+  }
   config.indexDir = config.outputDir;
   config.sourceDir = sourceDir;
+  config.path = path;
+  config.slug = config.slug || ["slug"];
 
   const files = fs.readdirSync(sourceDir);
   for (let i = 0; i < files.length; ++i) {
@@ -66,8 +72,9 @@ const compileDirectory = async (
       targets = { ...targets, ...extra };
     }
   }
-  if (config.content && config.paginate)
-    await pagination(targets, config.outputDir);
+  if (config.content) {
+    if (config.paginate) await pagination(targets, config.outputDir);
+  }
   return targets;
 };
 

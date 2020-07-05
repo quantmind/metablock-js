@@ -35,7 +35,7 @@ module.exports = {
     "no-multiple-empty-lines": [ERROR, { max: 2, maxEOF: 0 }],
     "eol-last": ERROR,
     semi: ERROR,
-    complexity: [ERROR, { max: 13 }],
+    complexity: [ERROR, { max: 15 }],
     // prevent lint errors if you don't use some function arguments
     "@typescript-eslint/no-unused-vars": [
       "error",

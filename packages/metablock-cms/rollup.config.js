@@ -1,4 +1,5 @@
 import typescript from "rollup-plugin-typescript2";
+import sourcemaps from "rollup-plugin-sourcemaps";
 import pkg from "./package.json";
 
 const globals = {
@@ -16,6 +17,7 @@ const externals = ["mobx", "tslib"];
 const external = Object.keys(globals).concat(externals);
 
 const plugins = [
+  sourcemaps(),
   typescript({
     typescript: require("typescript"),
   }),
@@ -32,6 +34,7 @@ function onwarn(warning, warn) {
 
 export default {
   input: "src/index.ts",
+  plugins,
   onwarn,
   output: {
     file: pkg.main,
@@ -41,7 +44,6 @@ export default {
     globals,
   },
   external,
-  plugins,
   watch: {
     clearScreen: false,
   },

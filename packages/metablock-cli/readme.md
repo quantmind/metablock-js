@@ -1,6 +1,9 @@
 # Metablock Client
 
-A node client for interacting with metablock cloud.
+A command line client for
+
+- Interacting with [metablock cloud](https://metablock.io/) (make deployments)
+- Compile content/sitemap from repositories
 
 ## Deployments
 
@@ -18,4 +21,22 @@ BUNDLE_LOCATION=...
 
 ```
 metablock ship --help
+```
+
+## Compile Content
+
+The `compile` command scans the repository for directories containing the `collection.json` file and
+
+* Compile Markdown files into JSON data files and compile minimal requirement javascript files for inclusion in [@metablock/notebooks](https://github.com/quantmind/metablock-js/tree/master/packages/metablock-notebook)
+
+The `collection.json` must include the
+
+```json
+  "content": true,
+```
+
+entry otherwise the directory won't be considered as content (however subdirectories will be scanned for `collection.json` files).
+
+```
+metablock compile --help
 ```

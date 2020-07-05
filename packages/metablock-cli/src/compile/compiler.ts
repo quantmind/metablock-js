@@ -1,10 +1,11 @@
 import mime from "mime-types";
-import compileFile, { copyFile } from "./file";
+import copyFile from "./file";
+import compileMarkdown from "./md";
 
 mime.types["svelte"] = "application/svelte";
 
 export const contentCompilers: Record<string, any> = {
-  "text/markdown": compileFile,
+  "text/markdown": compileMarkdown,
   "text/html": copyFile,
   "text/plain": copyFile,
   "application/javascript": copyFile,

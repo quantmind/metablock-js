@@ -1,6 +1,6 @@
 {
   "name": "@metablock/react",
-  "version": "0.2.17",
+  "version": "0.2.18",
   "description": "React Components for Metablock",
   "main": "dist/index.js",
   "module": "esm/index.js",
@@ -18,8 +18,8 @@
   "dependencies": {
     "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "^4.9.1",
-    "@metablock/core": "0.2.17",
-    "@metablock/store": "0.2.17",
+    "@metablock/core": "0.2.18",
+    "@metablock/store": "0.2.18",
     "clsx": "^1.1.1",
     "history": "4.10",
     "mobx-react-lite": "^2.0.7",
