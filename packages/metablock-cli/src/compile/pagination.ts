@@ -1,6 +1,7 @@
 import { writeJson } from "fs-extra";
 import { resolve } from "path";
 import { info } from "../log";
+import { production } from "./settings";
 
 const pagination = async (entries: Record<string, any>, outputDir: string) => {
   const targets = Object.keys(entries)
@@ -21,7 +22,8 @@ const pagination = async (entries: Record<string, any>, outputDir: string) => {
       slug: entry.slug,
     }));
     const file = resolve(outputDir, `index.json`);
-    writeJson(file, index);
+    const options = production ? {} : { spaces: 2 };
+    await writeJson(file, index, options);
     info(`:package: written ${index.length} entries in the index ${file}`);
   }
 };

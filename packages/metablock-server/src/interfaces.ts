@@ -1,3 +1,5 @@
+import { HttpClient, HttpResponse } from "@metablock/core";
+
 export interface Html {
   meta: Array<string>;
   css: Array<string>;
@@ -13,4 +15,16 @@ export interface Context {
 export interface Plugin {
   name: string;
   config: Record<string, string>;
+}
+
+export interface Services {
+  cli: HttpClient;
+
+  fromCache: (key: string, loader: any) => Promise<any>;
+
+  getConfig: (req: any) => Promise<Context>;
+
+  getPhoto: (key: string) => Promise<HttpResponse>;
+
+  login: (body: any) => Promise<HttpResponse>;
 }

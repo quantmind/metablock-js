@@ -1,9 +1,9 @@
 import { HttpClient, HttpResponse } from "@metablock/core";
-import { Context } from "./interfaces";
+import { Context, Services } from "./interfaces";
 
 const METABLOCK_WEB_URL = process.env.METABLOCK_API_URL;
 
-class Services {
+class DevServices implements Services {
   blockUrl: string;
   assetsUrl: string;
   cli: HttpClient;
@@ -13,6 +13,10 @@ class Services {
     this.assetsUrl = assetsUrl;
     this.cli = new HttpClient();
     this.cli.defaultHeaders["user-agent"] = "metablock-dev-server";
+  }
+
+  async fromCache(key: string, loader: any): Promise<any> {
+    return await loader();
   }
 
   async getConfig(req: any): Promise<Context> {
@@ -35,4 +39,4 @@ class Services {
   }
 }
 
-export default Services;
+export default DevServices;

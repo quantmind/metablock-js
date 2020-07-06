@@ -3,10 +3,9 @@ import sourcemaps from "rollup-plugin-sourcemaps";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
-const globals = {};
-const externals = ["tslib"];
+const globals = { tslib: "tslib" };
 
-const external = Object.keys(globals).concat(externals);
+const external = Object.keys(globals);
 
 const plugins = [
   resolve(),

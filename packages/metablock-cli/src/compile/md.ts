@@ -5,8 +5,7 @@ import mime from "mime-types";
 import { basename, dirname, resolve } from "path";
 import slugify from "slugify";
 import { error, info } from "../log";
-
-const production = process.env.NODE_ENV === "production";
+import { production } from "./settings";
 
 // compile markdown files
 

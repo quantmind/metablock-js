@@ -12,6 +12,16 @@
     },
     {
       "preset": "ts-jest",
+      "rootDir": "./packages/metablock-server",
+      "automock": false,
+      "displayName": "@metablock/server",
+      "testEnvironment": "jsdom",
+      "testMatch": ["<rootDir>/tests/*.test.ts"],
+      "setupFiles": ["./setupTests.ts"],
+      "transformIgnorePatterns": ["/node_modules/(?!@metablock)"]
+    },
+    {
+      "preset": "ts-jest",
       "rootDir": "./packages/metablock-notebook",
       "automock": false,
       "displayName": "@metablock/notebook",

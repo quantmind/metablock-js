@@ -4,6 +4,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Home from "@material-ui/icons/Home";
 import React from "react";
+import Page from "./Page";
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -31,20 +32,22 @@ const useStyles = makeStyles((theme: Theme) => ({
 const PageNotFound = () => {
   const classes = useStyles();
   return (
-    <Paper className={classes.paper}>
-      <div className={classes.container}>
-        <Typography variant="h4">404</Typography>
-        <Typography variant="subtitle1">Page Not Fund</Typography>
-        <Button
-          color="secondary"
-          aria-label="home"
-          href="/"
-          className={classes.button}
-        >
-          <Home />
-        </Button>
-      </div>
-    </Paper>
+    <Page title="Page not found" statusCode={404}>
+      <Paper className={classes.paper}>
+        <div className={classes.container}>
+          <Typography variant="h4">404</Typography>
+          <Typography variant="subtitle1">Page Not Fund</Typography>
+          <Button
+            color="secondary"
+            aria-label="home"
+            href="/"
+            className={classes.button}
+          >
+            <Home />
+          </Button>
+        </div>
+      </Paper>
+    </Page>
   );
 };
 

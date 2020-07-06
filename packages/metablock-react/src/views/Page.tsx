@@ -23,6 +23,7 @@ interface PageProps {
   url?: string;
   image?: string;
   children: React.ReactNode;
+  statusCode?: number;
   [x: string]: any;
 }
 
@@ -35,7 +36,8 @@ const Page = (props: PageProps) => {
     keywords,
     twitter_card = "summary",
     content = "website",
-    prefix = true,
+    prefix = false,
+    statusCode,
     description = "",
     url = window.location.href,
   } = props;
@@ -57,6 +59,9 @@ const Page = (props: PageProps) => {
         <meta name="twitter:description" content={description} />
         <meta name="twitter:card" content={twitter_card} />
         {image ? <meta property="twitter:image" content={image} /> : null}
+        {statusCode ? (
+          <meta name="page-status-code" content={`${statusCode}`} />
+        ) : null}
       </Helmet>
       {children}
     </>

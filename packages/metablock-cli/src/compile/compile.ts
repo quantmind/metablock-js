@@ -47,11 +47,11 @@ const compileDirectory = async (
     : {};
   let targets: Record<string, any> = {};
   let path = config.path || "";
-  if (!prevConfig.output)
+  if (!prevConfig.outputDir)
     config.outputDir = resolve(config.outputDir || "dist");
   else {
     path = config.path || basename(sourceDir);
-    config.outputDir = resolve(prevConfig.output, path);
+    config.outputDir = resolve(prevConfig.outputDir, path);
   }
   config.indexDir = config.outputDir;
   config.sourceDir = sourceDir;

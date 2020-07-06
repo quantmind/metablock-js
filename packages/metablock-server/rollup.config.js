@@ -3,7 +3,7 @@ import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
 const globals = {};
-const external = ["tslib"].concat(Object.keys(pkg.dependencies));
+const external = ["tslib", "perf_hooks"].concat(Object.keys(pkg.dependencies));
 
 const plugins = [
   resolve(),
