@@ -1,6 +1,6 @@
 import { Express, Request, Response } from "express";
 import { performance } from "perf_hooks";
-import Services from "../services";
+import { Services } from "../interfaces";
 import rawHtml from "./html";
 import BrowserManager from "./ssr";
 
