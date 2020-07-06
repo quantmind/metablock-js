@@ -2,6 +2,16 @@
   "projects": [
     {
       "preset": "ts-jest",
+      "rootDir": "./packages/metablock-core",
+      "automock": false,
+      "displayName": "@metablock/core",
+      "testEnvironment": "jsdom",
+      "testMatch": ["<rootDir>/tests/*.test.ts"],
+      "setupFiles": ["./setupTests.ts"],
+      "transformIgnorePatterns": ["/node_modules/(?!@metablock)"]
+    },
+    {
+      "preset": "ts-jest",
       "rootDir": "./packages/metablock-notebook",
       "automock": false,
       "displayName": "@metablock/notebook",

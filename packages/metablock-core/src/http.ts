@@ -1,4 +1,4 @@
-import getLogger from "./logger";
+import { getLogger } from "./logger";
 import HttpResponse from "./response";
 
 export interface Options {

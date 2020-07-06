@@ -1,5 +1,5 @@
 {
-  "version": "0.2.18",
+  "version": "0.2.19",
   "private": true,
   "license": "ISC",
   "name": "metablock",
@@ -35,6 +35,7 @@
     "@types/fs-extra": "^9.0.1",
     "@types/jest": "^26.0.3",
     "@types/lodash": "^4.14.157",
+    "@types/sinon": "^9.0.4",
     "@typescript-eslint/eslint-plugin": "^3.5.0",
     "@typescript-eslint/parser": "^3.5.0",
     "chalk": "^4.1.0",
@@ -60,6 +61,7 @@
     "rollup": "^2.18.2",
     "rollup-plugin-sourcemaps": "^0.6.2",
     "rollup-plugin-typescript2": "^0.27.1",
+    "sinon": "^9.0.2",
     "source-map-loader": "^1.0.1",
     "ts-jest": "^26.1.1",
     "ts-loader": "7.0.5",

@@ -1,8 +1,6 @@
 import { HttpClient, HttpResponse } from "@metablock/core";
-import fetch from "cross-fetch";
 import { Context } from "./interfaces";
 
-global.fetch = fetch as any;
 const METABLOCK_WEB_URL = process.env.METABLOCK_API_URL;
 
 class Services {

@@ -51,7 +51,10 @@ levels
     level: 50,
   });
 
-export default (name: LevelName | string, level?: LevelName | string) => {
+export const getLogger = (
+  name: LevelName | string,
+  level?: LevelName | string
+) => {
   const levelConfig =
     levels.get(level as LevelName) || (levels.get("info") as Config);
 
@@ -67,3 +70,5 @@ export default (name: LevelName | string, level?: LevelName | string) => {
 
   return logger as { [key in LevelName]: debug.Debugger };
 };
+
+export type Logger = ReturnType<typeof getLogger>;
