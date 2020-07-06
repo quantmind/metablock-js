@@ -1,5 +1,5 @@
 
-.PHONY: help clean
+.PHONY: help clean clean-deep version publish
 
 help:
 	@echo ======================================================================================
@@ -10,6 +10,9 @@ help:
 clean:		## remove generated files
 	find . -name 'dist' | xargs rm -rf
 	find . -name 'esm' | xargs rm -rf
+
+clean-deep:	## remove generated files & node_modules
+	make clean
 	find . -name 'node_modules' | xargs rm -rf
 
 
