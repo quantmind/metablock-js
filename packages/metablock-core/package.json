@@ -1,6 +1,6 @@
 {
   "name": "@metablock/core",
-  "version": "0.2.24",
+  "version": "0.3.0",
   "private": false,
   "description": "Metablock core library",
   "main": "dist/index.js",
