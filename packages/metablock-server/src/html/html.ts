@@ -9,7 +9,7 @@ export default (ctx: Context, req: Request) => {
   const title = ctx.web.title || ctx.web.name;
   const description = ctx.web.description || title;
   const scripts = [
-    `<script type="application/javascript">__metablock_assets_url__="${ctx.web.assetsUrl}/";</script>`,
+    `<script type="application/javascript">__bundle_url__="${ctx.web.deployUrl}/";</script>`,
   ].concat(
     ctx.html.scripts.map((script) => `<script src="${script}"></script>`)
   );

@@ -1,19 +1,24 @@
 # A dev server for metablock
 
-Install via
+To use it install these two dependencies
 
 ```bash
-yarn add @metablock/server
+yarn add @metablock/server webpack-require-from
 ```
 
 and use it with webpack
 
 ```javascript
+import RequireFrom from "webpack-require-from";
 import { devServer } from "@metablock/server";
 
 const webPackConfig = {
   devServer: devServer("https://myblock.mblock.sh", { hot: true }),
-  ...
+  plugins: [
+    new RequireFrom({
+      variableName: "__bundle_url__",
+    }),
+  ],
 };
 ```
 
