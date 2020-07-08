@@ -7,6 +7,7 @@ export interface CmsListData {
   image: string;
   urlPath: string;
   index: boolean;
+  private: boolean;
 }
 
 export interface CmsData extends CmsListData {

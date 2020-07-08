@@ -20,6 +20,7 @@ const pagination = async (entries: Record<string, any>, outputDir: string) => {
       image: entry.indexImage || entry.image,
       description: entry.description,
       slug: entry.slug,
+      private: entry.private || false,
     }));
     const file = resolve(outputDir, `index.json`);
     const options = production ? {} : { spaces: 2 };

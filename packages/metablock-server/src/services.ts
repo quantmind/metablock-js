@@ -5,12 +5,12 @@ const METABLOCK_WEB_URL = process.env.METABLOCK_API_URL;
 
 class DevServices implements Services {
   blockUrl: string;
-  assetsUrl: string;
+  bundleUrl: string;
   cli: HttpClient;
 
-  constructor(blockUrl: string, assetsUrl: string) {
+  constructor(blockUrl: string, bundleUrl: string) {
     this.blockUrl = METABLOCK_WEB_URL || blockUrl;
-    this.assetsUrl = assetsUrl;
+    this.bundleUrl = bundleUrl;
     this.cli = new HttpClient();
     this.cli.defaultHeaders["user-agent"] = "metablock-dev-server";
   }
@@ -19,14 +19,16 @@ class DevServices implements Services {
     return await loader();
   }
 
+  // Get config and adjust urls for local bundle
   async getConfig(req: any): Promise<Context> {
     const response = await this.cli.get(`${this.blockUrl}/.api/config`);
     let data = response.data as Context;
-    const assetsUrl = data.web.assetsUrl;
-    if (assetsUrl && this.assetsUrl)
-      data = JSON.parse(
-        JSON.stringify(data).split(assetsUrl).join(this.assetsUrl)
-      ) as Context;
+    const deployUrl = data.web.deployUrl;
+    if (deployUrl && this.bundleUrl) {
+      let cfg = JSON.stringify(data).split(deployUrl).join(this.bundleUrl);
+      cfg = cfg.split(data.web.liveUrl).join(this.bundleUrl);
+      data = JSON.parse(cfg);
+    }
     return data;
   }
 

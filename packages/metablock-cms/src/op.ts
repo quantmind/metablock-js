@@ -1,10 +1,11 @@
-import { assetUrl, bundleUrl, getBlock } from "@metablock/core";
+import { assetUrl, bundleUrl, liveUrl, getBlock } from "@metablock/core";
 import { timeFormat as d3TimeFormat } from "d3-time-format";
 import { CmsListData } from "./interfaces";
 
 const substitutes: Record<string, string> = {
-  "${assetUrl}": assetUrl(""),
-  "${bundleUrl}": bundleUrl(""),
+  "{{ assetUrl }}": assetUrl(""),
+  "{{ bundleUrl }}": bundleUrl(""),
+  "{{ liveUrl }}": liveUrl(""),
 };
 
 export const slugValues = (entry: CmsListData): Record<string, string> => {
