@@ -1,4 +1,10 @@
-import { CurrentUser, HttpResponse } from "@metablock/core";
+import {
+  ApiToken,
+  CurrentUser,
+  HttpResponse,
+  Paginated,
+  paginatedResponse,
+} from "@metablock/core";
 import { action, observable } from "mobx";
 import CommonStore from "./common";
 
@@ -13,7 +19,7 @@ export interface User {
 class UserStore {
   commonStore: CommonStore;
   @observable current?: CurrentUser;
-  @observable tokens?: Record<string, string>[];
+  @observable tokens?: Paginated<ApiToken>;
   @observable loading = false;
   @observable updating = false;
   @observable errors?: HttpResponse = undefined;
@@ -53,7 +59,8 @@ class UserStore {
   async getTokens() {
     this.loading = true;
     try {
-      this.tokens = await this.cli.user.getTokens();
+      const response = await this.cli.user.getTokens();
+      this.tokens = paginatedResponse<ApiToken>(response);
     } finally {
       this.loading = false;
     }

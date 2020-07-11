@@ -1,0 +1,78 @@
+import HttpResponse from "../response";
+
+export class Paginated<T> {
+  data: T[];
+  count: number;
+  offset: number;
+  limit: number;
+
+  constructor(data: T[], count = 0, offset = 0, limit = 25) {
+    this.data = data;
+    this.count = count;
+    this.offset = offset;
+    this.limit = limit;
+  }
+}
+
+export function paginatedResponse<T>(response: HttpResponse): Paginated<T> {
+  const data = response.data as T[];
+  const count = response.headers.get("x-total-count");
+  return new Paginated<T>(data, count ? +count : data.length);
+}
+
+export interface Block {
+  id: string;
+  name: string; // name of the metablock site
+  title: string; // default title
+  description: string; // default description
+  apiUrl: string; // metablock api url
+  assetsUrl: string; // base url of the javascript bundle
+  date_format: string;
+  login_url: string;
+  signin_url: string;
+  signup_url: string;
+  forgot_password_url: string;
+  space: Space;
+  plugins?: Paginated<BlockPlugin>;
+  [x: string]: any;
+}
+
+export interface Space {
+  id: string;
+  name: string;
+  domain: string;
+  hosted: boolean;
+  org_id: string;
+  org_name: string;
+  blocks?: Paginated<Block>;
+  extensions: Paginated<SpaceExtension>;
+}
+
+export interface Extension {
+  id: string;
+  name: string;
+  schema: Record<string, any>;
+}
+
+export interface SpaceExtension {
+  id: string;
+  name: string;
+  config: Record<string, any>;
+}
+
+export interface Plugin {
+  id: string;
+  name: string;
+  schema: Record<string, any>;
+}
+
+export interface BlockPlugin {
+  id: string;
+  name: string;
+  config: Record<string, any>;
+}
+
+export interface ApiToken {
+  id: string;
+  created: string;
+}

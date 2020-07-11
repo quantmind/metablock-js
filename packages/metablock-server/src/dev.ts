@@ -13,7 +13,7 @@ const devServer = (blockUrl: string, options: any) => {
   };
 };
 
-const before = (blockUrl: string, options: any) => {
+export const before = (blockUrl: string, options: any) => {
   global.fetch = require("cross-fetch");
   return (app: Express, server: any) => {
     const { mode } = server.compiler.options;

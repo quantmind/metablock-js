@@ -1,4 +1,5 @@
 import { compileOptions } from "@metablock/core";
+import { timeFormat } from "d3-time-format";
 import fs from "fs";
 import { writeJson } from "fs-extra";
 import mime from "mime-types";
@@ -8,6 +9,7 @@ import { error, info } from "../log";
 import { production } from "./settings";
 
 // compile markdown files
+const formatDate = timeFormat("%B %d, %Y");
 
 const compileMarkdown = async (
   srcPath: string,
@@ -19,6 +21,7 @@ const compileMarkdown = async (
   try {
     const json = compileOptions(bits[0]);
     if (production && json.private) return;
+    if (json.date) json.date = formatDate(new Date(json.date));
     json.index = index;
     json.contentType = mime.lookup(srcPath);
     json.body = bits.slice(1).join("---").trim();

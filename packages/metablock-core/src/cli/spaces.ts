@@ -1,14 +1,6 @@
 import HttpResponse from "../response";
 import HttpComponent from "./http";
-
-export interface Space {
-  id: string;
-  name: string;
-  domain: string;
-  hosted: boolean;
-  org_id: string;
-  org_name: string;
-}
+import { Space } from "./interfaces";
 
 class Spaces extends HttpComponent {
   async getList(query: any): Promise<HttpResponse> {
@@ -48,6 +40,16 @@ class Spaces extends HttpComponent {
   async delete(space_id: string): Promise<void> {
     const url = `${this.cli.apiUrl}/spaces/${space_id}`;
     await this.cli.delete(url, {
+      headers: this.cli.withToken(),
+    });
+  }
+
+  async getBlocks(space: Space, query?: any): Promise<HttpResponse> {
+    const url = this.urlQuery(
+      `${this.cli.apiUrl}/spaces/${space.id}/services`,
+      query
+    );
+    return await this.cli.get(url, {
       headers: this.cli.withToken(),
     });
   }

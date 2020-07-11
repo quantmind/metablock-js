@@ -19,6 +19,7 @@ const watch = async (targets: Record<string, any>) => {
         const isIndex = sourceFile === srcPath ? index : false;
         const compiler = getCompiler(sourceFile);
         const output = await compiler(sourceFile, config, isIndex);
+        targets[sourcePath] = { ...output, config };
         if (output.paginate) pagination(targets, outputDir);
         if (config.js_source) await compileBundle(config, sourceFile);
       });

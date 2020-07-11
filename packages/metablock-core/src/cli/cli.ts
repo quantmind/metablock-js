@@ -1,9 +1,10 @@
 import HttpClient from "../http";
 import MbAuth from "./auth";
 import Blocks from "./blocks";
+import { Space } from "./interfaces";
 import Orgs from "./orgs";
 import Photos from "./photos";
-import Spaces, { Space } from "./spaces";
+import Spaces from "./spaces";
 import MbUser from "./user";
 
 export class Metablock extends HttpClient {

@@ -1,4 +1,5 @@
 import HttpComponent from "./http";
+import HttpResponse from "../response";
 
 export interface CurrentUser {
   first_name: string;
@@ -36,11 +37,10 @@ class MbUser extends HttpComponent {
     return response.data as UserOrg[];
   }
 
-  async getTokens(): Promise<Record<string, string>[]> {
-    const response = await this.cli.get(`${this.cli.apiUrl}/user/tokens`, {
+  async getTokens(): Promise<HttpResponse> {
+    return await this.cli.get(`${this.cli.apiUrl}/user/tokens`, {
       headers: this.cli.withToken(),
     });
-    return response.data as Record<string, string>[];
   }
 
   async createToken(): Promise<Record<string, string>> {

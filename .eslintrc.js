@@ -29,6 +29,7 @@ module.exports = {
     "@typescript-eslint/camelcase": OFF,
     "@typescript-eslint/explicit-module-boundary-types": OFF,
     "@typescript-eslint/ban-ts-comment": OFF,
+    "@typescript-eslint/no-empty-function": OFF,
     "no-cond-assign": OFF,
     "no-floating-decimal": ERROR,
     "no-trailing-spaces": ERROR,

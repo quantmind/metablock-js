@@ -16,7 +16,13 @@ const compileOption = (text: string): string[] => {
   const bits = text.split(":");
   const name = bits[0].trim();
   if (!name || bits.length < 2) throw new Error(`Bad header ${text}`);
-  return [name, bits.slice(1).join(":").trim()];
+  let value = bits.slice(1).join(":").trim();
+  try {
+    value = JSON.parse(value);
+  } catch (err) {
+    // skip on error
+  }
+  return [name, value];
 };
 
 export default compileOptions;

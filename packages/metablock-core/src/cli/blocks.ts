@@ -1,22 +1,6 @@
 import HttpResponse from "../response";
 import HttpComponent from "./http";
-import { Space } from "./spaces";
-
-export interface Block {
-  id: string;
-  name: string; // name of the metablock site
-  title: string; // default title
-  description: string; // default description
-  apiUrl: string; // metablock api url
-  assetsUrl: string; // base url of the javascript bundle
-  date_format: string;
-  login_url: string;
-  signin_url: string;
-  signup_url: string;
-  forgot_password_url: string;
-  space: Space;
-  [x: string]: any;
-}
+import { Block } from "./interfaces";
 
 class Blocks extends HttpComponent {
   async getList(query: any): Promise<HttpResponse> {
@@ -46,7 +30,7 @@ class Blocks extends HttpComponent {
 
   async update(block_id: string, body: Record<string, any>): Promise<Block> {
     const url = `${this.cli.apiUrl}/services/${block_id}`;
-    const response = await this.cli.post(url, {
+    const response = await this.cli.patch(url, {
       body,
       headers: this.cli.withToken(),
     });

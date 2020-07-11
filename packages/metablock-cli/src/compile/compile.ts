@@ -23,7 +23,8 @@ const compile = async (
   } else {
     throw new Error(`${source} directory does not exist!`);
   }
-  const targets = await compileDirectory(sourceDir, options, {});
+  const targets = {};
+  await compileDirectory(sourceDir, options, {}, targets);
   if (options.watch) await watch(targets);
 };
 
@@ -39,13 +40,13 @@ const compile = async (
 const compileDirectory = async (
   sourceDir: string,
   options: Record<string, any>,
-  prevConfig: Record<string, any>
-): Promise<Record<string, any>> => {
+  prevConfig: Record<string, any>,
+  targets: Record<string, any>
+) => {
   const configPath = resolve(sourceDir, configName);
   const config: Record<string, any> = fs.existsSync(configPath)
     ? await readJson(configPath)
     : {};
-  let targets: Record<string, any> = {};
   let path = config.path || "";
   if (!prevConfig.outputDir)
     config.outputDir = resolve(config.outputDir || "dist");
@@ -68,14 +69,12 @@ const compileDirectory = async (
       await compileContent(sourcePath, config, targets);
     } else if (fs.lstatSync(sourcePath).isDirectory()) {
       // recursive call
-      const extra = await compileDirectory(sourcePath, options, config);
-      targets = { ...targets, ...extra };
+      await compileDirectory(sourcePath, options, config, targets);
     }
   }
   if (config.content) {
     if (config.paginate) await pagination(targets, config.outputDir);
   }
-  return targets;
 };
 
 const compileContent = async (
