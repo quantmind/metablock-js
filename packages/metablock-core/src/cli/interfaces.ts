@@ -63,7 +63,9 @@ export interface SpaceExtension {
 export interface Plugin {
   id: string;
   name: string;
+  description: string;
   schema: Record<string, any>;
+  extension_id?: string;
 }
 
 export interface BlockPlugin {

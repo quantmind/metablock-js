@@ -4,6 +4,7 @@ import Blocks from "./blocks";
 import { Space } from "./interfaces";
 import Orgs from "./orgs";
 import Photos from "./photos";
+import Plugins from "./plugins";
 import Spaces from "./spaces";
 import MbUser from "./user";
 
@@ -16,6 +17,7 @@ export class Metablock extends HttpClient {
   orgs: Orgs;
   blocks: Blocks;
   spaces: Spaces;
+  plugins: Plugins;
   photos: Photos;
 
   constructor(baseUrl: string, name = "", jwt = "", token = "") {
@@ -28,6 +30,7 @@ export class Metablock extends HttpClient {
     this.orgs = new Orgs(this);
     this.blocks = new Blocks(this);
     this.spaces = new Spaces(this);
+    this.plugins = new Plugins(this);
     this.photos = new Photos(this);
   }
 

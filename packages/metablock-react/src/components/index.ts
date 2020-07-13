@@ -1,4 +1,3 @@
-export { default as Button } from "./Button";
 export { default as Copyright } from "./Copyright";
 export * from "./Header";
 export { default as Image } from "./Image";
