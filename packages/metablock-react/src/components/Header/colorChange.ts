@@ -6,7 +6,8 @@ interface ChangeColorOnScroll {
 const headerColorChange = (
   changeColorOnScroll: ChangeColorOnScroll,
   classes: Record<string, string>,
-  color: string
+  color: string,
+  setColorChange: any
 ) => {
   return () => {
     const windowsScrollTop = window.pageYOffset;
@@ -17,6 +18,7 @@ const headerColorChange = (
       document.body
         .getElementsByTagName("header")[0]
         .classList.add(classes[changeColorOnScroll.color]);
+      setColorChange(true);
     } else {
       document.body
         .getElementsByTagName("header")[0]
@@ -24,6 +26,7 @@ const headerColorChange = (
       document.body
         .getElementsByTagName("header")[0]
         .classList.remove(classes[changeColorOnScroll.color]);
+      setColorChange(false);
     }
   };
 };

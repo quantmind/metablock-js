@@ -1,13 +1,12 @@
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { getBlock } from "@metablock/core";
+import { AuthStore } from "@metablock/store";
 import React from "react";
 import Link from "../components/Link";
-import { CheckBoxField, TextField, useForm } from "../forms";
+import { CheckBoxField, FormErrorMessage, TextField, useForm } from "../forms";
 import AppForm from "../views/AppForm";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,20 +23,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const DefaultHeader = () => (
+  <Typography component="h1" variant="h5" paragraph>
+    Sign in
+  </Typography>
+);
+
+interface SignInProps {
+  authStore: AuthStore;
+  onSuccess: React.FC;
+  Header?: React.FC;
+}
+
 const SignIn = (props: any) => {
   const classes = useStyles();
   const block = getBlock();
-  const { onSubmit } = props;
-  const form = useForm({ handleSubmit: onSubmit });
+  const { authStore, onSuccess, Header = DefaultHeader } = props;
+  const form = useForm({
+    handleSubmit: async (data: Record<string, any>) => {
+      await authStore.login(data);
+      const errors = authStore.errors;
+      if (errors) {
+        if (errors.status === 422) form.setErrors(errors.errors, true);
+        else form.setErrorMessage(errors.message || "Could not sign in");
+      } else form.setSuccess();
+    },
+  });
+
+  if (form.success) return onSuccess();
 
   return (
     <AppForm>
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        Sign in
-      </Typography>
+      <Header />
+      {form.errorMessage ? (
+        <FormErrorMessage paragraph>{form.errorMessage}</FormErrorMessage>
+      ) : null}
       <form className={classes.form} onSubmit={form.onSubmit()} noValidate>
         <TextField
           form={form}

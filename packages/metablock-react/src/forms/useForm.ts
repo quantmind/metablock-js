@@ -13,6 +13,7 @@ export class FormData {
   data: Record<string, any>;
   dirty: Record<string, any>;
   errors: Map<string, string>;
+  errorMessage: string;
   handleSubmit: (
     data: Record<string, any>,
     dirty: Record<string, any>
@@ -26,6 +27,7 @@ export class FormData {
     this.data = { ...defaultValues };
     this.dirty = {};
     this.errors = new Map();
+    this.errorMessage = "";
     this.success = false;
     this.handleSubmit = handleSubmit;
     this._render = render;
@@ -50,8 +52,14 @@ export class FormData {
   }
 
   setErrors(records: Array<any>, clear = true) {
-    if (clear) this.errors.clear();
+    if (clear) this.clearErrors();
     records.forEach((e) => this.errors.set(e.field, e.message));
+    this._render({});
+  }
+
+  setErrorMessage(message: string, clear = true) {
+    if (clear) this.clearErrors();
+    this.errorMessage = message;
     this._render({});
   }
 
@@ -63,6 +71,11 @@ export class FormData {
   helperText(name: string, text = "") {
     if (this.errors.has(name)) return this.errors.get(name);
     return text;
+  }
+
+  clearErrors() {
+    this.errorMessage = "";
+    this.errors.clear();
   }
 
   onSubmit() {

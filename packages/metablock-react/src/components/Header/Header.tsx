@@ -1,5 +1,4 @@
 import AppBar from "@material-ui/core/AppBar";
-import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Drawer from "@material-ui/core/Drawer";
@@ -12,12 +11,16 @@ import React from "react";
 import createColorChange from "./colorChange";
 import useStyles from "./headerStyles";
 
+interface BrandProps {
+  colorChange: boolean;
+}
+
 interface HeaderProps {
   color?: string;
   fixed?: boolean;
   absolute?: boolean;
   maxWidth?: any;
-  brandComponent?: React.ReactNode;
+  BrandComponent?: React.FC<BrandProps>;
   leftLinks?: React.ReactNode;
   rightLinks?: React.ReactNode;
   paddingTop?: number;
@@ -29,7 +32,6 @@ interface HeaderProps {
 }
 
 const Header = (props: HeaderProps) => {
-  const classes: Record<string, any> = useStyles();
   const {
     color = "transparent",
     maxWidth = "lg",
@@ -37,20 +39,24 @@ const Header = (props: HeaderProps) => {
     absolute,
     paddingTop = 0,
     paddingBottom = 0,
-    brandComponent = <Button className={classes.title}>brand</Button>,
     leftLinks,
     rightLinks,
     changeColorOnScroll,
   } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const classes: Record<string, any> = useStyles({ paddingTop, paddingBottom });
+  const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
+  const [colorChange, setColorChange] = React.useState<boolean>(false);
   const headerColorChange = changeColorOnScroll
-    ? createColorChange(changeColorOnScroll, classes, color)
+    ? createColorChange(changeColorOnScroll, classes, color, setColorChange)
     : null;
   const appBarClasses = clsx(classes.appBar, {
     [classes[color]]: color,
     [classes.absolute]: absolute,
     [classes.fixed]: fixed,
   });
+  const {
+    BrandComponent = () => <Button className={classes.title}>brand</Button>,
+  } = props;
 
   React.useEffect(() => {
     if (headerColorChange) {
@@ -67,53 +73,53 @@ const Header = (props: HeaderProps) => {
     setMobileOpen(!mobileOpen);
   };
 
+  const brand = <BrandComponent colorChange={colorChange} />;
+
   return (
-    <Box pt={paddingTop || 0} pb={paddingBottom || 0}>
-      <AppBar className={appBarClasses}>
-        <Container maxWidth={maxWidth}>
-          <Toolbar className={classes.container} disableGutters={true}>
-            {leftLinks !== undefined ? brandComponent : null}
-            <div className={classes.flex}>
-              {leftLinks !== undefined ? (
-                <Hidden smDown implementation="css">
-                  {leftLinks}
-                </Hidden>
-              ) : (
-                brandComponent
-              )}
-            </div>
-            <Hidden smDown implementation="css">
-              {rightLinks}
-            </Hidden>
-            <Hidden mdUp>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerToggle}
-              >
-                <Menu />
-              </IconButton>
-            </Hidden>
-          </Toolbar>
-          <Hidden mdUp implementation="js">
-            <Drawer
-              variant="temporary"
-              anchor={"right"}
-              open={mobileOpen}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              onClose={handleDrawerToggle}
-            >
-              <div className={classes.appResponsive}>
+    <AppBar className={appBarClasses}>
+      <Container maxWidth={maxWidth}>
+        <Toolbar className={classes.container} disableGutters={true}>
+          {leftLinks !== undefined ? brand : null}
+          <div className={classes.flex}>
+            {leftLinks !== undefined ? (
+              <Hidden smDown implementation="css">
                 {leftLinks}
-                {rightLinks}
-              </div>
-            </Drawer>
+              </Hidden>
+            ) : (
+              brand
+            )}
+          </div>
+          <Hidden smDown implementation="css">
+            {rightLinks}
           </Hidden>
-        </Container>
-      </AppBar>
-    </Box>
+          <Hidden mdUp>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerToggle}
+            >
+              <Menu />
+            </IconButton>
+          </Hidden>
+        </Toolbar>
+        <Hidden mdUp implementation="js">
+          <Drawer
+            variant="temporary"
+            anchor={"right"}
+            open={mobileOpen}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            onClose={handleDrawerToggle}
+          >
+            <div className={classes.appResponsive}>
+              {leftLinks}
+              {rightLinks}
+            </div>
+          </Drawer>
+        </Hidden>
+      </Container>
+    </AppBar>
   );
 };
 
