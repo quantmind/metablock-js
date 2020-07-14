@@ -25,7 +25,7 @@ class HttpResponse {
   }
 
   get links() {
-    const links = this.response.headers.get("Links");
+    const links = this.response.headers.get("Link");
     return links ? JSON.parse(links) : null;
   }
 }

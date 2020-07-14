@@ -1,6 +1,6 @@
 import HttpResponse from "../response";
 import HttpComponent from "./http";
-import { Block } from "./interfaces";
+import { Block, BlockPlugin } from "./interfaces";
 
 class Blocks extends HttpComponent {
   async getList(query: any): Promise<HttpResponse> {
@@ -44,12 +44,41 @@ class Blocks extends HttpComponent {
     });
   }
 
-  async plugins(block_id: string): Promise<any[]> {
-    const url = `${this.cli.apiUrl}/services/${block_id}/plugins`;
+  async config(block_id: string): Promise<any> {
+    const url = `${this.cli.apiUrl}/services/${block_id}/config`;
     const response = await this.cli.get(url, {
       headers: this.cli.withToken(),
     });
-    return response.data as any[];
+    return response.data as any;
+  }
+
+  async plugins(block_id: string, query?: any): Promise<HttpResponse> {
+    const url = this.urlQuery(
+      `${this.cli.apiUrl}/services/${block_id}/plugins`,
+      query
+    );
+    return await this.cli.get(url, {
+      headers: this.cli.withToken(),
+    });
+  }
+
+  async updatePlugin(block_id: string, body: any): Promise<BlockPlugin> {
+    const url = `${this.cli.apiUrl}/services/${block_id}/plugins`;
+    const response = await this.cli.post(url, {
+      body,
+      headers: this.cli.withToken(),
+    });
+    return response.data as BlockPlugin;
+  }
+
+  async deployments(block_id: string, query?: any): Promise<HttpResponse> {
+    const url = this.urlQuery(
+      `${this.cli.apiUrl}/services/${block_id}/deployments`,
+      query
+    );
+    return await this.cli.get(url, {
+      headers: this.cli.withToken(),
+    });
   }
 
   async ship(

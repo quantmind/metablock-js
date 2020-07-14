@@ -71,10 +71,20 @@ export interface Plugin {
 export interface BlockPlugin {
   id: string;
   name: string;
+  description?: string;
+  author?: string;
   config: Record<string, any>;
 }
 
 export interface ApiToken {
   id: string;
+  created: string;
+}
+
+export interface Deployment {
+  id: string;
+  name: string;
+  service_id: string;
+  env: string;
   created: string;
 }
