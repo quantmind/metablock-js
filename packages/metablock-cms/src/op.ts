@@ -1,4 +1,4 @@
-import { assetUrl, bundleUrl, liveUrl, getBlock } from "@metablock/core";
+import { assetUrl, bundleUrl, getBlock, liveUrl } from "@metablock/core";
 import { timeFormat as d3TimeFormat } from "d3-time-format";
 import { CmsListData } from "./interfaces";
 
@@ -46,14 +46,11 @@ export const dateFormat = () => {
 const renderTypes = new Set([String, Array]);
 
 export const render = (entry: Record<string, any>): Record<string, any> => {
+  if (entry._cms_rendered) return entry;
   return Object.keys(entry).reduce(
     (newEntry: Record<string, any>, key: string) => {
       let value = entry[key];
-      if (
-        value &&
-        typeof entry.date === "string" &&
-        renderTypes.has(value.constructor)
-      ) {
+      if (value && renderTypes.has(value.constructor)) {
         let single = false;
         if (value.constructor !== Array) {
           value = [value];
@@ -70,6 +67,6 @@ export const render = (entry: Record<string, any>): Record<string, any> => {
       newEntry[key] = value;
       return newEntry;
     },
-    {}
+    { _cms_rendered: true }
   );
 };

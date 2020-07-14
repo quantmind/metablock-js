@@ -1,6 +1,6 @@
 {
   "name": "@metablock/cms",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Metablock lightweight CMS",
   "main": "dist/index.js",
   "license": "ISC",
@@ -19,8 +19,8 @@
     "watch": "rollup -c -w"
   },
   "dependencies": {
-    "@metablock/core": "0.3.4",
-    "@metablock/react": "0.3.4",
+    "@metablock/core": "0.3.5",
+    "@metablock/react": "0.3.5",
     "d3-time-format": "^2.2.3",
     "mobx": "^5.15.4"
   },
