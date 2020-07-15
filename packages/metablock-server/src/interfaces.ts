@@ -1,6 +1,7 @@
 import { HttpClient, HttpResponse } from "@metablock/core";
 
 export interface Html {
+  head: Array<string>;
   meta: Array<string>;
   css: Array<string>;
   scripts: Array<string>;
@@ -28,3 +29,10 @@ export interface Services {
 
   login: (body: any) => Promise<HttpResponse>;
 }
+
+export const createContext = (web?: Record<string, any>): Context => {
+  return {
+    web: web || {},
+    html: { head: [], meta: [], afterBody: [], css: [], scripts: [] },
+  } as Context;
+};
