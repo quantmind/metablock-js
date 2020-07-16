@@ -112,7 +112,7 @@ const SignUp = (props: any) => {
         </Button>
         <Grid container justify="flex-end">
           <Grid item>
-            <Link to={block.login_url} variant="body2">
+            <Link to={block.plugins.account.login_url} variant="body2">
               Already have an account? Sign in
             </Link>
           </Grid>

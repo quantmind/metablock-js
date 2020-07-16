@@ -1,4 +1,4 @@
-export { default as getBlock } from "./block";
+export { default as getBlock, WebBlock } from "./block";
 export * from "./cli";
 export { default as HttpClient } from "./http";
 export * from "./logger";

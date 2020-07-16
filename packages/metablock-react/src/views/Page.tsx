@@ -1,13 +1,13 @@
-import { Block, getBlock } from "@metablock/core";
+import { WebBlock, getBlock } from "@metablock/core";
 import React from "react";
 import { Helmet } from "react-helmet";
 
-function buildTitle(block: Block, text: string, prefix: boolean) {
+function buildTitle(block: WebBlock, text: string, prefix: boolean) {
   if (text) return prefix ? `${block.title} - ${text}` : text;
   else return block.title;
 }
 
-function buildDescription(block: Block, text: string) {
+function buildDescription(block: WebBlock, text: string) {
   if (text && text.length > 50) return text;
   else if (text) return `${text}. ${block.description}`;
   else return block.description;

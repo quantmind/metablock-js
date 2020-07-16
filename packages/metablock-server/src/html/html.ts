@@ -1,5 +1,6 @@
 import btoa from "btoa";
 import { Request } from "express";
+import { render } from "mustache";
 import { Context } from "../interfaces";
 
 export default (ctx: Context, req?: Request) => {
@@ -17,13 +18,12 @@ export default (ctx: Context, req?: Request) => {
     `<title>${title}</title>`,
     `<meta name="description" content="${description}">`,
     ...ctx.html.head,
-    ...ctx.html.meta,
-    ...ctx.html.css,
     `<meta name="mb:state" content="${btoa(init)}">`,
   ];
   const afterBody = scripts.concat(ctx.html.afterBody);
 
-  return `<!doctype html>
+  return render(
+    `<!doctype html>
 <html>
 <head>
   ${head.join("\n")}
@@ -32,5 +32,7 @@ export default (ctx: Context, req?: Request) => {
   <div id="__metablock"></div>
 </body>
 ${afterBody.join("\n")}
-</html>`;
+</html>`,
+    ctx.web
+  );
 };

@@ -2,8 +2,6 @@ import { HttpClient, HttpResponse } from "@metablock/core";
 
 export interface Html {
   head: Array<string>;
-  meta: Array<string>;
-  css: Array<string>;
   scripts: Array<string>;
   afterBody: Array<string>;
 }
