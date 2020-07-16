@@ -1,6 +1,7 @@
 import HttpClient from "../http";
 import MbAuth from "./auth";
 import Blocks from "./blocks";
+import Extensions from "./extensions";
 import { Space } from "./interfaces";
 import Orgs from "./orgs";
 import Photos from "./photos";
@@ -17,6 +18,7 @@ export class Metablock extends HttpClient {
   orgs: Orgs;
   blocks: Blocks;
   spaces: Spaces;
+  extensions: Extensions;
   plugins: Plugins;
   photos: Photos;
 
@@ -31,6 +33,7 @@ export class Metablock extends HttpClient {
     this.blocks = new Blocks(this);
     this.spaces = new Spaces(this);
     this.plugins = new Plugins(this);
+    this.extensions = new Extensions(this);
     this.photos = new Photos(this);
   }
 

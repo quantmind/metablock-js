@@ -1,6 +1,6 @@
 import HttpResponse from "../response";
 import HttpComponent from "./http";
-import { Space } from "./interfaces";
+import { Space, SpaceExtension } from "./interfaces";
 
 class Spaces extends HttpComponent {
   async getList(query: any): Promise<HttpResponse> {
@@ -52,6 +52,25 @@ class Spaces extends HttpComponent {
     return await this.cli.get(url, {
       headers: this.cli.withToken(),
     });
+  }
+
+  async getExtensions(space_id: string, query?: any): Promise<HttpResponse> {
+    const url = this.urlQuery(
+      `${this.cli.apiUrl}/spaces/${space_id}/extensions`,
+      query
+    );
+    return await this.cli.get(url, {
+      headers: this.cli.withToken(),
+    });
+  }
+
+  async updateExtension(block_id: string, body: any): Promise<SpaceExtension> {
+    const url = `${this.cli.apiUrl}/spaces/${block_id}/extensions`;
+    const response = await this.cli.post(url, {
+      body,
+      headers: this.cli.withToken(),
+    });
+    return response.data as SpaceExtension;
   }
 }
 
