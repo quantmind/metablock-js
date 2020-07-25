@@ -12,7 +12,10 @@ export default (services: Services) => {
   app.post(
     "/login",
     safe(async (req: Request) => {
-      return services.login(req.body);
+      const { body } = req.body;
+      return await services.cli.post(`${services.blockUrl}/.api/login`, {
+        body,
+      });
     })
   );
 

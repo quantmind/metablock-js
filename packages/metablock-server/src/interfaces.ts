@@ -24,8 +24,6 @@ export interface Services {
   getConfig: (req: any) => Promise<Context>;
 
   getPhoto: (key: string) => Promise<HttpResponse>;
-
-  login: (body: any) => Promise<HttpResponse>;
 }
 
 export const createContext = (web?: Record<string, any>): Context => {

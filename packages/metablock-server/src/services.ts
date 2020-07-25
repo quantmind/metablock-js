@@ -35,10 +35,6 @@ class DevServices implements Services {
   async getPhoto(key: string): Promise<HttpResponse> {
     return await this.cli.get(`${this.blockUrl}/.api/photo/${key}`);
   }
-
-  async login(body: any): Promise<HttpResponse> {
-    return await this.cli.post(`${this.blockUrl}/.api/login`, { body });
-  }
 }
 
 export default DevServices;
