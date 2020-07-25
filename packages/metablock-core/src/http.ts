@@ -33,6 +33,10 @@ class HttpClient implements HttpClientInterface {
     return await this.request(url, { ...options, method: "GET" });
   }
 
+  async head(url: string, options?: any): Promise<HttpResponse> {
+    return await this.request(url, { ...options, method: "HEAD" });
+  }
+
   async patch(url: string, options?: any): Promise<HttpResponse> {
     return await this.request(url, { ...options, method: "PATCH" });
   }

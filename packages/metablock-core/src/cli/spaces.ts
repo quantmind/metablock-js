@@ -64,8 +64,8 @@ class Spaces extends HttpComponent {
     });
   }
 
-  async updateExtension(block_id: string, body: any): Promise<SpaceExtension> {
-    const url = `${this.cli.apiUrl}/spaces/${block_id}/extensions`;
+  async updateExtension(space_id: string, body: any): Promise<SpaceExtension> {
+    const url = `${this.cli.apiUrl}/spaces/${space_id}/extensions`;
     const response = await this.cli.post(url, {
       body,
       headers: this.cli.withToken(),
