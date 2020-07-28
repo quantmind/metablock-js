@@ -1,4 +1,4 @@
-import HttpComponent from "./http";
+import HttpComponent from "./httpComponent";
 import HttpResponse from "../response";
 
 export interface CurrentUser {

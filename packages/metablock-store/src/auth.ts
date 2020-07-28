@@ -34,6 +34,20 @@ class AuthStore {
   }
 
   @action
+  async setJwt(jwt: string) {
+    this.inProgress = true;
+    this.errors = undefined;
+    try {
+      this.commonStore.setToken(jwt);
+      await this.userStore.getUser();
+    } catch (errors) {
+      this.errors = errors;
+    } finally {
+      this.inProgress = false;
+    }
+  }
+
+  @action
   async logout() {
     await this.cli.user.logout();
     this.userStore.forgetUser();

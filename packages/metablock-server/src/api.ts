@@ -19,6 +19,13 @@ export default (services: Services) => {
     })
   );
 
+  app.get("/integration/urls", async (req: Request, res) => {
+    const response = await services.cli.get(
+      `${services.blockUrl}/.api/integration/urls`
+    );
+    res.json(response.data);
+  });
+
   app.get("/config", async (req, res) => {
     const ctx: Record<string, any> = await services.getConfig(req);
     res.json({ ...ctx, env: { blockUrl: services.blockUrl } });

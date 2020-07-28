@@ -1,5 +1,5 @@
 import HttpResponse from "../response";
-import HttpComponent from "./http";
+import HttpComponent from "./httpComponent";
 import { Plugin } from "./interfaces";
 
 class Plugins extends HttpComponent {

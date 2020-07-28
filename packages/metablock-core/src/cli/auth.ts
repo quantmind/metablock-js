@@ -1,4 +1,4 @@
-import HttpComponent from "./http";
+import HttpComponent from "./httpComponent";
 
 class MbAuth extends HttpComponent {
   async login(body: any): Promise<string> {

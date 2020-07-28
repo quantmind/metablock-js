@@ -1,4 +1,4 @@
-import HttpComponent from "./http";
+import HttpComponent from "./httpComponent";
 
 export interface Org {
   id: string;

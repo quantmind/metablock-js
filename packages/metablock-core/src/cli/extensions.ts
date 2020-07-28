@@ -1,5 +1,5 @@
 import HttpResponse from "../response";
-import HttpComponent from "./http";
+import HttpComponent from "./httpComponent";
 import { Extension } from "./interfaces";
 
 class Extensions extends HttpComponent {

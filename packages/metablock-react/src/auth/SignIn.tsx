@@ -1,13 +1,18 @@
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { getBlock } from "@metablock/core";
 import { AuthStore } from "@metablock/store";
+import { parseUrl, stringifyUrl } from "query-string";
 import React from "react";
 import Link from "../components/Link";
 import { CheckBoxField, FormErrorMessage, TextField, useForm } from "../forms";
+import { useFetch } from "../hooks";
 import AppForm from "../views/AppForm";
+import NotFound from "../views/NotFound";
+import Icons from "./icons";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -20,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  provider: {
+    margin: theme.spacing(0, 0, 2),
   },
 }));
 
@@ -38,7 +46,10 @@ interface SignInProps {
 const SignIn = (props: any) => {
   const classes = useStyles();
   const block = getBlock();
+  const account = block.plugins.account;
   const { authStore, onSuccess, Header = DefaultHeader } = props;
+  const loc = parseUrl(window.location.href);
+  const { jwt } = loc.query;
   const form = useForm({
     handleSubmit: async (data: Record<string, any>) => {
       await authStore.login(data);
@@ -49,8 +60,28 @@ const SignIn = (props: any) => {
       } else form.setSuccess();
     },
   });
-
+  const integrationUrls = useFetch(async () => {
+    if (!account) return;
+    if (jwt) {
+      await authStore.setJwt(jwt);
+      const errors = authStore.errors;
+      if (errors) form.setErrorMessage(errors.message || "Could not sign in");
+      else {
+        form.setSuccess();
+        return;
+      }
+    }
+    const response = await authStore.cli.get(
+      stringifyUrl({
+        url: "/.api/integration/urls",
+        query: { reason: "signin", redirect: loc.url },
+      })
+    );
+    return response.data;
+  });
+  if (!account) return <NotFound />;
   if (form.success) return onSuccess();
+  if (!integrationUrls) return null;
 
   return (
     <AppForm>
@@ -58,63 +89,82 @@ const SignIn = (props: any) => {
       {form.errorMessage ? (
         <FormErrorMessage paragraph>{form.errorMessage}</FormErrorMessage>
       ) : null}
-      <form className={classes.form} onSubmit={form.onSubmit()} noValidate>
-        <TextField
-          form={form}
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-        <TextField
-          form={form}
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-        <CheckBoxField
-          form={form}
-          fullWidth
-          margin="normal"
-          name="remember"
-          color="primary"
-          label="Remember me"
-        />
+      {account.password ? (
+        <form className={classes.form} onSubmit={form.onSubmit()} noValidate>
+          <TextField
+            form={form}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+          />
+          <TextField
+            form={form}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <CheckBoxField
+            form={form}
+            fullWidth
+            margin="normal"
+            name="remember"
+            color="primary"
+            label="Remember me"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign In
+          </Button>
+        </form>
+      ) : null}
+      {integrationUrls.map((d: any) => (
         <Button
-          type="submit"
-          fullWidth
           variant="contained"
           color="primary"
-          className={classes.submit}
+          fullWidth
+          key={d.name}
+          startIcon={Icons[d.name]}
+          className={classes.provider}
+          href={d.url}
         >
-          Sign In
+          Sign in with {d.name}
         </Button>
-        <Grid container>
-          <Grid item xs>
-            <Link
-              to={block.plugins.account.forgot_password_url}
-              variant="body2"
-            >
-              Forgot password?
-            </Link>
+      ))}
+      {account.password ? (
+        <Box pt={2}>
+          <Grid container>
+            <Grid item xs>
+              <Link
+                to={block.plugins.account.forgot_password_url}
+                variant="body2"
+              >
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link to={block.plugins.account.signup_url} variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Link to={block.plugins.account.signup_url} variant="body2">
-              {"Don't have an account? Sign Up"}
-            </Link>
-          </Grid>
-        </Grid>
-      </form>
+        </Box>
+      ) : null}
     </AppForm>
   );
 };

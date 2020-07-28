@@ -1,5 +1,5 @@
 import HttpResponse from "../response";
-import HttpComponent from "./http";
+import HttpComponent from "./httpComponent";
 import { Block, BlockPlugin } from "./interfaces";
 
 class Blocks extends HttpComponent {

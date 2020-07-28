@@ -1,4 +1,4 @@
-import HttpComponent from "./http";
+import HttpComponent from "./httpComponent";
 
 class Photos extends HttpComponent {
   async get(photoId: string): Promise<Record<string, any>> {
