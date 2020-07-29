@@ -11,7 +11,7 @@ import { CheckBoxField, FormErrorMessage, TextField, useForm } from "../forms";
 import { useFetch } from "../hooks";
 import AppForm from "../views/AppForm";
 import NotFound from "../views/NotFound";
-import Icons from "./icons";
+import Icons from "./Icons";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
