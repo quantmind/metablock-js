@@ -1,74 +1,59 @@
-import debug from "debug";
-// todo: adding properties to a map is a slopery slope and should be avoided. Not very 'TypeScripty', refactor when possible.
-
-interface Config extends ConfigBase {
-  name: string;
+export interface LoggerOptions {
+  name?: string;
+  level?: string;
 }
 
-interface ConfigBase {
-  color: number;
-  level: number;
-}
-
-interface Level extends Map<LevelName, Config> {
-  add: (name: LevelName, config: ConfigBase) => Level;
-}
-
-const level_names = ["debug", "info", "warning", "error", "critical"] as const;
-
-type LevelName = typeof level_names[number];
-
-const levels = new Map() as Level;
-
-levels.add = function (name, configBase) {
-  const config = {
-    name,
-    ...configBase,
-  };
-  this.set(name, config);
-  return this;
+export const logLevels: Record<string, number> = {
+  debug: 10,
+  info: 20,
+  warn: 30,
+  error: 40,
+  fatal: 50,
 };
 
-levels
-  .add("debug", {
-    color: 81,
-    level: 10,
-  })
-  .add("info", {
-    color: 76,
-    level: 20,
-  })
-  .add("warning", {
-    color: 149,
-    level: 30,
-  })
-  .add("error", {
-    color: 161,
-    level: 40,
-  })
-  .add("critical", {
-    color: 38,
-    level: 50,
-  });
+const defaultLogger = (options?: LoggerOptions) => {
+  options = options || {};
+  const loggerName = options.name || "";
+  const loggerLevel = options.level || "info";
+  const levelNumber = logLevels[loggerLevel] || logLevels.info;
+  return {
+    levelNumber,
+    debug(...msg: any) {
+      if (levelNumber <= logLevels.debug) console.debug(loggerName, ...msg);
+    },
+    info(...msg: any) {
+      if (levelNumber <= logLevels.info) console.info(loggerName, ...msg);
+    },
+    warn(...msg: any) {
+      if (levelNumber <= logLevels.warn) console.warn(loggerName, ...msg);
+    },
+    error(...msg: any) {
+      if (levelNumber <= logLevels.error) console.error(loggerName, ...msg);
+    },
+    fatal(...msg: any) {
+      if (levelNumber <= logLevels.fatal) console.error(loggerName, ...msg);
+    },
+    isLevelEnabled(level: string): boolean {
+      const num = logLevels[level];
+      return num ? num >= levelNumber : false;
+    },
+    child(name: string) {
+      const newName = loggerName ? `${loggerName}.${name}` : name;
+      return logging.loggerFactory({ name: newName });
+    },
+  };
+};
 
-export const getLogger = (
-  name: LevelName | string,
-  level?: LevelName | string
-) => {
-  const levelConfig =
-    levels.get(level as LevelName) || (levels.get("info") as Config);
+const logging = {
+  loggerFactory: defaultLogger,
+};
 
-  const logger: { [key: string]: debug.Debugger } = {};
-  let db;
+export const setLoggerFactory = (loggerFactory: any) => {
+  logging.loggerFactory = loggerFactory;
+};
 
-  levels.forEach((l) => {
-    db = debug(`${name} - ${l.name} -`);
-    db.color = String(l.color);
-    db.enabled = l.level >= levelConfig.level;
-    logger[l.name] = db;
-  });
-
-  return logger as { [key in LevelName]: debug.Debugger };
+export const getLogger = (options?: any) => {
+  return logging.loggerFactory(options);
 };
 
 export type Logger = ReturnType<typeof getLogger>;

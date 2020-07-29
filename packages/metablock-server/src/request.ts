@@ -10,15 +10,17 @@ export default (app: Express, logger_?: Logger) => {
     // log when response finished
     onFinished(res, function () {
       const status = res.statusCode;
-      let level = logger.info;
-      if (status == 404) level = logger.warning;
-      else if (status >= 400) level = logger.error;
+      let level = "info";
+      if (status == 404) level = "warn";
+      else if (status >= 400) level = "error";
 
-      if (level.enabled && !req.logged)
-        level(
-          `${req.method} ${req.originalUrl} - ${req.get(
-            "user-agent"
-          )} - ${status}`
+      if (logger.isLevelEnabled(level) && !req.logged)
+        // @ts-ignore
+        logger[level](
+          req.method,
+          req.originalUrl,
+          req.get("user-agent"),
+          status
         );
     });
 

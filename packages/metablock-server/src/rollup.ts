@@ -26,7 +26,7 @@ const rollupServer = (blockUrl: string, options: any) => {
   seoMiddleware(app, services);
   htmlMiddleware(app, services, { ...opts, plugins: ssrPlugins });
   server = app.listen({ port, host }, () => {
-    logger.warning(`started devserver server on port ${port}`);
+    logger.warn(`started devserver server on port ${port}`);
   });
 
   return {

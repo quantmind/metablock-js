@@ -1,5 +1,5 @@
-import { stringifyUrl } from "query-string";
 import { HttpClientInterface } from "../http";
+import urlQuery from "../url";
 
 interface HttpClient extends HttpClientInterface {
   apiUrl: string;
@@ -15,7 +15,7 @@ class HttpComponent {
   }
 
   urlQuery(url: string, query: any): string {
-    return stringifyUrl({ url, query });
+    return urlQuery(url, query);
   }
 }
 

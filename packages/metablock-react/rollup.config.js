@@ -6,8 +6,6 @@ const globals = {
   "react-dom": "ReactDOM",
   "react-router-dom": "ReactRouterDOM",
   "react-helmet": "ReactHelmet",
-  "@metablock/core": "metablock",
-  "@metablock/store": "metablock",
 };
 const externals = ["tslib", "clsx", "history"];
 

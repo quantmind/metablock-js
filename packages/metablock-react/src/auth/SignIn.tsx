@@ -3,9 +3,8 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { getBlock } from "@metablock/core";
+import { getBlock, urlQuery } from "@metablock/core";
 import { AuthStore } from "@metablock/store";
-import { parseUrl, stringifyUrl } from "query-string";
 import React from "react";
 import Link from "../components/Link";
 import { CheckBoxField, FormErrorMessage, TextField, useForm } from "../forms";
@@ -48,8 +47,8 @@ const SignIn = (props: any) => {
   const block = getBlock();
   const account = block.plugins.account;
   const { authStore, onSuccess, Header = DefaultHeader } = props;
-  const loc = parseUrl(window.location.href);
-  const { jwt } = loc.query;
+  const loc = new URL(window.location.href);
+  const jwt = loc.searchParams.get("jwt");
   const form = useForm({
     handleSubmit: async (data: Record<string, any>) => {
       await authStore.login(data);
@@ -72,9 +71,9 @@ const SignIn = (props: any) => {
       }
     }
     const response = await authStore.cli.get(
-      stringifyUrl({
-        url: "/.api/integration/urls",
-        query: { reason: "signin", redirect: loc.url },
+      urlQuery("/.api/integration/urls", {
+        reason: "signin",
+        redirect: `${loc.origin}${loc.pathname}`,
       })
     );
     return response.data;
