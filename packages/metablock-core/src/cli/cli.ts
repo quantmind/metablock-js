@@ -9,6 +9,13 @@ import Plugins from "./plugins";
 import Spaces from "./spaces";
 import MbUser from "./user";
 
+export interface MetablockOptions {
+  baseUrl?: string;
+  name?: string;
+  jwt?: string;
+  token?: string;
+}
+
 export class Metablock extends HttpClient {
   baseUrl: string;
   jwt: string;
@@ -22,11 +29,11 @@ export class Metablock extends HttpClient {
   plugins: Plugins;
   photos: Photos;
 
-  constructor(baseUrl: string, name = "", jwt = "", token = "") {
-    super(name || "metablock");
-    this.baseUrl = baseUrl;
-    this.jwt = jwt;
-    this.token = token;
+  constructor(options?: MetablockOptions) {
+    super(options?.name || "metablock");
+    this.baseUrl = options?.baseUrl || "https://api.metablock.io";
+    this.jwt = options?.jwt || "";
+    this.token = options?.token || "";
     this.auth = new MbAuth(this);
     this.user = new MbUser(this);
     this.orgs = new Orgs(this);

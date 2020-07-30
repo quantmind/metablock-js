@@ -2,10 +2,6 @@ import { terser } from "rollup-plugin-terser";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
-const globals = {
-  tslib: "tslib",
-};
-
 const banner = `// ${pkg.name} v${
   pkg.version
 } Copyright ${new Date().getFullYear()} ${pkg.author} - ${pkg.homepage}`;
@@ -28,7 +24,6 @@ export default {
     name: "metablock",
     sourcemap: true,
     banner,
-    globals,
   },
   external,
   plugins,

@@ -84,6 +84,7 @@
     "publish-all": "export TS_NODE_PROJECT=./scripts/tsconfig.json && ts-node ./scripts/cli.ts publish",
     "cli:dev": "yarn workspace metablock-cli dev",
     "test": "jest -c --coverage --forceExit --detectOpenHandles",
+    "test:watch": "jest -c --coverage --watch",
     "build": "yarn build:core && yarn build:store && yarn build:cli && yarn build:server && yarn build:react && yarn build:cms && yarn build:notebook",
     "build:cli": "yarn workspace @metablock/cli build",
     "build:core": "yarn workspace @metablock/core build",

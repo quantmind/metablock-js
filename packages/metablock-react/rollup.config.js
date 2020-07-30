@@ -2,7 +2,7 @@ import autoExternal from "rollup-plugin-auto-external";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
-//const externals = ["tslib", "clsx", "history"];
+const external = ["tslib"];
 
 const plugins = [
   autoExternal(),
@@ -30,6 +30,7 @@ export default [
       name: "MetablockReact",
       sourcemap: true,
     },
+    external,
     plugins,
     watch: {
       clearScreen: false,
@@ -44,6 +45,7 @@ export default [
       name: "MetablockReact",
       sourcemap: true,
     },
+    external,
     plugins,
     watch: {
       clearScreen: false,

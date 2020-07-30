@@ -1,17 +1,12 @@
-import resolve from "@rollup/plugin-node-resolve";
+import autoExternal from "rollup-plugin-auto-external";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
-const globals = {
-  mobx: "mobx",
-  "@metablock/core": "metablock",
-  tslib: "tslib",
-};
-
-const external = Object.keys(globals);
+const globals = { "@metablock/core": "metablock" };
+const external = ["tslib"];
 
 const plugins = [
-  resolve(),
+  autoExternal(),
   typescript({
     typescript: require("typescript"),
   }),
@@ -23,6 +18,7 @@ export default {
     file: pkg.main,
     format: "umd",
     name: "metablock",
+    extend: true,
     sourcemap: true,
     globals,
   },
