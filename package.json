@@ -1,8 +1,9 @@
 {
-  "version": "0.4.3",
+  "version": "0.4.4",
   "private": true,
   "license": "ISC",
   "name": "metablock",
+  "homepage": "https://metablock.io",
   "repository": {
     "type": "git",
     "url": "https://github.com/quantmind/metablock-js.git"
@@ -60,7 +61,10 @@
     "prettier": "^2.0.5",
     "progress-estimator": "^0.3.0",
     "rollup": "^2.23.0",
+    "rollup-plugin-auto-external": "^2.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.3",
     "rollup-plugin-sourcemaps": "^0.6.2",
+    "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-typescript2": "^0.27.1",
     "sinon": "^9.0.2",
     "source-map-loader": "^1.0.1",

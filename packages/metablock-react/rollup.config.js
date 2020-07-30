@@ -1,17 +1,11 @@
+import autoExternal from "rollup-plugin-auto-external";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
-const globals = {
-  react: "React",
-  "react-dom": "ReactDOM",
-  "react-router-dom": "ReactRouterDOM",
-  "react-helmet": "ReactHelmet",
-};
-const externals = ["tslib", "clsx", "history"];
-
-const external = Object.keys(globals).concat(externals);
+//const externals = ["tslib", "clsx", "history"];
 
 const plugins = [
+  autoExternal(),
   typescript({
     typescript: require("typescript"),
   }),
@@ -35,9 +29,7 @@ export default [
       format: "cjs",
       name: "MetablockReact",
       sourcemap: true,
-      globals,
     },
-    external,
     plugins,
     watch: {
       clearScreen: false,
@@ -51,9 +43,7 @@ export default [
       format: "esm",
       name: "MetablockReact",
       sourcemap: true,
-      globals,
     },
-    external,
     plugins,
     watch: {
       clearScreen: false,

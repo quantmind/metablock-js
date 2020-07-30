@@ -23,6 +23,7 @@ export const updateVersion = async () => {
     dirs.map(async (dir: string) => {
       const packagePath = join(getPackagePath(dir), "package.json");
       const packageJSON = await readJson(packagePath);
+      packageJSON.homepage = main.homepage;
       packageJSON.version = main.version;
       packageJSON.license = main.license;
       const { dependencies } = packageJSON;

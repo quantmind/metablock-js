@@ -1,6 +1,6 @@
 {
   "name": "@metablock/notebook",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "private": false,
   "description": "Metablock Notebook",
   "main": "dist/index.js",
@@ -24,5 +24,6 @@
   },
   "devDependencies": {
     "@types/d3-require": "^1.2.0"
-  }
+  },
+  "homepage": "https://metablock.io"
 }

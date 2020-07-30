@@ -1,21 +1,24 @@
-import resolve from "@rollup/plugin-node-resolve";
+import { terser } from "rollup-plugin-terser";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
 const globals = {
-  debug: "debug",
-  "query-string": "queryString",
   tslib: "tslib",
 };
 
-const external = Object.keys(globals);
+const banner = `// ${pkg.name} v${
+  pkg.version
+} Copyright ${new Date().getFullYear()} ${pkg.author} - ${pkg.homepage}`;
+const external = ["tslib"];
 
 const plugins = [
-  resolve(),
   typescript({
     typescript: require("typescript"),
   }),
 ];
+
+if (process.env.NODE_ENV === "production")
+  plugins.push(terser({ output: { preamble: banner } }));
 
 export default {
   input: "src/index.ts",
@@ -24,6 +27,7 @@ export default {
     format: "umd",
     name: "metablock",
     sourcemap: true,
+    banner,
     globals,
   },
   external,

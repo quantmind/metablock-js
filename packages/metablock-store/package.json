@@ -1,6 +1,6 @@
 {
   "name": "@metablock/store",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Metablock MobX store",
   "main": "dist/index.js",
   "repository": {
@@ -16,11 +16,12 @@
     "store"
   ],
   "dependencies": {
-    "@metablock/core": "0.4.3",
+    "@metablock/core": "0.4.4",
     "mobx": "^5.15.4"
   },
   "scripts": {
     "build": "export NODE_ENV=production && rollup -c",
     "watch": "rollup -c -w"
-  }
+  },
+  "homepage": "https://metablock.io"
 }

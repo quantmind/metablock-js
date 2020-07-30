@@ -1,6 +1,6 @@
 {
   "name": "@metablock/cms",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Metablock lightweight CMS",
   "main": "dist/index.js",
   "license": "ISC",
@@ -19,8 +19,8 @@
     "watch": "rollup -c -w"
   },
   "dependencies": {
-    "@metablock/core": "0.4.3",
-    "@metablock/react": "0.4.3",
+    "@metablock/core": "0.4.4",
+    "@metablock/react": "0.4.4",
     "d3-time-format": "^2.2.3",
     "mobx": "^5.15.4"
   },
@@ -29,5 +29,6 @@
     "@types/react-syntax-highlighter": "^11.0.4",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4"
-  }
+  },
+  "homepage": "https://metablock.io"
 }
