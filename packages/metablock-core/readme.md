@@ -8,10 +8,28 @@ Core tooling for metablock applications. It includes a client for [metablock Res
 import { Metablock } from "@metablock/core";
 
 cli = new Metablock({ token: "" });
-cli.users.getUser();
+cli.user.getUser();
 ```
 
 ## Tools
+
+### Logger
+
+A simple logger utility for node and the browser
+
+```javascript
+import { getLogger } from "@metablock/core";
+
+const logger = getLogger();
+logger.debug("Hi!");
+logger.info("Hi!"); // Hi!
+
+const logger2 = getLogger({ level: "debug" });
+logger2.debug("Hi!"); // Hi!
+
+const child = logger.child("test");
+child.info("Hi!"); // test Hi!
+```
 
 ### compileOptions(text)
 

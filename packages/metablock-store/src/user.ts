@@ -1,6 +1,6 @@
 import {
   ApiToken,
-  CurrentUser,
+  User,
   HttpResponse,
   Paginated,
   paginatedResponse,
@@ -8,17 +8,9 @@ import {
 import { action, observable } from "mobx";
 import CommonStore from "./common";
 
-export interface User {
-  current?: CurrentUser;
-  loading: boolean;
-  updating: boolean;
-  updatingErrors: boolean;
-  getUser: () => Promise<void>;
-}
-
 class UserStore {
   commonStore: CommonStore;
-  @observable current?: CurrentUser;
+  @observable current?: User;
   @observable tokens?: Paginated<ApiToken>;
   @observable loading = false;
   @observable updating = false;

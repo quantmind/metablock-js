@@ -1,11 +1,15 @@
-import HttpComponent from "./httpComponent";
 import HttpResponse from "../response";
+import HttpComponent from "./httpComponent";
 
-export interface CurrentUser {
+export interface User {
+  id: string;
   first_name: string;
   last_name: string;
   username: string;
   email: string;
+  created: string;
+  status: string;
+  additional_info: Record<string, any>;
 }
 
 export interface UserOrg {
@@ -15,19 +19,19 @@ export interface UserOrg {
 }
 
 class MbUser extends HttpComponent {
-  async getUser(): Promise<CurrentUser> {
+  async getUser(): Promise<User> {
     const response = await this.cli.get(`${this.cli.apiUrl}/user`, {
       headers: this.cli.withToken(),
     });
-    return response.data as CurrentUser;
+    return response.data as User;
   }
 
-  async update(body: any): Promise<CurrentUser> {
+  async update(body: any): Promise<User> {
     const response = await this.cli.patch(`${this.cli.apiUrl}/user`, {
       body,
       headers: this.cli.withToken(),
     });
-    return response.data as CurrentUser;
+    return response.data as User;
   }
 
   async getOrgs(): Promise<UserOrg[]> {
