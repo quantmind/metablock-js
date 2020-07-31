@@ -1,14 +1,16 @@
-import resolve from "@rollup/plugin-node-resolve";
+import autoExternal from "rollup-plugin-auto-external";
 import sourcemaps from "rollup-plugin-sourcemaps";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
+
+console.info("Build @metablock/notebook");
 
 const globals = { tslib: "tslib" };
 
 const external = Object.keys(globals);
 
 const plugins = [
-  resolve(),
+  autoExternal(),
   sourcemaps(),
   typescript({
     typescript: require("typescript"),

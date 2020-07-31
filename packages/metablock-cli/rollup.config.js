@@ -1,12 +1,14 @@
-import resolve from "@rollup/plugin-node-resolve";
+import autoExternal from "rollup-plugin-auto-external";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
-const globals = {};
-const external = ["tslib"].concat(Object.keys(pkg.dependencies));
+console.info("Build @metablock/cli");
+
+const globals = { tslib: "tslib" };
+const external = ["tslib"];
 
 const plugins = [
-  resolve(),
+  autoExternal(),
   typescript({
     typescript: require("typescript"),
   }),

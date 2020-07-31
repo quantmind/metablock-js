@@ -4,6 +4,13 @@ Core tooling for metablock applications. It includes a client for [metablock Res
 
 ## Metablock Client
 
+```javascript
+import { Metablock } from "@metablock/core";
+
+cli = new Metablock({ token: "" });
+cli.users.getUser();
+```
+
 ## Tools
 
 ### compileOptions(text)

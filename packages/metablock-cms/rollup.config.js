@@ -1,6 +1,9 @@
-import typescript from "rollup-plugin-typescript2";
+import autoExternal from "rollup-plugin-auto-external";
 import sourcemaps from "rollup-plugin-sourcemaps";
+import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
+
+console.info("Build @metablock/cms");
 
 const globals = {
   react: "React",
@@ -12,11 +15,10 @@ const globals = {
   "@metablock/react": "metablock",
   "d3-time-format": "d3",
 };
-const externals = ["mobx", "tslib"];
-
-const external = Object.keys(globals).concat(externals);
+const external = ["tslib"];
 
 const plugins = [
+  autoExternal(),
   sourcemaps(),
   typescript({
     typescript: require("typescript"),

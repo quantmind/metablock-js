@@ -2,7 +2,13 @@ import autoExternal from "rollup-plugin-auto-external";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
-const globals = { "@metablock/core": "metablock" };
+console.info("Build @metablock/store");
+
+const globals = {
+  "@metablock/core": "metablock",
+  mbox: "mbox",
+  tslib: "tslib",
+};
 const external = ["tslib"];
 
 const plugins = [
