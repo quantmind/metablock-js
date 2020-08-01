@@ -27,8 +27,11 @@ class UserStore {
   @action
   async getUser() {
     this.loading = true;
+    this.errors = undefined;
     try {
       this.current = await this.cli.user.getUser();
+    } catch (errors) {
+      this.errors = errors;
     } finally {
       this.loading = false;
     }

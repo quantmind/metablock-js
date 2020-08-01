@@ -6,7 +6,7 @@ console.info("Build @metablock/store");
 
 const globals = {
   "@metablock/core": "metablock",
-  mbox: "mbox",
+  mobx: "mobx",
   tslib: "tslib",
 };
 const external = ["tslib"];

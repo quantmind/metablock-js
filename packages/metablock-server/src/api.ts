@@ -1,3 +1,4 @@
+import { urlQuery } from "@metablock/core";
 import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import Services from "./services";
@@ -21,7 +22,7 @@ export default (services: Services) => {
 
   app.get("/integration/urls", async (req: Request, res) => {
     const response = await services.cli.get(
-      `${services.blockUrl}/.api/integration/urls`
+      urlQuery(`${services.blockUrl}/.api/integration/urls`, req.query)
     );
     res.json(response.data);
   });

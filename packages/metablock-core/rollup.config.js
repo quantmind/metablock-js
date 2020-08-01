@@ -1,15 +1,15 @@
 import { terser } from "rollup-plugin-terser";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
+import getBanner from "../../scripts/banner";
 
 console.info("Build @metablock/core");
 
-const banner = `// ${pkg.name} v${
-  pkg.version
-} Copyright ${new Date().getFullYear()} ${pkg.author} - ${pkg.homepage}`;
-
+const banner = getBanner(pkg);
 const globals = { tslib: "tslib" };
 const external = ["tslib"];
+
+console.log(banner);
 
 const config = (prod) => {
   const plugins = [
