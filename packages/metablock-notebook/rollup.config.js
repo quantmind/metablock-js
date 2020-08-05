@@ -38,4 +38,4 @@ const config = (prod) => {
   };
 };
 
-export default [config(), config(true)];
+export default [config()];
