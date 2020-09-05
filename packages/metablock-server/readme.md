@@ -1,5 +1,6 @@
 # A dev server for metablock
 
+This package allow to serve meta-blocks during development.
 To use it install these two dependencies
 
 ```bash
