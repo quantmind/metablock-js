@@ -20,7 +20,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn
-      - run: yarn build
-      - run: yarn test
-      - run: bash <(curl -s https://codecov.io/bash)
+      - name: install packages
+        run: yarn
+      - name: run linter
+        run: yarn lint
+      - name: build buncles
+        run: yarn build
+      - name: run tests
+        run: yarn test
+      - name: upload coverage
+        run: bash <(curl -s https://codecov.io/bash)

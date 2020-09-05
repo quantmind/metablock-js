@@ -1,7 +1,7 @@
 import { getLogger } from "@metablock/core";
 import express from "express";
 import api from "./api";
-import { htmlMiddleware } from "./html";
+import { blockMiddleware, BrowserManager } from "./block";
 import requestMiddleware from "./request";
 import seoMiddleware from "./seo";
 import DevServices from "./services";
@@ -16,7 +16,14 @@ const rollupServer = (blockUrl: string, options: any) => {
   if (server) server.close();
   else closeServerOnTermination();
   const app = express();
-  const { path, ssrPlugins, port = 8090, host = "0.0.0.0", ...opts } = options;
+  const {
+    path,
+    ssr,
+    ssrPlugins,
+    port = 8090,
+    host = "0.0.0.0",
+    ...opts
+  } = options;
   const services = new DevServices(blockUrl, path);
   requestMiddleware(app);
   app.use("/.api", api(services));
@@ -24,7 +31,10 @@ const rollupServer = (blockUrl: string, options: any) => {
     staticMiddleware(app, path);
   }
   seoMiddleware(app, services);
-  htmlMiddleware(app, services, { ...opts, plugins: ssrPlugins });
+  const ssrManager = ssr
+    ? new BrowserManager(services, { ...opts, plugins: ssrPlugins })
+    : null;
+  blockMiddleware(app, services, { ssrManager });
   server = app.listen({ port, host }, () => {
     logger.warn(`started devserver server on port ${port}`);
   });

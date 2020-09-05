@@ -2,12 +2,10 @@ import { Express, Request, Response } from "express";
 import { performance } from "perf_hooks";
 import { Services } from "../interfaces";
 import rawHtml from "./html";
-import BrowserManager from "./ssr";
 
 export default (app: Express, services: Services, options?: any) => {
-  const { ssr, publicPath, ...config } = options;
-  const manager = new BrowserManager(services, config);
-  app.set("browserManager", manager);
+  const { ssrManager, publicPath } = options;
+  app.set("browserManager", ssrManager);
 
   const serve_raw = async (req: Request, res: any) => {
     const context = await services.getConfig(req);
@@ -19,7 +17,7 @@ export default (app: Express, services: Services, options?: any) => {
       if (req.query._ssr === "yes") await serve_raw(req, res);
       else {
         const t0 = performance.now();
-        const result = await manager.ssr(req);
+        const result = await ssrManager.ssr(req);
         const total = Math.round(performance.now() - t0);
         res
           .set(
@@ -39,7 +37,7 @@ export default (app: Express, services: Services, options?: any) => {
     else await serve(req, res, next);
   };
 
-  const serve = ssr ? serve_html : serve_raw;
+  const serve = ssrManager ? serve_html : serve_raw;
 
   app.get("*", publicPath ? dev : serve);
 };

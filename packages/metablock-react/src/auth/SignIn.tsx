@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { getBlock, urlQuery } from "@metablock/core";
-import { AuthStore } from "@metablock/store";
 import React from "react";
 import Link from "../components/Link";
 import { CheckBoxField, FormErrorMessage, TextField, useForm } from "../forms";
@@ -35,12 +34,6 @@ const DefaultHeader = () => (
     Sign in
   </Typography>
 );
-
-interface SignInProps {
-  authStore: AuthStore;
-  onSuccess: React.FC;
-  Header?: React.FC;
-}
 
 const SignIn = (props: any) => {
   const classes = useStyles();

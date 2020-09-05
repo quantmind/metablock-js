@@ -1,6 +1,6 @@
 import MuiLink from "@material-ui/core/Link";
 import MuiList from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
+import MuiListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -68,7 +68,7 @@ const List = (props: ListProps) => {
       {items
         .filter((item) => item.text || item.href || item.to)
         .map((item, index) => (
-          <ListItem key={index} className={classItem}>
+          <MuiListItem key={index} className={classItem}>
             <ListItemIcon className={classes.icon}>{item.icon}</ListItemIcon>
             <ListItemText
               secondaryTypographyProps={{ component: "div" }}
@@ -82,7 +82,7 @@ const List = (props: ListProps) => {
                 )
               }
             />
-          </ListItem>
+          </MuiListItem>
         ))}
     </MuiList>
   );
