@@ -8,7 +8,11 @@ export interface Html {
 
 export interface Context {
   web: Record<string, any>;
+  // object passed to the html page as base64 encoded JSON string
   html: Html;
+  // server-size metadata for rendering the page
+  middleware: any[];
+  // list of server side middleware handlers
 }
 
 export interface Plugin {
@@ -30,5 +34,6 @@ export const createContext = (web?: Record<string, any>): Context => {
   return {
     web: web || {},
     html: { head: [], meta: [], afterBody: [], css: [], scripts: [] },
+    middleware: [],
   } as Context;
 };
