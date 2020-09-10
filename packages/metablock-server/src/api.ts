@@ -5,6 +5,16 @@ import Services from "./services";
 
 type Handler = (req: Request, res: Response) => Promise<void>;
 
+export class ApiError {
+  status: number;
+  data: Record<string, any>;
+
+  constructor(status: number, data: Record<string, any>) {
+    this.status = status;
+    this.data = data;
+  }
+}
+
 export default (services: Services) => {
   const app = express();
 
