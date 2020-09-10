@@ -8,7 +8,7 @@ export interface MetablockRequest extends Request {
 }
 
 export default (app: Express, services: Services, options?: any) => {
-  const { ssrManager, publicPath } = options;
+  const { ssrManager, publicPath } = options || {};
   app.set("browserManager", ssrManager);
 
   const serve = async (req: Request, res: Response, next: any) => {

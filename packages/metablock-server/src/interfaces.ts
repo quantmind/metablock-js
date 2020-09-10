@@ -23,8 +23,6 @@ export interface Plugin {
 export interface Services {
   cli: HttpClient;
 
-  fromCache: (key: string, loader: any) => Promise<any>;
-
   getConfig: (req: any) => Promise<Context>;
 
   getPhoto: (key: string) => Promise<HttpResponse>;
