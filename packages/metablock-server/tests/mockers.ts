@@ -2,6 +2,8 @@ import { pathToRegexp } from "path-to-regexp";
 import {
   blockMiddleware,
   DevServices,
+  requestMiddleware,
+  seoMiddleware,
   api,
   ApiError,
   createContext,
@@ -12,8 +14,10 @@ import express from "express";
 export const mockApp = () => {
   const app = express();
   const services = new DevServices("http://testing.io", "/static");
+  requestMiddleware(app);
   app.set("services", services);
   app.use("/.api", api(services));
+  seoMiddleware(app, services);
   blockMiddleware(app, services);
   return app;
 };
