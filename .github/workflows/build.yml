@@ -24,7 +24,7 @@ jobs:
         run: yarn
       - name: run linter
         run: yarn lint
-      - name: build buncles
+      - name: build bundles
         run: yarn build
       - name: run tests
         run: yarn test

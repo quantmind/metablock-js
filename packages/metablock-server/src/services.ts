@@ -15,6 +15,10 @@ class DevServices implements Services {
     this.cli.defaultHeaders["user-agent"] = "metablock-dev-server";
   }
 
+  async fromCache(key: string, loader: any): Promise<any> {
+    return await loader();
+  }
+
   // Get config and adjust urls for local bundle
   async getConfig(req: any): Promise<Context> {
     const response = await this.cli.get(`${this.blockUrl}/.api/config`);
