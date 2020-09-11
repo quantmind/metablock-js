@@ -1,6 +1,8 @@
 import { pathToRegexp } from "path-to-regexp";
 import {
   blockMiddleware,
+  BrowserManager,
+  defaultBrowserInterceptors,
   DevServices,
   requestMiddleware,
   seoMiddleware,
@@ -11,14 +13,22 @@ import {
 import fetch from "jest-fetch-mock";
 import express from "express";
 
+const mockPage = (request: any) => {
+  request.respond({ contentType: "text/html", body: "<div>test</div>" });
+  return true;
+};
+
 export const mockApp = () => {
   const app = express();
   const services = new DevServices("http://testing.io", "/static");
+  const ssrManager = new BrowserManager(services, {
+    interceptors: [...defaultBrowserInterceptors, mockPage],
+  });
   requestMiddleware(app);
   app.set("services", services);
   app.use("/.api", api(services));
   seoMiddleware(app, services);
-  blockMiddleware(app, services);
+  blockMiddleware(app, services, { ssrManager });
   return app;
 };
 

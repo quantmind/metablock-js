@@ -20,4 +20,20 @@ describe("Test html tools", () => {
     expect(status).toBe(200);
     expect(body).toBeTruthy();
   });
+
+  test("html", async () => {
+    const response = await request(app).get("/foo");
+    const { status, text, headers } = response;
+    expect(status).toBe(200);
+    expect(headers["content-type"]).toBe("text/html; charset=utf-8");
+    expect(text).toBe("<html><head></head><body><div>test</div></body></html>");
+  });
+
+  test("seo", async () => {
+    const response = await request(app).get("/robots.txt");
+    const { status, body, headers } = response;
+    expect(status).toBe(200);
+    expect(body).toBeTruthy();
+    expect(headers["content-type"]).toBe("text/plain; charset=utf-8");
+  });
 });

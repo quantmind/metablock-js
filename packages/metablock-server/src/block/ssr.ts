@@ -11,19 +11,44 @@ const blacklist = [
   "analytics.js",
 ];
 
+const whiteList = (resources: Set<string>) => {
+  return (request: any) => {
+    if (!resources.has(request.resourceType())) {
+      request.abort();
+      return true;
+    }
+  };
+};
+
+const blackList = (resources: string[]) => {
+  return (request: any) => {
+    if (resources.find((regex) => request.url().match(regex))) {
+      request.abort();
+      return true;
+    }
+  };
+};
+
+export const defaultBrowserInterceptors: any[] = [
+  whiteList(whitelistResources),
+  blackList(blacklist),
+];
+
 class BrowserManager {
   public services?: Services;
   public config: Record<string, any>;
   public plugins: any[];
+  public interceptors: any[];
   private _browser?: puppeteer.Browser;
   private _browserWsEndpoint?: string;
   private _lock: AsyncLock;
 
   constructor(services?: Services, options?: any) {
-    const { plugins = [], ...config } = options || {};
+    const { plugins = [], interceptors, ...config } = options || {};
     this.services = services;
     this.config = { waitUntil: "networkidle0", ...config };
     this.plugins = plugins;
+    this.interceptors = interceptors || defaultBrowserInterceptors;
     this._lock = new AsyncLock();
   }
 
@@ -43,17 +68,15 @@ class BrowserManager {
       // Intercept network requests
       await page.setRequestInterception(true);
       page.on("request", (request: puppeteer.Request) => {
-        if (!whitelistResources.has(request.resourceType())) {
-          return request.abort();
-        }
-        if (blacklist.find((regex) => request.url().match(regex))) {
-          return request.abort();
+        for (let i = 0; i < this.interceptors.length; ++i) {
+          if (this.interceptors[i](request)) return;
         }
         request.continue();
       });
       // fetch the page
       const renderUrl = fullUrl(req);
       renderUrl.searchParams.set("_ssr", "yes");
+      console.log(renderUrl.toString());
       await page.goto(renderUrl.toString(), {
         waitUntil: this.config.waitUntil,
       });
