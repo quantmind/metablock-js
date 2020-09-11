@@ -22,3 +22,7 @@ version:	## update version
 
 publish:	## publish to npm
 	@npm run publish-all
+
+
+update:		## Update dependencies
+	yarn upgrade --latest
