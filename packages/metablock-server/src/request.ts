@@ -1,9 +1,19 @@
 import { getLogger, Logger } from "@metablock/core";
-import { Express } from "express";
+import { Express, Request } from "express";
 import onFinished from "on-finished";
 
-export default (app: Express, logger_?: Logger) => {
+const defaultLogData = (req: Request, status: number) => {
+  return {
+    method: req.method,
+    url: req.originalUrl,
+    status,
+    "user-agent": req.get("user-agent"),
+  };
+};
+
+export default (app: Express, logger_?: Logger, logData?: any) => {
   const logger: Logger = logger_ || getLogger({ name: "request" });
+  logData = logData || defaultLogData;
 
   // record response start
   app.use((req: any, res, next) => {
@@ -16,12 +26,7 @@ export default (app: Express, logger_?: Logger) => {
 
       if (logger.isLevelEnabled(level) && !req.logged)
         // @ts-ignore
-        logger[level]({
-          method: req.method,
-          url: req.originalUrl,
-          status,
-          "user-agent": req.get("user-agent"),
-        });
+        logger[level](logData(req, status));
     });
 
     next();
