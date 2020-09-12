@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 declare global {
   interface Window {
     gtag?: (

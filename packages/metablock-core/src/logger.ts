@@ -37,7 +37,8 @@ const defaultLogger = (options?: LoggerOptions) => {
       const num = logLevels[level];
       return num ? num >= levelNumber : false;
     },
-    child(name: string) {
+    child(config?: any) {
+      const { name = "child" } = config || {};
       const newName = loggerName ? `${loggerName}.${name}` : name;
       return logging.loggerFactory({ name: newName });
     },

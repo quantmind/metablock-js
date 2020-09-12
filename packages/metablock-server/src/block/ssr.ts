@@ -76,7 +76,6 @@ class BrowserManager {
       // fetch the page
       const renderUrl = fullUrl(req);
       renderUrl.searchParams.set("_ssr", "yes");
-      console.log(renderUrl.toString());
       await page.goto(renderUrl.toString(), {
         waitUntil: this.config.waitUntil,
       });

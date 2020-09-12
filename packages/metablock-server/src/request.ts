@@ -3,7 +3,7 @@ import { Express } from "express";
 import onFinished from "on-finished";
 
 export default (app: Express, logger_?: Logger) => {
-  const logger: Logger = logger_ || getLogger("request");
+  const logger: Logger = logger_ || getLogger({ name: "request" });
 
   // record response start
   app.use((req: any, res, next) => {
@@ -16,12 +16,12 @@ export default (app: Express, logger_?: Logger) => {
 
       if (logger.isLevelEnabled(level) && !req.logged)
         // @ts-ignore
-        logger[level](
-          req.method,
-          req.originalUrl,
-          req.get("user-agent"),
-          status
-        );
+        logger[level]({
+          method: req.method,
+          url: req.originalUrl,
+          status,
+          "user-agent": req.get("user-agent"),
+        });
     });
 
     next();
