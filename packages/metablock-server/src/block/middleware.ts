@@ -26,7 +26,8 @@ export default (app: Express, services: Services, options?: any) => {
           else if (!middleware.length) next();
           else {
             const handler = middleware.shift();
-            handler(mReq, res, serveMiddleware);
+            if (handler.constructor === String) serveMiddleware();
+            else handler(mReq, res, serveMiddleware);
           }
         };
         serveMiddleware();
