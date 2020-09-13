@@ -21,28 +21,19 @@ export default (app: Express, services: Services, options?: any) => {
           ...mReq.context.middleware,
           ssrManager ? serve_html : serve_raw,
         ];
-        for (let i = 0; i < middleware.length; ++i) {
-          if (await serve_middleware(middleware[i], mReq, res, next)) break;
-        }
+        const serveMiddleware = (err?: any) => {
+          if (err) next(err);
+          else if (!middleware.length) next();
+          else {
+            const handler = middleware.shift();
+            handler(mReq, res, serveMiddleware);
+          }
+        };
+        serveMiddleware();
       }
     } catch (err) {
       next(err);
     }
-  };
-
-  const serve_middleware = async (
-    middleware: any,
-    req: MetablockRequest,
-    res: Response,
-    next: any
-  ) => {
-    const callback: Record<string, any> = {};
-    await middleware(req, res, (err?: any) => {
-      callback.called = true;
-      callback.err = err;
-    });
-    if (callback.err) next(callback.err);
-    return !callback.called;
   };
 
   const serve_raw = async (req: MetablockRequest, res: Response) => {
