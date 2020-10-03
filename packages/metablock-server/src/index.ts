@@ -1,8 +1,8 @@
-export { default as api, ApiError } from "./api";
-export { default as devServer } from "./dev";
-export { default as DevServices } from "./services";
+export { ApiError, default as api } from "./api";
 export * from "./block";
+export { default as devServer } from "./dev";
 export * from "./interfaces";
 export { default as requestMiddleware } from "./request";
 export { default as rollupServer } from "./rollup";
 export { default as seoMiddleware } from "./seo";
+export { default as DevServices } from "./services";

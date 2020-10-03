@@ -37,6 +37,15 @@ class Spaces extends HttpComponent {
     return response.data as Space;
   }
 
+  async update(space_id: string, body: Record<string, any>): Promise<Space> {
+    const url = `${this.cli.apiUrl}/spaces/${space_id}`;
+    const response = await this.cli.patch(url, {
+      body,
+      headers: this.cli.withToken(),
+    });
+    return response.data as Space;
+  }
+
   async delete(space_id: string): Promise<void> {
     const url = `${this.cli.apiUrl}/spaces/${space_id}`;
     await this.cli.delete(url, {

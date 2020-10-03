@@ -1,9 +1,9 @@
 import {
   ApiToken,
-  User,
   HttpResponse,
   Paginated,
   paginatedResponse,
+  User,
 } from "@metablock/core";
 import { action, observable } from "mobx";
 import CommonStore from "./common";

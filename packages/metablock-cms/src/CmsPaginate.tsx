@@ -1,6 +1,6 @@
 import { bundleUrl } from "@metablock/core";
-import React from "react";
 import { useFetch } from "@metablock/react";
+import React from "react";
 import { CmsListData } from "./interfaces";
 import ListLayout from "./ListLayout";
 import { render, urlPath } from "./op";

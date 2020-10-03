@@ -1,6 +1,6 @@
+import chalk from "chalk";
 import { exec } from "child-process-promise";
 import logger from "console";
-import chalk from "chalk";
 import { getPackagePath, getPackages, updateVersion } from "./version";
 
 export const publish = async () => {

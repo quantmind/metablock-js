@@ -1,4 +1,4 @@
-import { WebBlock, getBlock } from "@metablock/core";
+import { getBlock, WebBlock } from "@metablock/core";
 import React from "react";
 import { Helmet } from "react-helmet";
 

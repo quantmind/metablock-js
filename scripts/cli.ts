@@ -2,7 +2,7 @@
 import { Command } from "commander";
 import { version } from "../package.json";
 import { publish } from "./publish";
-import { updateVersion, devVersion } from "./version";
+import { devVersion, updateVersion } from "./version";
 
 const program = new Command();
 program.version(version);

@@ -1,5 +1,5 @@
-import html from "./lib/html";
 import getAttrs from "./lib/attrs";
+import html from "./lib/html";
 import Markdown from "./markdown";
 
 const renderer = {

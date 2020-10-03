@@ -1,6 +1,6 @@
 import { Express, Request, Response } from "express";
 import { performance } from "perf_hooks";
-import { Services, Context } from "../interfaces";
+import { Context, Services } from "../interfaces";
 import rawHtml from "./html";
 
 export interface MetablockRequest extends Request {

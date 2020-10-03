@@ -1,17 +1,17 @@
+import express from "express";
+import fetch from "jest-fetch-mock";
 import { pathToRegexp } from "path-to-regexp";
 import {
+  api,
+  ApiError,
   blockMiddleware,
   BrowserManager,
+  createContext,
   defaultBrowserInterceptors,
   DevServices,
   requestMiddleware,
   seoMiddleware,
-  api,
-  ApiError,
-  createContext,
 } from "../src";
-import fetch from "jest-fetch-mock";
-import express from "express";
 
 const mockPage = (request: any) => {
   request.respond({ contentType: "text/html", body: "<div>test</div>" });

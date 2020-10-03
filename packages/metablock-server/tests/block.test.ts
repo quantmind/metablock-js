@@ -1,6 +1,6 @@
 import fetch from "jest-fetch-mock";
 import request from "supertest";
-import { mockApp, mockApi } from "./mockers";
+import { mockApi, mockApp } from "./mockers";
 
 describe("Test html tools", () => {
   const app = mockApp();
