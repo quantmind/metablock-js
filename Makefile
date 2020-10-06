@@ -15,14 +15,15 @@ clean-deep:	## remove generated files & node_modules
 	make clean
 	find . -name 'node_modules' | xargs rm -rf
 
-
-version:	## update version
-	@yarn update-version
-
+doc:		## update table of contents in docs
+	doctoc readme.md \
+		packages/metablock-react/readme.md
 
 publish:	## publish to npm
 	@npm run publish-all
 
+version:	## update version
+	@yarn update-version
 
-update:		## Update dependencies
+update:		## update dependencies
 	yarn upgrade --latest

@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Metablock &middot; * * * *](#metablock-middot----)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # [Metablock](https://Metablock.io/) &middot; [![GitHub license](https://img.shields.io/badge/license-IOC-blue.svg)](https://github.com/quantmind/metablock-js/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/@metablock/core.svg?style=flat)](https://www.npmjs.com/package/@metablock/core) [![build](https://github.com/quantmind/metablock-js/workflows/build/badge.svg)](https://github.com/quantmind/metablock-js/actions?query=workflow%3Abuild) [![codecov](https://codecov.io/gh/quantmind/metablock-js/branch/master/graph/badge.svg)](https://codecov.io/gh/quantmind/metablock-js)
 
 Tooling for metablock cloud.

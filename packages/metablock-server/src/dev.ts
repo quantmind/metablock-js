@@ -16,14 +16,15 @@ const devServer = (blockUrl: string, options: any) => {
 export const before = (blockUrl: string, options: any) => {
   global.fetch = require("cross-fetch");
   return (app: Express, server: any) => {
-    const { mode, ssr } = server.compiler.options;
+    const { ssr, ...ssrOptions } = options;
+    const { mode } = server.compiler.options;
     const { publicPath } = server.options;
     const services = new DevServices(blockUrl, publicPath);
     requestMiddleware(app);
     seoMiddleware(app, services);
     app.use("/.api", api(services));
     const ssrManager = ssr
-      ? new BrowserManager(services, { mode, ...options })
+      ? new BrowserManager(services, { mode, ...ssrOptions })
       : null;
     blockMiddleware(app, services, { publicPath, ssrManager });
   };

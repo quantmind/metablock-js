@@ -1,8 +1,34 @@
 # Metablock React
 
-React components and views
+React components, views and utilities for building metablocks.
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Contents**
+
+- [Components](#components)
+  - [NoSsr](#nossr)
+  - [Header](#header)
+  - [Image](#image)
+- [Hooks](#hooks)
+  - [useFetch](#usefetch)
+  - [useIntersectionObserver](#useintersectionobserver)
+  - [useWindowSize](#usewindowsize)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Components
+
+### NoSsr
+
+Disable server-side rendering
+```js
+import {NoSsr} from "@metablock/react";
+<NoSsr>
+  ...
+</NoSsr>
+```
+This is useful for private/login-protected pages for example.
 
 ### Header
 
