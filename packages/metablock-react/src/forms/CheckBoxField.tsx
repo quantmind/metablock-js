@@ -6,7 +6,15 @@ import React from "react";
 import { FormControlProps } from "./ControlField";
 
 const CheckBoxField = (props: FormControlProps) => {
-  const { name, label = "", color, form, helperText = "", ...extra } = props;
+  const {
+    name,
+    label = "",
+    Component = Checkbox,
+    color,
+    form,
+    helperText = "",
+    ...extra
+  } = props;
   const cprops: any = {};
   if (form.defaults[name]) cprops.defaultChecked = true;
   extra.error = form.errors.has(name);
@@ -15,7 +23,7 @@ const CheckBoxField = (props: FormControlProps) => {
     <FormControl {...extra}>
       <FormControlLabel
         control={
-          <Checkbox
+          <Component
             color={color}
             onChange={form.onChange()}
             name={name}

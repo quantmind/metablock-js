@@ -8,6 +8,7 @@ export interface FormControlProps {
   form: FormData;
   label?: string;
   helpText?: string;
+  Component?: React.FC;
   [x: string]: any;
 }
 
