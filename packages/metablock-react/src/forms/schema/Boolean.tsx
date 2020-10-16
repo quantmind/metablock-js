@@ -7,9 +7,7 @@ const BooleanSchema: React.FC<SchemaEntryProps> = (prop: SchemaEntryProps) => {
   return (
     <CheckBoxField
       fullWidth
-      margin="normal"
       name={name}
-      color="primary"
       checked={schema.default}
       label={schema.description || name}
       {...extra}

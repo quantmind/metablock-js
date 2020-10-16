@@ -25,10 +25,11 @@ export const flattenData = (
   const flatData = {};
   if (!schema) return flatData;
   if (schema.properties) {
+    const keys = new Set(Object.keys(data || {}));
     Object.keys(schema.properties).reduce(
       (record: Record<string, any>, name: string) => {
         const prop: any = schema.properties[name];
-        const propData: any = data ? data[name] : prop.default;
+        const propData: any = keys.has(name) ? data[name] : prop.default;
         name = propName(name, prefix);
         if (prop.type === "object")
           record = { ...record, ...flattenData(prop, propData, name) };
