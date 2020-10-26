@@ -37,15 +37,8 @@ class UserOrgStore {
 
   @action
   async getOrg(org_name_or_id: string) {
-    this.loading = true;
-    this.errors = undefined;
-    try {
-      this.currentOrg = await this.cli.orgs.get(org_name_or_id);
-    } catch (errors) {
-      this.errors = errors;
-    } finally {
-      this.loading = false;
-    }
+    this.currentOrg = await this.cli.orgs.get(org_name_or_id);
+    return this.currentOrg;
   }
 
   @action

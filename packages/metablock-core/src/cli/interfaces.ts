@@ -20,6 +20,15 @@ export function paginatedResponse<T>(response: HttpResponse): Paginated<T> {
   return new Paginated<T>(data, count ? +count : data.length);
 }
 
+export interface Org {
+  id: string;
+  short_name: string;
+  full_name: string;
+  email: string;
+  country: string;
+  website?: string;
+}
+
 export interface Block {
   id: string;
   name: string; // name of the metablock site
@@ -51,12 +60,15 @@ export interface Space {
 export interface Extension {
   id: string;
   name: string;
+  description: string;
+  script?: string;
   schema: Record<string, any>;
 }
 
 export interface SpaceExtension {
   id: string;
   name: string;
+  script?: string;
   config: Record<string, any>;
 }
 

@@ -19,7 +19,7 @@ export const before = (blockUrl: string, options: any) => {
     const { ssr, ...ssrOptions } = options;
     const { mode } = server.compiler.options;
     const { publicPath } = server.options;
-    const services = new DevServices(blockUrl, publicPath);
+    const services = new DevServices(blockUrl, removeSlash(publicPath));
     requestMiddleware(app);
     seoMiddleware(app, services);
     app.use("/.api", api(services));
@@ -28,6 +28,12 @@ export const before = (blockUrl: string, options: any) => {
       : null;
     blockMiddleware(app, services, { publicPath, ssrManager });
   };
+};
+
+const removeSlash = (url?: string): string => {
+  if (url && url.substring(url.length - 1) == "/")
+    return url.substring(0, url.length - 1);
+  return url || "";
 };
 
 export default devServer;
