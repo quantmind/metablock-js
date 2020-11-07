@@ -39,7 +39,7 @@ interface ImageProps {
   selectImage?: (urls: string[], width: number | undefined) => number;
   urls: string[];
   children?: React.ReactNode;
-  key?: string;
+  [x: string]: any;
 }
 
 const defaultSelectImage = (
@@ -63,6 +63,7 @@ const Image = (props: ImageProps) => {
     className,
     onIsVisible,
     children,
+    ...extra
   } = props;
   const classes = useStyles({ opacity });
   const getClasses = (image: ImageEntry) =>
@@ -138,8 +139,11 @@ const Image = (props: ImageProps) => {
       />
     ));
   }
-  entries.push(children);
-  return React.createElement(container, { className, ref }, entries);
+  return React.createElement(
+    container,
+    { className, ref, ...extra },
+    entries.concat(children)
+  );
 };
 
 export default Image;

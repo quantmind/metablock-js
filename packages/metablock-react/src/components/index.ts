@@ -5,7 +5,6 @@ export { default as Link } from "./Link";
 export { default as List } from "./List";
 export { default as ListItemLink } from "./ListItemLink";
 export { default as NoSsr, isSsr } from "./NoSsr";
-export { default as Parallax } from "./Parallax";
+export * from "./Parallax";
 export { default as Section } from "./Section";
 export { default as UnsplashCredits } from "./UnsplashCredits";
-export { default as WaitFor, waitable } from "./WaitFor";
