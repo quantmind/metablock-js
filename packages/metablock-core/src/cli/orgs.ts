@@ -1,6 +1,6 @@
 import HttpResponse from "../response";
 import HttpComponent from "./httpComponent";
-import { Org } from "./interfaces";
+import { Org, OrgMember, Paginated, paginatedResponse } from "./interfaces";
 
 class Orgs extends HttpComponent {
   get url(): string {
@@ -34,6 +34,14 @@ class Orgs extends HttpComponent {
     return await this.cli.get(`${this.url}/${org_id}/extensions`, {
       headers: this.cli.withToken(),
     });
+  }
+
+  async getMembers(org_id: string, query?: any): Promise<Paginated<OrgMember>> {
+    const url = this.urlQuery(`${this.url}/${org_id}/members`, query);
+    const response = await this.cli.get(url, {
+      headers: this.cli.withToken(),
+    });
+    return paginatedResponse<OrgMember>(response);
   }
 }
 

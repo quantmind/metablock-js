@@ -28,6 +28,7 @@ interface HeaderProps {
   changeColorOnScroll?: {
     height: number;
     color: string;
+    backgroundColor: string;
   };
 }
 
@@ -43,7 +44,11 @@ const Header = (props: HeaderProps) => {
     rightLinks,
     changeColorOnScroll,
   } = props;
-  const classes: Record<string, any> = useStyles({ paddingTop, paddingBottom });
+  const classes: Record<string, any> = useStyles({
+    paddingTop,
+    paddingBottom,
+    changeColorOnScroll,
+  });
   const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
   const [colorChange, setColorChange] = React.useState<boolean>(false);
   const headerColorChange = changeColorOnScroll

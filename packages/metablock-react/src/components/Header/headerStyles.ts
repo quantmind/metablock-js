@@ -31,9 +31,14 @@ export default makeStyles((theme: Theme) => ({
   transparent: {
     backgroundColor: "transparent !important",
     boxShadow: "none",
-    color: "#FFFFFF",
   },
   appResponsive: {
     margin: "20px 10px",
+  },
+  colorChange(props: any) {
+    return {
+      backgroundColor: props.changeColorOnScroll?.backgroundColor,
+      color: props.changeColorOnScroll?.color,
+    };
   },
 }));

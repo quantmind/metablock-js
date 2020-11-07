@@ -29,6 +29,16 @@ export interface Org {
   website?: string;
 }
 
+export interface OrgMember {
+  user_id: string;
+  roles: string[];
+  org_name: string;
+  org_id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+}
+
 export interface Block {
   id: string;
   name: string; // name of the metablock site

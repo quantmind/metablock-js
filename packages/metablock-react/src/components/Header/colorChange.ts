@@ -14,18 +14,18 @@ const headerColorChange = (
     if (windowsScrollTop > changeColorOnScroll.height) {
       document.body
         .getElementsByTagName("header")[0]
-        .classList.remove(classes[color]);
+        .classList.remove(...classes[color].split(" "));
       document.body
         .getElementsByTagName("header")[0]
-        .classList.add(classes[changeColorOnScroll.color]);
+        .classList.add(...classes.colorChange.split(" "));
       setColorChange(true);
     } else {
       document.body
         .getElementsByTagName("header")[0]
-        .classList.add(classes[color]);
+        .classList.add(...classes[color].split(" "));
       document.body
         .getElementsByTagName("header")[0]
-        .classList.remove(classes[changeColorOnScroll.color]);
+        .classList.remove(...classes.colorChange.split(" "));
       setColorChange(false);
     }
   };

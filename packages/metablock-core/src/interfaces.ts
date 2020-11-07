@@ -4,6 +4,7 @@ export interface ExtensionData {
   title: string;
   url: string;
   create?: string;
+  options?: Record<string, any>;
   items?: (query: any) => any[];
 }
 
