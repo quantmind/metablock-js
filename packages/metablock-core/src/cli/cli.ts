@@ -1,6 +1,7 @@
 import HttpClient from "../http";
 import MbAuth from "./auth";
 import Blocks from "./blocks";
+import Cache from "./cache";
 import Extensions from "./extensions";
 import { Space } from "./interfaces";
 import Orgs from "./orgs";
@@ -28,6 +29,7 @@ export class Metablock extends HttpClient {
   extensions: Extensions;
   plugins: Plugins;
   photos: Photos;
+  cache: Cache;
 
   constructor(options?: MetablockOptions) {
     super(options?.name || "metablock");
@@ -42,6 +44,7 @@ export class Metablock extends HttpClient {
     this.plugins = new Plugins(this);
     this.extensions = new Extensions(this);
     this.photos = new Photos(this);
+    this.cache = new Cache(this);
   }
 
   get apiUrl(): string {

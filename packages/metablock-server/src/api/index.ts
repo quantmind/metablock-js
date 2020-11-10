@@ -1,9 +1,9 @@
 import { urlQuery } from "@metablock/core";
 import bodyParser from "body-parser";
-import express, { Request, Response } from "express";
-import Services from "./services";
-
-type Handler = (req: Request, res: Response) => Promise<void>;
+import express, { Request } from "express";
+import Services from "../services";
+import cacheMiddleware from "./cache";
+import safe from "./safe";
 
 export class ApiError {
   status: number;
@@ -19,6 +19,7 @@ export default (services: Services) => {
   const app = express();
 
   app.use(bodyParser.json());
+  cacheMiddleware(app, services);
 
   app.post(
     "/login",
@@ -50,16 +51,4 @@ export default (services: Services) => {
   );
 
   return app;
-};
-
-const safe = (executor: any): Handler => {
-  return async (req: express.Request, res: express.Response) => {
-    let response;
-    try {
-      response = await executor(req, res);
-    } catch (exc) {
-      response = exc;
-    }
-    res.status(response.status).json(response.data);
-  };
 };

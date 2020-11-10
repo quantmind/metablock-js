@@ -8,10 +8,12 @@ export interface Options {
 }
 
 export interface HttpClientInterface {
-  get: (url: string, options?: any) => Promise<HttpResponse>;
   delete: (url: string, options?: any) => Promise<HttpResponse>;
-  post: (url: string, options?: any) => Promise<HttpResponse>;
+  get: (url: string, options?: any) => Promise<HttpResponse>;
+  head: (url: string, options?: any) => Promise<HttpResponse>;
   patch: (url: string, options?: any) => Promise<HttpResponse>;
+  post: (url: string, options?: any) => Promise<HttpResponse>;
+  put: (url: string, options?: any) => Promise<HttpResponse>;
 }
 
 class HttpClient implements HttpClientInterface {
@@ -43,6 +45,10 @@ class HttpClient implements HttpClientInterface {
 
   async post(url: string, options?: any): Promise<HttpResponse> {
     return await this.request(url, { ...options, method: "POST" });
+  }
+
+  async put(url: string, options?: any): Promise<HttpResponse> {
+    return await this.request(url, { ...options, method: "PUT" });
   }
 
   async request(url: string, options: Options): Promise<HttpResponse> {

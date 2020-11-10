@@ -11,6 +11,7 @@ const createStores = (baseUrl: string, name?: string) => {
   const authStore = new AuthStore(commonStore, userStore);
   const photoStore = new PhotoStore(commonStore);
   return {
+    cli,
     commonStore,
     userStore,
     authStore,

@@ -2,13 +2,13 @@
 
 Core tooling for metablock applications. It includes a client for [metablock Rest API](https://api.metablock.io/v1/docs).
 
-## Metablock Client
+## Metablock API Client
 
 ```javascript
 import { Metablock } from "@metablock/core";
 
-cli = new Metablock({ token: "" });
-cli.user.getUser();
+const cli = new Metablock({ token: "" });
+const user = await cli.user.getUser();
 ```
 
 ## Tools
