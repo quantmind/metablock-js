@@ -26,4 +26,7 @@ version:	## update version
 	@yarn update-version
 
 update:		## update dependencies
-	yarn upgrade --latest
+	@yarn upgrade --latest
+
+outdated:	## outdated dependencies
+	@yarn outdated
