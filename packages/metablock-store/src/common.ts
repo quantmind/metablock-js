@@ -1,5 +1,5 @@
 import { Metablock } from "@metablock/core";
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 
 export interface Common {
   token: string;
@@ -12,11 +12,14 @@ const tokenKey = "metablock-key";
 
 class CommonStore {
   cli: Metablock;
-
-  @observable
   appLoaded = false;
 
   constructor(cli: Metablock) {
+    makeObservable(this, {
+      appLoaded: observable,
+      setToken: action,
+      setAppLoaded: action,
+    });
     this.cli = cli;
     this.cli.jwt = window.localStorage.getItem(tokenKey) || "";
   }
@@ -25,7 +28,6 @@ class CommonStore {
     return this.cli.jwt;
   }
 
-  @action
   setToken(token: string) {
     this.cli.jwt = token;
     if (token) {
@@ -35,7 +37,6 @@ class CommonStore {
     }
   }
 
-  @action
   setAppLoaded() {
     this.appLoaded = true;
   }

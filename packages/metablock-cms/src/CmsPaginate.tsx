@@ -1,6 +1,6 @@
 import { bundleUrl } from "@metablock/core";
-import { useFetch } from "@metablock/react";
 import React from "react";
+import { useAsync } from "react-use";
 import { CmsListData } from "./interfaces";
 import ListLayout from "./ListLayout";
 import { render, urlPath } from "./op";
@@ -16,7 +16,8 @@ interface CmsPaginateProps {
 const CmsPaginate = (props: CmsPaginateProps) => {
   const { path, topic, slug, Component = ListLayout } = props;
   const url = bundleUrl(`${topic}/index.json`);
-  const data = useFetch(() => store.get(url), url) || [];
+  const result = useAsync(async () => await store.get(url), [url]);
+  const data = result.value || [];
   const entries = data.map((entry: CmsListData) => {
     entry = render(entry) as CmsListData;
     entry.urlPath = `${path}/${urlPath(entry, slug)}`;

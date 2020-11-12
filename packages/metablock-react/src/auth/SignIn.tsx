@@ -5,9 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { getBlock, urlQuery } from "@metablock/core";
 import React from "react";
+import { useAsync } from "react-use";
 import Link from "../components/Link";
 import { CheckBoxField, FormErrorMessage, TextField, useForm } from "../forms";
-import { useFetch } from "../hooks";
 import AppForm from "../views/AppForm";
 import NotFound from "../views/NotFound";
 import Icons from "./Icons";
@@ -52,7 +52,7 @@ const SignIn = (props: any) => {
       } else form.setSuccess();
     },
   });
-  const integrationUrls = useFetch(async () => {
+  const result = useAsync(async () => {
     if (!account) return;
     if (jwt) {
       await authStore.setJwt(jwt);
@@ -73,7 +73,8 @@ const SignIn = (props: any) => {
   });
   if (!account) return <NotFound />;
   if (form.success) return onSuccess();
-  if (!integrationUrls) return null;
+  if (result.loading) return null;
+  const integrationUrls = result.value as any[];
 
   return (
     <AppForm>

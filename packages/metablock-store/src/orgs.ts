@@ -1,18 +1,24 @@
 import { HttpResponse, Org, UserOrg } from "@metablock/core";
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import CommonStore from "./common";
 import UserStore from "./user";
 
 class UserOrgStore {
   userStore: UserStore;
-  @observable orgs?: UserOrg[];
-  @observable currentOrg?: Org;
-  @observable errors?: HttpResponse = undefined;
-  @observable loading = false;
-  @observable updating = false;
-  @observable updatingErrors = false;
+  orgs?: UserOrg[] = undefined;
+  currentOrg?: Org = undefined;
+  errors?: HttpResponse = undefined;
 
   constructor(userStore: UserStore) {
+    makeObservable(this, {
+      orgs: observable,
+      currentOrg: observable,
+      getOrgs: action,
+      getOrg: action,
+      updateOrg: action,
+      forgetOrg: action,
+      forgetOrgs: action,
+    });
     this.userStore = userStore;
   }
 
@@ -24,41 +30,25 @@ class UserOrgStore {
     return this.commonStore.cli;
   }
 
-  @action
   async getOrgs() {
-    this.loading = true;
-    this.errors = undefined;
-    try {
-      this.orgs = await this.cli.user.getOrgs();
-    } finally {
-      this.loading = false;
-    }
+    this.orgs = await this.cli.user.getOrgs();
+    return this.orgs;
   }
 
-  @action
   async getOrg(org_name_or_id: string) {
     this.currentOrg = await this.cli.orgs.get(org_name_or_id);
     return this.currentOrg;
   }
 
-  @action
   async updateOrg(org_name_or_id: string, body: Record<string, any>) {
-    this.loading = true;
-    this.errors = undefined;
-    try {
-      this.currentOrg = await this.cli.orgs.update(org_name_or_id, body);
-    } catch (errors) {
-      this.errors = errors;
-    } finally {
-      this.loading = false;
-    }
+    this.currentOrg = await this.cli.orgs.update(org_name_or_id, body);
   }
 
-  @action forgetOrg() {
+  forgetOrg() {
     this.currentOrg = undefined;
   }
 
-  @action forgetOrgs() {
+  forgetOrgs() {
     this.currentOrg = undefined;
     this.orgs = undefined;
   }

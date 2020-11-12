@@ -1,6 +1,6 @@
 import { bundleUrl } from "@metablock/core";
-import { useFetch } from "@metablock/react";
 import React from "react";
+import { useAsync } from "react-use";
 import EntryLayout from "./EntryLayout";
 import EntryLoading from "./EntryLoading";
 import { CmsData } from "./interfaces";
@@ -28,8 +28,9 @@ const CmsEntry = (props: CmsProps) => {
     ...extra
   } = props;
   const url = bundleUrl(`${topic}/${params.slug}.json`);
-  const data = useFetch(() => store.get(url), url);
-  if (!data) return <Loading />;
+  const result = useAsync(async () => await store.get(url), [url]);
+  if (result.loading) return <Loading />;
+  const data = result.value as any;
   const entry = render(data) as CmsData;
   const baseUrl = entry.index
     ? bundleUrl(`${topic}/${params.slug}`)

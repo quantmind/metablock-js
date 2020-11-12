@@ -11,7 +11,6 @@ React components, views and utilities for building metablocks.
   - [Header](#header)
   - [Image](#image)
 - [Hooks](#hooks)
-  - [useFetch](#usefetch)
   - [useIntersectionObserver](#useintersectionobserver)
   - [useWindowSize](#usewindowsize)
 
@@ -42,8 +41,6 @@ import {Header} from "@metablock/react";
 Progressively load background images
 
 ## Hooks
-
-### useFetch
 
 ### useIntersectionObserver
 

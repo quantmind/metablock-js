@@ -1,20 +1,14 @@
-import { action, observable } from "mobx";
+import { action, makeObservable } from "mobx";
 import CommonStore from "./common";
-
-export interface Photos {
-  loading: boolean;
-  updating: boolean;
-  updatingErrors: boolean;
-  getUser: () => Promise<void>;
-}
 
 class PhotoStore {
   commonStore: CommonStore;
-  @observable photos: Record<string, any> = {};
-  @observable loading = false;
-  @observable updatingErrors = false;
 
   constructor(commonStore: CommonStore) {
+    makeObservable(this, {
+      getPhoto: action,
+      getPhotoUrl: action,
+    });
     this.commonStore = commonStore;
   }
 
@@ -22,27 +16,17 @@ class PhotoStore {
     return this.commonStore.cli;
   }
 
-  @action
   async getPhoto(photoId: string): Promise<Record<string, any>> {
     const jsonStr = window.localStorage.getItem(`photo-${photoId}`);
     if (jsonStr) {
-      const photo = JSON.parse(jsonStr);
-      this.photos[photoId] = photo;
-      return photo;
+      return JSON.parse(jsonStr);
     } else {
-      this.loading = true;
-      try {
-        const photo = await this.cli.photos.get(photoId);
-        window.localStorage.setItem(`photo-${photoId}`, JSON.stringify(photo));
-        this.photos[photoId] = photo;
-        return photo;
-      } finally {
-        this.loading = false;
-      }
+      const photo = await this.cli.photos.get(photoId);
+      window.localStorage.setItem(`photo-${photoId}`, JSON.stringify(photo));
+      return photo;
     }
   }
 
-  @action
   async getPhotoUrl(photoId: string, url = "raw"): Promise<string> {
     const photo = await this.getPhoto(photoId);
     return photo.urls[url];

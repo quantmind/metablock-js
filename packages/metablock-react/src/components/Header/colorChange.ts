@@ -11,21 +11,16 @@ const headerColorChange = (
 ) => {
   return () => {
     const windowsScrollTop = window.pageYOffset;
+    const defaults = classes.defaultColor.split(" ");
+    const change = classes.colorChange.split(" ");
+    const header = document.body.getElementsByTagName("header")[0];
     if (windowsScrollTop > changeColorOnScroll.height) {
-      document.body
-        .getElementsByTagName("header")[0]
-        .classList.remove(...classes[color].split(" "));
-      document.body
-        .getElementsByTagName("header")[0]
-        .classList.add(...classes.colorChange.split(" "));
+      header.classList.remove(...defaults);
+      header.classList.add(...change);
       setColorChange(true);
     } else {
-      document.body
-        .getElementsByTagName("header")[0]
-        .classList.add(...classes[color].split(" "));
-      document.body
-        .getElementsByTagName("header")[0]
-        .classList.remove(...classes.colorChange.split(" "));
+      header.classList.remove(...change);
+      header.classList.add(...defaults);
       setColorChange(false);
     }
   };

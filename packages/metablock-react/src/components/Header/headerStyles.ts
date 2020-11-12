@@ -28,17 +28,20 @@ export default makeStyles((theme: Theme) => ({
   flex: {
     flex: 1,
   },
-  transparent: {
-    backgroundColor: "transparent !important",
-    boxShadow: "none",
-  },
   appResponsive: {
     margin: "20px 10px",
   },
+  defaultColor(props: any) {
+    return {
+      backgroundColor: `${props.backgroundColor} !important`,
+      color: props.color,
+      boxShadow: "none",
+    };
+  },
   colorChange(props: any) {
     return {
-      backgroundColor: props.changeColorOnScroll?.backgroundColor,
-      color: props.changeColorOnScroll?.color,
+      backgroundColor: `${props.changeColorOnScroll?.backgroundColor} !important`,
+      color: `${props.changeColorOnScroll?.color} !important`,
     };
   },
 }));

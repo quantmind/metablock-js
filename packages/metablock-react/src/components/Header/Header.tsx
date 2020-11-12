@@ -11,18 +11,19 @@ import React from "react";
 import createColorChange from "./colorChange";
 import useStyles from "./headerStyles";
 
-interface BrandProps {
+interface HeaderComponentProps {
   colorChange: boolean;
 }
 
-interface HeaderProps {
+export interface HeaderProps {
   color?: string;
+  backgroundColor?: string;
   fixed?: boolean;
   absolute?: boolean;
   maxWidth?: any;
-  BrandComponent?: React.FC<BrandProps>;
-  leftLinks?: React.ReactNode;
-  rightLinks?: React.ReactNode;
+  BrandComponent?: React.FC<HeaderComponentProps>;
+  LeftLinks?: React.FC<HeaderComponentProps>;
+  RightLinks?: React.FC<HeaderComponentProps>;
   paddingTop?: number;
   paddingBottom?: number;
   changeColorOnScroll?: {
@@ -35,18 +36,21 @@ interface HeaderProps {
 const Header = (props: HeaderProps) => {
   const {
     color = "transparent",
+    backgroundColor = "inherit",
     maxWidth = "lg",
     fixed,
     absolute,
     paddingTop = 0,
     paddingBottom = 0,
-    leftLinks,
-    rightLinks,
+    LeftLinks,
+    RightLinks,
     changeColorOnScroll,
   } = props;
   const classes: Record<string, any> = useStyles({
     paddingTop,
     paddingBottom,
+    backgroundColor,
+    color,
     changeColorOnScroll,
   });
   const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
@@ -54,8 +58,7 @@ const Header = (props: HeaderProps) => {
   const headerColorChange = changeColorOnScroll
     ? createColorChange(changeColorOnScroll, classes, color, setColorChange)
     : null;
-  const appBarClasses = clsx(classes.appBar, {
-    [classes[color]]: color,
+  const appBarClasses = clsx(classes.appBar, classes.defaultColor, {
     [classes.absolute]: absolute,
     [classes.fixed]: fixed,
   });
@@ -81,22 +84,24 @@ const Header = (props: HeaderProps) => {
   const brand = <BrandComponent colorChange={colorChange} />;
 
   return (
-    <AppBar className={appBarClasses}>
+    <AppBar color="transparent" className={appBarClasses}>
       <Container maxWidth={maxWidth}>
         <Toolbar className={classes.container} disableGutters={true}>
-          {leftLinks !== undefined ? brand : null}
+          {LeftLinks ? brand : null}
           <div className={classes.flex}>
-            {leftLinks !== undefined ? (
+            {LeftLinks ? (
               <Hidden smDown implementation="css">
-                {leftLinks}
+                <LeftLinks colorChange={colorChange} />
               </Hidden>
             ) : (
               brand
             )}
           </div>
-          <Hidden smDown implementation="css">
-            {rightLinks}
-          </Hidden>
+          {RightLinks ? (
+            <Hidden smDown implementation="css">
+              <RightLinks colorChange={colorChange} />
+            </Hidden>
+          ) : null}
           <Hidden mdUp>
             <IconButton
               color="inherit"
@@ -118,8 +123,8 @@ const Header = (props: HeaderProps) => {
             onClose={handleDrawerToggle}
           >
             <div className={classes.appResponsive}>
-              {leftLinks}
-              {rightLinks}
+              {LeftLinks ? <LeftLinks colorChange={colorChange} /> : null}
+              {RightLinks ? <RightLinks colorChange={colorChange} /> : null}
             </div>
           </Drawer>
         </Hidden>

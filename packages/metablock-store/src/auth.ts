@@ -1,15 +1,22 @@
 import { HttpResponse } from "@metablock/core";
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import CommonStore from "./common";
 import UserStore from "./user";
 
 class AuthStore {
   commonStore: CommonStore;
   userStore: UserStore;
-  @observable inProgress = false;
-  @observable errors?: HttpResponse = undefined;
+  inProgress = false;
+  errors?: HttpResponse = undefined;
 
   constructor(commonStore: CommonStore, userStore: UserStore) {
+    makeObservable(this, {
+      inProgress: observable,
+      errors: observable,
+      login: action,
+      setJwt: action,
+      logout: action,
+    });
     this.commonStore = commonStore;
     this.userStore = userStore;
   }
@@ -18,7 +25,6 @@ class AuthStore {
     return this.commonStore.cli;
   }
 
-  @action
   async login(data: Record<string, string>): Promise<void> {
     this.inProgress = true;
     this.errors = undefined;
@@ -33,7 +39,6 @@ class AuthStore {
     }
   }
 
-  @action
   async setJwt(jwt: string) {
     this.inProgress = true;
     this.errors = undefined;
@@ -47,7 +52,6 @@ class AuthStore {
     }
   }
 
-  @action
   async logout() {
     await this.cli.user.logout();
     this.userStore.forgetUser();
