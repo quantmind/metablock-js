@@ -16,7 +16,8 @@ clean-deep:	## remove generated files & node_modules
 	find . -name 'node_modules' | xargs rm -rf
 
 doc:		## update table of contents in docs
-	doctoc readme.md \
+	doctoc \
+		packages/metablock-core/readme.md \
 		packages/metablock-react/readme.md
 
 publish:	## publish to npm

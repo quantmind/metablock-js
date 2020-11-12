@@ -2,6 +2,18 @@
 
 Core tooling for metablock applications. It includes a client for [metablock Rest API](https://api.metablock.io/v1/docs).
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Contents**
+
+- [Metablock API Client](#metablock-api-client)
+- [Tools](#tools)
+  - [Urls](#urls)
+  - [Logger](#logger)
+  - [compileOptions(text)](#compileoptionstext)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Metablock API Client
 
 ```javascript
