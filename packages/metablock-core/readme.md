@@ -1,18 +1,22 @@
 # Metablock Core
 
-Core tooling for metablock applications. It includes a client for [metablock Rest API](https://api.metablock.io/v1/docs).
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Contents**
+
 
 - [Metablock API Client](#metablock-api-client)
+  - [Organizations](#organizations)
 - [Tools](#tools)
   - [Urls](#urls)
   - [Logger](#logger)
   - [compileOptions(text)](#compileoptionstext)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+Core tooling for metablock applications
+
+- Lightweight with no dependencies
+- Includes a client for [metablock Rest API](https://api.metablock.io/v1/docs).
 
 ## Metablock API Client
 
@@ -22,6 +26,11 @@ import { Metablock } from "@metablock/core";
 const cli = new Metablock({ token: "" });
 const user = await cli.user.getUser();
 ```
+
+### Organizations
+
+The metablock client access the organizations endpoints via [cli.orgs](./src/cli/orgs.ts) component.
+Check the [org REST docs](https://api.metablock.io/v1/docs#tag/Organizations) for more detailed information.
 
 ## Tools
 

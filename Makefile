@@ -18,6 +18,7 @@ clean-deep:	## remove generated files & node_modules
 doc:		## update table of contents in docs
 	doctoc \
 		packages/metablock-core/readme.md \
+		packages/metablock-store/readme.md \
 		packages/metablock-react/readme.md
 
 publish:	## publish to npm

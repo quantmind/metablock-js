@@ -1,6 +1,12 @@
 import HttpResponse from "../response";
 import HttpComponent from "./httpComponent";
-import { Org, OrgMember, Paginated, paginatedResponse } from "./interfaces";
+import {
+  Org,
+  OrgMember,
+  OrgRole,
+  Paginated,
+  paginatedResponse,
+} from "./interfaces";
 
 class Orgs extends HttpComponent {
   get url(): string {
@@ -42,6 +48,43 @@ class Orgs extends HttpComponent {
       headers: this.cli.withToken(),
     });
     return paginatedResponse<OrgMember>(response);
+  }
+
+  async getRoles(orgId: string, query?: any): Promise<Paginated<OrgRole>> {
+    const url = this.urlQuery(`${this.url}/${orgId}/roles`, query);
+    const response = await this.cli.get(url, {
+      headers: this.cli.withToken(),
+    });
+    return paginatedResponse<OrgRole>(response);
+  }
+
+  async createRole(orgId: string, body: any): Promise<OrgRole> {
+    const response = await this.cli.post(`${this.url}/${orgId}/roles`, {
+      body,
+      headers: this.cli.withToken(),
+    });
+    return response.data as OrgRole;
+  }
+
+  async updateRole(
+    orgId: string,
+    roleName: any,
+    body: Record<string, any>
+  ): Promise<OrgRole> {
+    const response = await this.cli.patch(
+      `${this.url}/${orgId}/roles/${roleName}`,
+      {
+        body,
+        headers: this.cli.withToken(),
+      }
+    );
+    return response.data as OrgRole;
+  }
+
+  async deleteRole(orgId: string, roleName: any): Promise<void> {
+    await this.cli.delete(`${this.url}/${orgId}/roles/${roleName}`, {
+      headers: this.cli.withToken(),
+    });
   }
 }
 

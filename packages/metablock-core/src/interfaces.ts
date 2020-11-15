@@ -3,7 +3,8 @@ import { Org, Space } from "./cli";
 export interface ExtensionData {
   title: string;
   url: string;
-  create?: string;
+  create?: any;
+  update?: any;
   options?: Record<string, any>;
   items?: (query: any) => any[];
 }

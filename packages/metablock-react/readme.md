@@ -40,6 +40,10 @@ import {Header} from "@metablock/react";
 
 Progressively load background images
 
+## Forms
+
+The library has a tooling for rending Forms specified via a Json schema.
+
 ## Hooks
 
 ### useIntersectionObserver
