@@ -10,7 +10,7 @@ describe("Test MobX stores", () => {
   });
 
   test("Create stores", () => {
-    expect(Object.keys(stores).length).toBe(5);
+    expect(Object.keys(stores).length).toBe(7);
     expect(stores.commonStore.token).toBe("");
   });
 
