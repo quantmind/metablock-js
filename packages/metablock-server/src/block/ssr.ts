@@ -1,7 +1,9 @@
 import AsyncLock from "async-lock";
-import { Request } from "express";
+import { Request, Response } from "express";
+import { performance } from "perf_hooks";
 import puppeteer from "puppeteer";
 import { Services } from "../interfaces";
+import { reqUrl } from "../request";
 
 const whitelistResources = new Set(["document", "script", "xhr", "fetch"]);
 const blacklist = [
@@ -34,35 +36,56 @@ export const defaultBrowserInterceptors: any[] = [
   blackList(blacklist),
 ];
 
+type FinishCallbackType = (
+  props: Record<string, any>,
+  req: Request,
+  res: Response
+) => void;
+
+const noop = () => {};
+
 class BrowserManager {
   public services?: Services;
   public config: Record<string, any>;
+  public pageConfig: Record<string, any>;
   public plugins: any[];
   public interceptors: any[];
+  public onFinish: FinishCallbackType;
   private _browser?: puppeteer.Browser;
   private _browserWsEndpoint?: string;
   private _lock: AsyncLock;
 
   constructor(services?: Services, options?: any) {
-    const { plugins = [], interceptors, ...config } = options || {};
+    const {
+      plugins = [],
+      interceptors,
+      waitUntil = "networkidle2",
+      timeout = 10000,
+      onFinish = noop,
+      ...config
+    } = options || {};
     this.services = services;
-    this.config = { waitUntil: "networkidle0", ...config };
+    this.config = config;
+    this.pageConfig = { waitUntil, timeout };
     this.plugins = plugins;
     this.interceptors = interceptors || defaultBrowserInterceptors;
+    this.onFinish = onFinish;
     this._lock = new AsyncLock();
   }
 
-  async ssr(req: Request): Promise<Record<string, any>> {
+  async ssr(req: Request, res: Response): Promise<Record<string, any>> {
     if (this.services) {
       return await this.services.fromCache(fullUrl(req).toString(), () =>
-        this.render(req)
+        this.render(req, res)
       );
     } else {
-      return await this.render(req);
+      return await this.render(req, res);
     }
   }
 
-  async render(req: Request): Promise<Record<string, any>> {
+  async render(req: Request, res: Response): Promise<Record<string, any>> {
+    const t0 = performance.now();
+    let requestCount = 0;
     const page = await this.newPage();
     try {
       // Intercept network requests
@@ -71,20 +94,28 @@ class BrowserManager {
         for (let i = 0; i < this.interceptors.length; ++i) {
           if (this.interceptors[i](request)) return;
         }
+        requestCount += 1;
         request.continue();
       });
       // fetch the page
       const renderUrl = fullUrl(req);
       renderUrl.searchParams.set("_ssr", "yes");
-      await page.goto(renderUrl.toString(), {
-        waitUntil: this.config.waitUntil,
-      });
+      await page.goto(renderUrl.toString(), this.pageConfig);
       let result: Record<string, any> = {};
       for (let i = 0; i < this.plugins.length; ++i) {
         const meta = await this.plugins[i](page);
         if (meta) result = { ...meta, ...result };
       }
       result.content = await page.content();
+      result.time = Math.round(performance.now() - t0);
+      result.requestCount = requestCount;
+      res
+        .set(
+          "Server-Timing",
+          `Prerender;dur=${result.time};desc="Headless render time (ms)"`
+        )
+        .status(result.statusCode || 200);
+      this.onFinish(result, req, res);
       return result;
     } finally {
       await page.close();
@@ -142,8 +173,6 @@ class BrowserManager {
   }
 }
 
-const fullUrl = (req: Request): URL => {
-  return new URL(`${req.protocol}://${req.get("host")}${req.originalUrl}`);
-};
+const fullUrl = (req: Request): URL => new URL(reqUrl(req));
 
 export default BrowserManager;

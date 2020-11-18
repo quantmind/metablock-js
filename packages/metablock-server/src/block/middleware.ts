@@ -1,7 +1,10 @@
+import { getLogger } from "@metablock/core";
 import { Express, Request, Response } from "express";
-import { performance } from "perf_hooks";
 import { Context, Services } from "../interfaces";
+import { reqUrl } from "../request";
 import rawHtml from "./html";
+
+const logger = getLogger({ name: "ssr" });
 
 export interface MetablockRequest extends Request {
   context: Context;
@@ -42,16 +45,17 @@ export default (app: Express, services: Services, options?: any) => {
   };
 
   const serve_html = async (req: MetablockRequest, res: Response) => {
-    const t0 = performance.now();
-    const result = await ssrManager.ssr(req);
-    const total = Math.round(performance.now() - t0);
-    res
-      .set(
-        "Server-Timing",
-        `Prerender;dur=${total};desc="Headless render time (ms)"`
-      )
-      .status(result.statusCode || 200)
-      .send(result.content);
+    let content;
+    try {
+      const result = await ssrManager.ssr(req, res);
+      content = result.content;
+    } catch (err) {
+      if (err.constructor && err.constructor.name === "TimeoutError")
+        logger.warn({ url: reqUrl(req), message: err.toString() });
+      else logger.error(err);
+      content = await rawHtml(req.context, req);
+    }
+    res.send(content);
   };
 
   const dev = async (req: Request, res: any, next: any) => {

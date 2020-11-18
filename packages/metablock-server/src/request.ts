@@ -2,10 +2,13 @@ import { getLogger, Logger } from "@metablock/core";
 import { Express, Request } from "express";
 import onFinished from "on-finished";
 
+export const reqUrl = (req: Request) =>
+  `${req.protocol}://${req.get("host")}${req.originalUrl}`;
+
 const defaultLogData = (req: Request, status: number) => {
   return {
     method: req.method,
-    url: req.originalUrl,
+    url: reqUrl(req),
     status,
     "user-agent": req.get("user-agent"),
   };
