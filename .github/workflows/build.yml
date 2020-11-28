@@ -49,6 +49,7 @@ jobs:
         with:
           tag_name: "v%s"
           tag_message: "v%s"
+          commit_pattern: "^Release"
           publish_command: make
           publish_args: publish
         env:
