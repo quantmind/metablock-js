@@ -17,6 +17,7 @@
     "colors": "^1.4.0",
     "commander": "^6.2.0",
     "cross-fetch": "^3.0.5",
+    "d3-time-format": "^3.0.0",
     "form-data": "^3.0.0",
     "fs-extra": "^9.0.1",
     "mime-types": "^2.1.27",
@@ -38,19 +39,14 @@
     "@types/archiver": "^3.1.0",
     "@types/mime-types": "^2.1.0",
     "@types/node-emoji": "^1.8.1",
-    "@types/tmp": "^0.2.0"
+    "@types/tmp": "^0.2.0",
+    "add": "^2.0.6",
+    "rollup-plugin-copy": "^3.3.0"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && tsc",
+    "build": "export NODE_ENV=production && rollup -c",
     "dev": "ts-node src/metablock.ts",
-    "watch": "nodemon"
-  },
-  "nodemonConfig": {
-    "watch": [
-      "src"
-    ],
-    "exec": "tsc",
-    "ext": "ts"
+    "watch": "rollup -c -w"
   },
   "homepage": "https://metablock.io"
 }

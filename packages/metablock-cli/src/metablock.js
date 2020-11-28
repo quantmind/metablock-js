@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-import createClient from "./cli";
+const { createClient } = require("./index");
 
 createClient().parse(process.argv);

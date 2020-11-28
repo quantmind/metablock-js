@@ -6,7 +6,7 @@ import MessageStore from "./messages";
 import PhotoStore from "./photos";
 import UserStore from "./user";
 
-const createStores = (baseUrl: string, name?: string) => {
+const createStores = (baseUrl: string, name?: string): Record<string, any> => {
   const cli = new Metablock({ baseUrl, name });
   const cacheStore = new CacheStore();
   const commonStore = new CommonStore(cli);
