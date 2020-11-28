@@ -49,8 +49,7 @@ jobs:
         with:
           tag_name: "v%s"
           tag_message: "v%s"
-          publish_command: make
-          publish_args: publish
+          publish_command: ./publish
         env:
           GITHUB_TOKEN: ${{ secrets.QMBOT_GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.QMBOT_NPM_TOKEN }}
