@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CODECOV_TOKEN: d4844aaf-4533-4d72-80df-65806ecb6591
+      NPM_AUTH_TOKEN: ${{ secrets.QMBOT_NPM_TOKEN }}
 
     strategy:
       matrix:
