@@ -1,9 +1,13 @@
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import { ExtensionData, Paginated } from "@metablock/core";
+import { Paginated } from "@metablock/core";
 import React from "react";
+import { Route, Switch } from "react-router-dom";
 import { useAsync } from "react-use";
 import Link from "../components/Link";
+import { useStores } from "../store";
+import CrudForm from "./Form";
+import { ExtensionData } from "./interfaces";
 import ListEntry from "./ListEntry";
 
 interface ListItem {
@@ -13,25 +17,33 @@ interface ListItem {
 }
 type ListResult = Paginated<ListItem>;
 
-const List = (props: ExtensionData) => {
+const List = (props: ExtensionData<ListItem>) => {
   const { url, items, create } = props;
   if (!items) throw new Error("items async function must be provided");
-  const result = useAsync(items as any);
-  if (result.loading) return null;
-  const p: ListResult = result.value as ListResult;
+  const stores = useStores();
+  const { loading, value } = useAsync(async () => {
+    return await items(stores);
+  });
+  if (loading) return null;
+  const p: ListResult = (value || []) as ListResult;
 
   return (
-    <Grid container spacing={4}>
+    <Switch>
       {create ? (
-        <Grid item lg={12}>
-          <Link to={`${url}/new`}>
-            <Button color="primary" variant="contained">
-              {create}
-            </Button>
-          </Link>
-        </Grid>
+        <Route path={`${url}/new`} exact>
+          <CrudForm {...create} />
+        </Route>
       ) : null}
-      <Grid item lg={12}>
+      <Route path={url} exact>
+        {create ? (
+          <Box pb={2}>
+            <Link to={`${url}/new`}>
+              <Button variant="contained" color="primary">
+                {create.label}
+              </Button>
+            </Link>
+          </Box>
+        ) : null}
         {p.data.map((ext: ListItem, index: number) => {
           const { description, ...extra } = ext;
           return (
@@ -40,8 +52,8 @@ const List = (props: ExtensionData) => {
             </ListEntry>
           );
         })}
-      </Grid>
-    </Grid>
+      </Route>
+    </Switch>
   );
 };
 

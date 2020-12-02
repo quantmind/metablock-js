@@ -23,9 +23,9 @@ export function paginatedResponse<T>(response: HttpResponse): Paginated<T> {
 export interface Org {
   id: string;
   short_name: string;
-  full_name: string;
   email: string;
-  country: string;
+  full_name?: string;
+  country?: string;
   website?: string;
 }
 

@@ -1,11 +1,11 @@
 import Alert from "@material-ui/lab/Alert";
-import { ExtensionOutput } from "@metablock/core";
 import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Route, Switch } from "react-router-dom";
 import { useStores } from "../store";
 import { NotFound, Page } from "../views";
 import { ExtensionFailure, ExtensionLoaded, ExtensionType } from "./Extensions";
+import { ExtensionOutput } from "./interfaces";
 import list from "./List";
 import table from "./Table";
 
@@ -17,7 +17,7 @@ const Components: Record<string, any> = {
   table,
 };
 
-interface ExtensionProps extends ExtensionOutput {
+interface ExtensionProps<T> extends ExtensionOutput<T> {
   extension: ExtensionType;
   render?: RenderType;
 }
@@ -76,7 +76,7 @@ const ExtensionsComponent = (props: ExtensionsProps) => {
   );
 };
 
-const ExtensionComponent = (props: ExtensionProps) => {
+function ExtensionComponent<T>(props: ExtensionProps<T>) {
   const { title } = props;
   return (
     <Page title={title}>
@@ -85,9 +85,9 @@ const ExtensionComponent = (props: ExtensionProps) => {
       </ErrorBoundary>
     </Page>
   );
-};
+}
 
-const Render = (props: ExtensionProps) => {
+function Render<T>(props: ExtensionProps<T>) {
   const { extension, type, component, render, ...extra } = props;
   const { url } = extra;
   const Component: any = type ? Components[type] : component;
@@ -101,6 +101,6 @@ const Render = (props: ExtensionProps) => {
   ) : (
     <Component {...extra} />
   );
-};
+}
 
 export default ExtensionsComponent;

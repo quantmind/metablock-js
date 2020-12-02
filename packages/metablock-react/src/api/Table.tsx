@@ -1,13 +1,13 @@
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import { ExtensionData } from "@metablock/core";
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Link from "../components/Link";
 import MetaTable from "../components/MetaTable";
 import CrudForm from "./Form";
+import { ExtensionData } from "./interfaces";
 
-const Table = (props: ExtensionData) => {
+const Table = (props: ExtensionData<any>) => {
   const { title, items, url, create, update, options = {} } = props;
   const { columns } = options;
   return (
