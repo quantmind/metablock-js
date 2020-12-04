@@ -1,6 +1,6 @@
 {
   "name": "@metablock/cli",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "A node client for interacting with metablock cloud",
   "main": "dist/index.js",
   "repository": {
@@ -11,9 +11,9 @@
   "author": "Quantmind",
   "license": "ISC",
   "dependencies": {
-    "@metablock/core": "0.7.1",
-    "@rollup/plugin-node-resolve": "^10.0.0",
-    "archiver": "^5.0.2",
+    "@metablock/core": "0.7.2",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "archiver": "^5.1.0",
     "colors": "^1.4.0",
     "commander": "^6.2.0",
     "cross-fetch": "^3.0.5",
@@ -24,7 +24,7 @@
     "node-emoji": "^1.10.0",
     "pretty-bytes": "^5.3.0",
     "rollup": "^2.18.2",
-    "rollup-plugin-svelte": "^6.1.0",
+    "rollup-plugin-svelte": "^7.0.0",
     "slugify": "^1.4.2",
     "svelte": "^3.23.2",
     "tmp": "^0.2.1"
@@ -36,7 +36,7 @@
     "metablock": "dist/metablock.js"
   },
   "devDependencies": {
-    "@types/archiver": "^3.1.0",
+    "@types/archiver": "^5.1.0",
     "@types/mime-types": "^2.1.0",
     "@types/node-emoji": "^1.8.1",
     "@types/tmp": "^0.2.0",

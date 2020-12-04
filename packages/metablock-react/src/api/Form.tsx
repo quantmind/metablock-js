@@ -50,7 +50,8 @@ const InnerForm = (props: any) => {
     label = "submit",
     successMessage = "Success",
   } = props;
-  const { messageStore } = useStores();
+  const stores = useStores();
+  const { messageStore } = stores;
 
   const form = useForm({
     defaultValues: flattenData(schema, defaults),
@@ -60,7 +61,7 @@ const InnerForm = (props: any) => {
     ) => {
       const body = unFlattenData(changedData);
       try {
-        await submit(body);
+        await submit(stores, body);
         messageStore.success(successMessage, 3000);
       } catch (errors) {
         if (errors.status === 422) {
