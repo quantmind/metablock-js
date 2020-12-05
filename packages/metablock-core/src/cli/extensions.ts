@@ -1,13 +1,13 @@
-import HttpResponse from "../response";
 import HttpComponent from "./httpComponent";
-import { Extension } from "./interfaces";
+import { Extension, Paginated, paginatedResponse } from "./interfaces";
 
 class Extensions extends HttpComponent {
-  async getList(query: any): Promise<HttpResponse> {
+  async getList(query: any): Promise<Paginated<Extension>> {
     const url = this.urlQuery(`${this.cli.apiUrl}/extensions`, query);
-    return await this.cli.get(url, {
+    const response = await this.cli.get(url, {
       headers: this.cli.withToken(),
     });
+    return paginatedResponse<Extension>(response);
   }
 
   async get(name_or_id: string): Promise<Extension> {

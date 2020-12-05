@@ -1,6 +1,12 @@
 import HttpResponse from "../response";
 import HttpComponent from "./httpComponent";
-import { Block, BlockPlugin } from "./interfaces";
+import {
+  Block,
+  BlockPlugin,
+  Deployment,
+  Paginated,
+  paginatedResponse,
+} from "./interfaces";
 
 class Blocks extends HttpComponent {
   async getList(query: any): Promise<HttpResponse> {
@@ -52,14 +58,18 @@ class Blocks extends HttpComponent {
     return response.data as any;
   }
 
-  async plugins(block_id: string, query?: any): Promise<HttpResponse> {
+  async plugins(
+    block_id: string,
+    query?: any
+  ): Promise<Paginated<BlockPlugin>> {
     const url = this.urlQuery(
       `${this.cli.apiUrl}/services/${block_id}/plugins`,
       query
     );
-    return await this.cli.get(url, {
+    const response = await this.cli.get(url, {
       headers: this.cli.withToken(),
     });
+    return paginatedResponse<BlockPlugin>(response);
   }
 
   async updatePlugin(block_id: string, body: any): Promise<BlockPlugin> {
@@ -71,14 +81,18 @@ class Blocks extends HttpComponent {
     return response.data as BlockPlugin;
   }
 
-  async deployments(block_id: string, query?: any): Promise<HttpResponse> {
+  async deployments(
+    block_id: string,
+    query?: any
+  ): Promise<Paginated<Deployment>> {
     const url = this.urlQuery(
       `${this.cli.apiUrl}/services/${block_id}/deployments`,
       query
     );
-    return await this.cli.get(url, {
+    const response = await this.cli.get(url, {
       headers: this.cli.withToken(),
     });
+    return paginatedResponse<Deployment>(response);
   }
 
   async ship(

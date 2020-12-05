@@ -1,6 +1,12 @@
 import HttpResponse from "../response";
 import HttpComponent from "./httpComponent";
-import { Space, SpaceExtension } from "./interfaces";
+import {
+  Block,
+  Paginated,
+  paginatedResponse,
+  Space,
+  SpaceExtension,
+} from "./interfaces";
 
 class Spaces extends HttpComponent {
   async getList(query: any): Promise<HttpResponse> {
@@ -53,24 +59,29 @@ class Spaces extends HttpComponent {
     });
   }
 
-  async getBlocks(space: Space, query?: any): Promise<HttpResponse> {
+  async getBlocks(space_id: string, query?: any): Promise<Paginated<Block>> {
     const url = this.urlQuery(
-      `${this.cli.apiUrl}/spaces/${space.id}/services`,
+      `${this.cli.apiUrl}/spaces/${space_id}/services`,
       query
     );
-    return await this.cli.get(url, {
+    const response = await this.cli.get(url, {
       headers: this.cli.withToken(),
     });
+    return paginatedResponse<Block>(response);
   }
 
-  async getExtensions(space_id: string, query?: any): Promise<HttpResponse> {
+  async getExtensions(
+    space_id: string,
+    query?: any
+  ): Promise<Paginated<SpaceExtension>> {
     const url = this.urlQuery(
       `${this.cli.apiUrl}/spaces/${space_id}/extensions`,
       query
     );
-    return await this.cli.get(url, {
+    const response = await this.cli.get(url, {
       headers: this.cli.withToken(),
     });
+    return paginatedResponse<SpaceExtension>(response);
   }
 
   async updateExtension(space_id: string, body: any): Promise<SpaceExtension> {

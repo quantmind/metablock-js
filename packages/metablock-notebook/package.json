@@ -1,6 +1,6 @@
 {
   "name": "@metablock/notebook",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "private": false,
   "description": "Metablock Notebook",
   "main": "dist/index.js",
