@@ -25,7 +25,7 @@ const List = (props: ExtensionData<ListItem>) => {
     return await items(stores);
   });
   if (loading) return null;
-  const p: ListResult = (value || []) as ListResult;
+  const p: ListResult = (value || { data: [] }) as ListResult;
 
   return (
     <Switch>

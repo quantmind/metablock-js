@@ -75,6 +75,7 @@ export interface Space {
   org_name: string;
   blocks?: Paginated<Block>;
   extensions: Paginated<SpaceExtension>;
+  cdn?: string;
 }
 
 export interface Extension {
