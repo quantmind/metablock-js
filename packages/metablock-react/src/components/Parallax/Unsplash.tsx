@@ -14,21 +14,20 @@ interface UnsplashProps extends ParallaxProps {
 const Unsplash = (props: UnsplashProps) => {
   const { photoId, credit, maxWidth, ...extra } = props;
   const { photoStore } = useStores();
-  const result = useAsync(async () => {
-    if (isSsr()) return { urls: [] };
+  const { loading, value } = useAsync(async () => {
+    if (isSsr()) return { urls: {} };
     else return await photoStore.getPhoto(photoId);
   }, [photoId]);
   let urls: string[] = [];
-  const data = result.value;
-  if (!result.loading && data) {
-    const d = data?.urls;
+  if (!loading && value) {
+    const d = value.urls;
     urls = [d.thumb, d.small, d.regular, d.full];
   }
   return (
     <>
       <Parallax urls={urls} maxWidth={maxWidth} {...extra} />
-      {credit && data ? (
-        <UnsplashCredits {...data} maxWidth={maxWidth} />
+      {credit && value ? (
+        <UnsplashCredits {...value} maxWidth={maxWidth} />
       ) : null}
     </>
   );

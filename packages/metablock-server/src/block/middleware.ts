@@ -17,8 +17,10 @@ export default (app: Express, services: Services, options?: any) => {
   const serve = async (req: Request, res: Response, next: any) => {
     try {
       const mReq: MetablockRequest = req as MetablockRequest;
-      mReq.context = await services.getConfig(req);
-      if (ssrManager && req.query._ssr === "yes") serve_raw(mReq, res);
+      const context = await services.getConfig(req);
+      mReq.context = context;
+      if (!context.web.id || (ssrManager && req.query._ssr === "yes"))
+        serve_raw(mReq, res);
       else {
         const middleware = [
           ...mReq.context.middleware,

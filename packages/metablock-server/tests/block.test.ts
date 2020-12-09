@@ -26,7 +26,7 @@ describe("Test html tools", () => {
     const { status, text, headers } = response;
     expect(status).toBe(200);
     expect(headers["content-type"]).toBe("text/html; charset=utf-8");
-    expect(text).toBe("<html><head></head><body><div>test</div></body></html>");
+    expect(text.includes("<title>metablock</title>")).toBeTruthy();
   });
 
   test("seo", async () => {

@@ -17,11 +17,13 @@ class PhotoStore {
   }
 
   async getPhoto(photoId: string): Promise<Record<string, any>> {
-    const jsonStr = window.localStorage.getItem(`photo-${photoId}`);
+    //const jsonStr = window.localStorage.getItem(`photo-${photoId}`);
+    const jsonStr = null;
     if (jsonStr) {
       return JSON.parse(jsonStr);
     } else {
-      const photo = await this.cli.photos.get(photoId);
+      const payload = await this.cli.photos.get(photoId);
+      const { photo } = payload;
       window.localStorage.setItem(`photo-${photoId}`, JSON.stringify(photo));
       return photo;
     }
