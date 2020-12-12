@@ -8,7 +8,12 @@ const useStyles = makeStyles(() => ({
     position: "absolute",
     top: 0,
     left: 0,
+  },
+  height: {
     height: "100%",
+  },
+  width: {
+    width: "100%",
   },
   opacity: (props: any) => ({
     opacity: props.opacity,
@@ -35,6 +40,7 @@ interface ImageProps {
   alt?: string;
   opacity?: number;
   className?: string;
+  fit?: string;
   onIsVisible?: () => void;
   selectImage?: (urls: string[], width: number | undefined) => number;
   urls: string[];
@@ -57,6 +63,7 @@ const Image = (props: ImageProps) => {
   const {
     container = "div",
     alt = "image",
+    fit = "height",
     opacity = 1,
     selectImage = defaultSelectImage,
     urls,
@@ -69,6 +76,8 @@ const Image = (props: ImageProps) => {
   const getClasses = (image: ImageEntry) =>
     clsx({
       [classes.image]: true,
+      [classes.height]: fit === "height",
+      [classes.width]: fit === "width",
       [classes.thumb]: image.size === 0,
       [classes.full]: image.size >= 1,
       [classes.opacity]: image.loaded,

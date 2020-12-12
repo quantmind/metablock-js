@@ -8,3 +8,4 @@ export { default as NoSsr, isSsr } from "./NoSsr";
 export * from "./Parallax";
 export { default as Section } from "./Section";
 export { default as UnsplashCredits } from "./UnsplashCredits";
+export { default as UnsplashImage } from "./UnsplashImage";

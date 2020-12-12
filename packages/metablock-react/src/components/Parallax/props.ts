@@ -4,7 +4,7 @@ interface ParallaxProps {
   maxWidth?: any;
   maxHeight?: string;
   className?: string;
-  children: any;
+  children?: any;
   urls?: string[];
   filter?: number;
   small?: boolean;

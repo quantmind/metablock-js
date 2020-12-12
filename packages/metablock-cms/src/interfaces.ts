@@ -18,4 +18,5 @@ export interface CmsData extends CmsListData {
 
 export interface CmsListProps {
   data: CmsListData[];
+  [x: string]: any;
 }
