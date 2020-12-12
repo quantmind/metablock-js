@@ -37,7 +37,7 @@ const imageProvider = (props: any) => {
   } else return {};
 };
 const EntryImage = (props: any) => {
-  const { title, className } = props;
+  const { title, className, ...extra } = props;
   const image = imageProvider(props);
   if (image.provider === "unsplash")
     return (
@@ -46,6 +46,7 @@ const EntryImage = (props: any) => {
         alt={title}
         fit="width"
         className={className}
+        {...extra}
       />
     );
   else if (image.urls)
@@ -54,7 +55,7 @@ const EntryImage = (props: any) => {
 };
 
 const ListLayout = (props: CmsListProps) => {
-  const { data, defaultUnsplash, ...extra } = props;
+  const { data, ...extra } = props;
   const classes = useStyle(extra);
   return (
     <List>
@@ -65,8 +66,8 @@ const ListLayout = (props: CmsListProps) => {
               <Grid container spacing={3}>
                 <Grid item>
                   <EntryImage
+                    {...extra}
                     {...entry}
-                    defaultUnsplash={defaultUnsplash}
                     className={classes.placeholder}
                   />
                 </Grid>
