@@ -6,6 +6,8 @@
 
 - [Metablock API Client](#metablock-api-client)
   - [Organizations](#organizations)
+  - [Spaces](#spaces)
+  - [Blocks](#blocks)
 - [Tools](#tools)
   - [Urls](#urls)
   - [Logger](#logger)
@@ -31,6 +33,16 @@ const user = await cli.user.getUser();
 
 The metablock client access the organizations endpoints via [cli.orgs](./src/cli/orgs.ts) component.
 Check the [org REST docs](https://api.metablock.io/v1/docs#tag/Organizations) for more detailed information.
+
+### Spaces
+
+The metablock client access the organizations endpoints via [cli.spaces](./src/cli/spaces.ts) component.
+Check the [space REST docs](https://api.metablock.io/v1/docs#tag/Spaces) for more detailed information.
+
+### Blocks
+
+The metablock client access the organizations endpoints via [cli.blocks](./src/cli/blocks.ts) component.
+Check the [block REST docs](https://api.metablock.io/v1/docs#tag/Services) for more detailed information.
 
 ## Tools
 

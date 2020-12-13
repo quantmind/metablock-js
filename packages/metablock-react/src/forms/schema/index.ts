@@ -1,4 +1,6 @@
 import BooleanSchema from "./Boolean";
+import EditableTable from "./EditableTable";
+import EditorSchema from "./Editor";
 import NumberSchema from "./Number";
 import ObjectSchema from "./Object";
 import SchemaRegistry from "./registry";
@@ -19,3 +21,5 @@ SchemaRegistry.set("boolean", BooleanSchema);
 SchemaRegistry.set("integer", NumberSchema);
 SchemaRegistry.set("number", NumberSchema);
 SchemaRegistry.set("object", ObjectSchema);
+SchemaRegistry.set("string:code", EditorSchema);
+SchemaRegistry.set("array:table", EditableTable);

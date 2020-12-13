@@ -58,7 +58,7 @@ class Blocks extends HttpComponent {
     return response.data as any;
   }
 
-  async plugins(
+  async getPlugins(
     block_id: string,
     query?: any
   ): Promise<Paginated<BlockPlugin>> {

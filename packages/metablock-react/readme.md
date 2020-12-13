@@ -4,12 +4,15 @@ React components, views and utilities for building metablocks.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Contents**
+
 
 - [Components](#components)
   - [NoSsr](#nossr)
   - [Header](#header)
   - [Image](#image)
+- [Forms](#forms)
+  - [FormFromSchema](#formfromschema)
+  - [SchemaRegistry](#schemaregistry)
 - [Hooks](#hooks)
   - [useIntersectionObserver](#useintersectionobserver)
   - [useWindowSize](#usewindowsize)
@@ -21,12 +24,12 @@ React components, views and utilities for building metablocks.
 ### NoSsr
 
 Disable server-side rendering
+
 ```js
-import {NoSsr} from "@metablock/react";
-<NoSsr>
-  ...
-</NoSsr>
+import { NoSsr } from "@metablock/react";
+<NoSsr>...</NoSsr>;
 ```
+
 This is useful for private/login-protected pages for example.
 
 ### Header
@@ -42,7 +45,31 @@ Progressively load background images
 
 ## Forms
 
-The library has a tooling for rending Forms specified via a Json schema.
+The library has a tooling for rending Forms specified via JSON schema.
+
+### FormFromSchema
+
+The entrypoint component for rendring froms from JSON schema
+
+```js
+import {FormFromSchema} from "@metablock/react";
+
+<FormFromSchema schema={...} data={...} />
+```
+
+### SchemaRegistry
+
+This is a global object which controls how form fields are rendered. By defaults it provide the basic input fields, but it can be extended or overwritten if required.
+
+```js
+import { SchemaRegistry } from "@metablock/react";
+
+SchemaRegistry.set("string", StringSchema);
+SchemaRegistry.set("boolean", BooleanSchema);
+SchemaRegistry.set("integer", NumberSchema);
+SchemaRegistry.set("number", NumberSchema);
+SchemaRegistry.set("object", ObjectSchema);
+```
 
 ## Hooks
 
