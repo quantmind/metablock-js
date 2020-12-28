@@ -53,9 +53,14 @@ const ExtensionsComponent = (props: ExtensionsProps) => {
     );
   }, [extensions, messageStore]);
 
+  const routes = loaded
+    .slice()
+    .sort((e1: ExtensionLoaded, e2: ExtensionLoaded) =>
+      e1.output.url < e2.output.url ? 1 : -1
+    );
   return (
     <Switch>
-      {loaded.map((e: ExtensionLoaded) => {
+      {routes.map((e: ExtensionLoaded) => {
         const { output, extension } = e;
         return (
           <Route

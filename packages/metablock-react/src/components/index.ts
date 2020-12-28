@@ -7,5 +7,6 @@ export { default as ListItemLink } from "./ListItemLink";
 export { default as NoSsr, isSsr } from "./NoSsr";
 export * from "./Parallax";
 export { default as Section } from "./Section";
+export { default as TabRoutes } from "./TabRoutes";
 export { default as UnsplashCredits } from "./UnsplashCredits";
 export { default as UnsplashImage } from "./UnsplashImage";

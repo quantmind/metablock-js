@@ -47,6 +47,7 @@ const InnerForm = (props: any) => {
     schema,
     defaults,
     submit,
+    changesOnly = true,
     label = "submit",
     successMessage = "Success",
   } = props;
@@ -59,7 +60,7 @@ const InnerForm = (props: any) => {
       formData: Record<string, any>,
       changedData: Record<string, any>
     ) => {
-      const body = unFlattenData(changedData);
+      const body = unFlattenData(changesOnly ? changedData : formData);
       try {
         await submit(stores, body);
         messageStore.success(successMessage, 3000);

@@ -22,4 +22,5 @@ SchemaRegistry.set("integer", NumberSchema);
 SchemaRegistry.set("number", NumberSchema);
 SchemaRegistry.set("object", ObjectSchema);
 SchemaRegistry.set("string:code", EditorSchema);
+SchemaRegistry.set("array:code", EditorSchema);
 SchemaRegistry.set("array:table", EditableTable);

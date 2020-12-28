@@ -1,5 +1,10 @@
 import config, { Library } from "./config";
 
+const MODE: Record<string, string | Record<string, any>> = {
+  html: "htmlmixed",
+  json: { name: "javascript", json: true },
+};
+
 const resolve = (name: string): string | void => {
   if (name.substring(0, config.CODEMIRROR.length) == config.CODEMIRROR)
     return name;
@@ -32,7 +37,13 @@ class Editor {
       ...extra
     } = opts;
     extra.value = text || "";
-    const modeUrl = `${config.CODEMIRROR}/mode/${mode}/${mode}.js`;
+
+    const codeMirrorMode = MODE[mode] || mode;
+    const language =
+      codeMirrorMode.constructor === String
+        ? codeMirrorMode
+        : codeMirrorMode.name;
+    const modeUrl = `${config.CODEMIRROR}/mode/${language}/${language}.js`;
     await this.lib.loadStyle(`${config.CODEMIRROR}/lib/codemirror.css`);
     await this.lib.loadStyle(`${config.CODEMIRROR}/theme/${theme}.css`);
     this.lib
@@ -42,9 +53,9 @@ class Editor {
           const instance = Codemirror(element, {
             lineNumbers: this.lineNumbers(mode, lineNumbers),
             tabSize: this.tabSize(mode, tabSize),
+            mode: codeMirrorMode,
             styleActiveLine,
             matchBrackets,
-            mode,
             theme,
             ...extra,
           });

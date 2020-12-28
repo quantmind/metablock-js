@@ -3,13 +3,19 @@ import Button from "@material-ui/core/Button";
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Link from "../components/Link";
-import MetaTable from "../components/MetaTable";
+import { useStores } from "../store";
+import { MetaTable } from "../table";
 import CrudForm from "./Form";
 import { ExtensionData } from "./interfaces";
 
 const Table = (props: ExtensionData<any>) => {
-  const { title, items, url, create, update, options = {} } = props;
+  const { title, items, url, create, Update, options = {}, ...extra } = props;
+  const stores = useStores();
+  if (!items) throw new Error("items async function must be provided");
   const { columns } = options;
+  const tableData = async (metaQuery: any) => {
+    return await items(stores, metaQuery);
+  };
   return (
     <Switch>
       {create ? (
@@ -17,9 +23,9 @@ const Table = (props: ExtensionData<any>) => {
           <CrudForm {...create} />
         </Route>
       ) : null}
-      {update ? (
+      {Update ? (
         <Route path={`${url}/:key`} exact>
-          <CrudForm {...update} />
+          <Update {...extra} />
         </Route>
       ) : null}
       <Route path={url} exact>
@@ -32,7 +38,7 @@ const Table = (props: ExtensionData<any>) => {
             </Link>
           </Box>
         ) : null}
-        <MetaTable title={title} columns={columns} data={items} />
+        <MetaTable title={title} columns={columns} data={tableData} />
       </Route>
     </Switch>
   );

@@ -4,7 +4,7 @@ export interface ExtensionData<T> {
   title: string;
   url: string;
   create?: any;
-  update?: any;
+  Update?: any;
   options?: Record<string, any>;
   items?: (stores: Record<string, any>, query?: any) => Paginated<T>;
 }
