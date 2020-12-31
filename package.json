@@ -1,5 +1,5 @@
 {
-  "version": "0.7.8",
+  "version": "0.8.0",
   "private": true,
   "license": "ISC",
   "name": "metablock",
@@ -36,8 +36,8 @@
     "@types/jest": "^26.0.19",
     "@types/lodash": "^4.14.166",
     "@types/sinon": "^9.0.10",
-    "@typescript-eslint/eslint-plugin": "^4.11.0",
-    "@typescript-eslint/parser": "^4.11.0",
+    "@typescript-eslint/eslint-plugin": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
     "chalk": "^4.1.0",
     "child-process-promise": "^2.2.1",
     "codecov": "^3.8.1",
@@ -69,7 +69,7 @@
     "sinon": "^9.2.2",
     "source-map-loader": "^2.0.0",
     "ts-jest": "^26.4.4",
-    "ts-loader": "8.0.12",
+    "ts-loader": "8.0.13",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   },
