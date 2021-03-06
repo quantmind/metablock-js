@@ -23,14 +23,14 @@ export class FormData {
 
   constructor(render: any, options: FormOptions) {
     const { defaultValues = {}, handleSubmit } = options;
+    this.handleSubmit = handleSubmit;
+    this._render = render;
     this.defaults = { ...defaultValues };
     this.data = { ...defaultValues };
     this.dirty = {};
     this.errors = new Map();
     this.errorMessage = "";
     this.success = false;
-    this.handleSubmit = handleSubmit;
-    this._render = render;
   }
 
   onChange() {
@@ -49,6 +49,16 @@ export class FormData {
       this.errors.delete(name);
       this._render({});
     }
+  }
+
+  setNewState(data: Record<string, any>, render = false) {
+    this.defaults = { ...data };
+    this.data = { ...data };
+    this.dirty = {};
+    this.errors = new Map();
+    this.errorMessage = "";
+    this.success = false;
+    if (render) this._render({});
   }
 
   setErrors(records: Array<any>, clear = true) {
