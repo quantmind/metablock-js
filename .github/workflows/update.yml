@@ -1,0 +1,34 @@
+name: update
+
+on:
+  schedule:
+    - cron: "0 6 * * 5"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: use node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: update dependencies
+        run: make update
+      - name: build
+        run: yarn build
+      - name: run tests
+        run: yarn test
+      - name: create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.QMBOT_GITHUB_TOKEN }}
+          author-name: Quantmind Bot
+          author-email: bot@quantmind.com
+          commit-message: update dependencies
+          title: Automated Dependency Updates
+          body: This is an auto-generated PR with dependency updates.
+          branch: ci-yarn-upgrade
+          labels: ci, automated pr, automerge
