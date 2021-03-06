@@ -4,11 +4,9 @@
     "sourceMap": true,
     "strict": true,
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "ESNext",
     "allowJs": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "declaration": true
+    "declaration": true,
   },
   "exclude": ["node_modules"]
 }
