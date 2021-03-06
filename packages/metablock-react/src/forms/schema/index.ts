@@ -1,6 +1,7 @@
 import BooleanSchema from "./Boolean";
 import EditableTable from "./EditableTable";
 import EditorSchema from "./Editor";
+import Fieldset from "./Fieldset";
 import NumberSchema from "./Number";
 import ObjectSchema from "./Object";
 import SchemaRegistry from "./registry";
@@ -14,6 +15,7 @@ export {
   SchemaRegistry,
   StringSchema,
   NumberSchema,
+  Fieldset,
 };
 
 SchemaRegistry.set("string", StringSchema);
