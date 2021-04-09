@@ -1,20 +1,5 @@
 # Metablock Core
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Metablock API Client](#metablock-api-client)
-  - [Organizations](#organizations)
-  - [Spaces](#spaces)
-  - [Blocks](#blocks)
-- [Tools](#tools)
-  - [Urls](#urls)
-  - [Logger](#logger)
-  - [compileOptions(text)](#compileoptionstext)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 Core tooling for metablock applications
 
 - Lightweight with no dependencies
