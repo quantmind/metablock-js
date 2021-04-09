@@ -1,12 +1,22 @@
 import React from "react";
 
+export type FieldCallbackType = (
+  name: string,
+  props: Record<string, any>
+) => Record<string, any>;
+
+export type FormSubmitType = (
+  data: Record<string, any>,
+  dirty: Record<string, any>
+) => Promise<void>;
+
 interface FormOptions {
+  handleSubmit: FormSubmitType;
   defaultValues?: Record<string, any>;
-  handleSubmit: (
-    data: Record<string, any>,
-    dirty: Record<string, any>
-  ) => Promise<void>;
+  fieldCallback?: FieldCallbackType;
 }
+
+const passThrough = (ignored: string, props: Record<string, any>) => props;
 
 export class FormData {
   defaults: Record<string, any>;
@@ -14,15 +24,13 @@ export class FormData {
   dirty: Record<string, any>;
   errors: Map<string, string>;
   errorMessage: string;
-  handleSubmit: (
-    data: Record<string, any>,
-    dirty: Record<string, any>
-  ) => Promise<void>;
   success: boolean;
-  _render: any;
+  handleSubmit: FormSubmitType;
+  fieldCallback: FieldCallbackType;
+  private _render: any;
 
   constructor(render: any, options: FormOptions) {
-    const { defaultValues = {}, handleSubmit } = options;
+    const { defaultValues = {}, fieldCallback, handleSubmit } = options;
     this.handleSubmit = handleSubmit;
     this._render = render;
     this.defaults = { ...defaultValues };
@@ -31,6 +39,7 @@ export class FormData {
     this.errors = new Map();
     this.errorMessage = "";
     this.success = false;
+    this.fieldCallback = fieldCallback || passThrough;
   }
 
   onChange() {

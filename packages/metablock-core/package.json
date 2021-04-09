@@ -1,7 +1,6 @@
 {
   "name": "@metablock/core",
   "version": "0.9.1",
-  "private": false,
   "description": "Metablock core library",
   "main": "dist/index.min.js",
   "types": "dist/index.d.ts",
@@ -20,7 +19,6 @@
     "src/**/*",
     "dist/**/*"
   ],
-  "dependencies": {},
   "scripts": {
     "build": "export NODE_ENV=production && rollup -c",
     "watch": "rollup -c -w"

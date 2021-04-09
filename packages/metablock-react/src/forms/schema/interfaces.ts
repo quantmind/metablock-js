@@ -1,3 +1,5 @@
+import { FormData } from "../useForm";
+
 export interface SchemaEntry {
   type: string;
   format?: string;
@@ -10,19 +12,16 @@ export interface SchemaEntry {
   maximum?: number;
 }
 
-export type FieldCallbackType = (name: string, props: any) => any;
-
 export interface SchemaEntryProps {
-  form: any;
+  form: FormData;
   schema: SchemaEntry;
   name: string;
   required?: boolean;
-  callback?: FieldCallbackType;
   [key: string]: any;
 }
 
 export interface SchemaFormProps {
-  form: any;
+  form: FormData;
   schema: SchemaEntry;
-  callback?: FieldCallbackType;
+  [key: string]: any;
 }

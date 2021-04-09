@@ -16,7 +16,7 @@
     "store"
   ],
   "dependencies": {
-    "@metablock/core": "0.9.1",
+    "@metablock/core": "^0.9.1",
     "mobx": "^6.0.3"
   },
   "scripts": {

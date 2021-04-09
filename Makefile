@@ -13,6 +13,7 @@ clean:		## remove generated files
 
 clean-deep:	## remove generated files & node_modules
 	make clean
+	rm -rf .yarn
 	find . -name 'node_modules' | xargs rm -rf
 
 doc:		## update table of contents in docs

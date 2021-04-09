@@ -45,8 +45,10 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: 14
-      - run: yarn
-      - run: yarn build
+      - name: install packages
+        run: yarn
+      - name: build bundles
+        run: yarn build
       - name: Publish if version has been updated
         uses: pascalgn/npm-publish-action@1.3.5
         with:

@@ -29,7 +29,7 @@ const IntegerSchema: React.FC<SchemaEntryProps> = (prop: SchemaEntryProps) => {
           defaultValue={schema.default || schema.minimum}
           aria-labelledby={id}
           valueLabelDisplay="on"
-          onChange={form.onChange()}
+          onChange={form.onChange() as any}
           name={name}
           min={schema.minimum}
           max={schema.maximum}

@@ -17,6 +17,7 @@ export const getPackages = (): string[] => [
 
 export const updateVersion = async () => {
   const main = await readJson(join(rootDir, "package.json"));
+  const version = `^${main.version}`;
   const dirs = getPackages();
   const packages: string[] = dirs.map((dir) => `@${dir.replace("-", "/")}`);
   await Promise.all(
@@ -28,7 +29,7 @@ export const updateVersion = async () => {
       packageJSON.license = main.license;
       const { dependencies } = packageJSON;
       packages.forEach((pkg) => {
-        if (dependencies && dependencies[pkg]) dependencies[pkg] = main.version;
+        if (dependencies && dependencies[pkg]) dependencies[pkg] = version;
       });
       await writeJson(packagePath, packageJSON, { spaces: 2 });
     })

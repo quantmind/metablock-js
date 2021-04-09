@@ -3,4 +3,4 @@ export { default as ControlField } from "./ControlField";
 export { default as FormErrorMessage } from "./ErrorMessage";
 export * from "./schema";
 export { default as TextField } from "./TextField";
-export { default as useForm } from "./useForm";
+export { default as useForm, FieldCallbackType, FormData } from "./useForm";

@@ -11,16 +11,30 @@ import {
   flattenData,
   FormErrorMessage,
   FormFromSchema,
+  SchemaEntry,
   unFlattenData,
   useForm,
 } from "../forms";
 import { useStores } from "../store";
 import { Page } from "../views";
 
-const CrudForm = (props: any) => {
+type SchemaPromiseFunction = () => Promise<SchemaEntry>;
+
+interface CrudFormProps {
+  schema: SchemaPromiseFunction;
+  [key: string]: any;
+}
+
+interface InnerFormProps {
+  schema: SchemaEntry;
+  [key: string]: any;
+}
+
+const CrudForm = (props: CrudFormProps) => {
   const { title, schema, maxWidth = "md", ...extra } = props;
   const result = useAsync(schema);
-  return (
+  const { loading, value } = result;
+  return title ? (
     <Page title={title}>
       <Container maxWidth={maxWidth}>
         <Card>
@@ -32,30 +46,35 @@ const CrudForm = (props: any) => {
             }
           />
           <CardContent>
-            {result.loading ? null : (
-              <InnerForm {...extra} schema={result.value} />
+            {loading ? null : (
+              <InnerForm {...extra} schema={value as SchemaEntry} />
             )}
           </CardContent>
         </Card>
       </Container>
     </Page>
+  ) : loading ? null : (
+    <InnerForm {...extra} schema={value as SchemaEntry} />
   );
 };
 
-const InnerForm = (props: any) => {
+const InnerForm = (props: InnerFormProps) => {
   const {
     schema,
     defaults,
     submit,
+    fieldCallback,
     changesOnly = true,
     label = "submit",
     successMessage = "Success",
+    ...extra
   } = props;
   const stores = useStores();
   const { messageStore } = stores;
 
   const form = useForm({
     defaultValues: flattenData(schema, defaults),
+    fieldCallback: fieldCallback,
     handleSubmit: async (
       formData: Record<string, any>,
       changedData: Record<string, any>
@@ -86,7 +105,7 @@ const InnerForm = (props: any) => {
       {form.errorMessage ? (
         <FormErrorMessage paragraph>{form.errorMessage}</FormErrorMessage>
       ) : null}
-      <FormFromSchema form={form} schema={schema} />
+      <FormFromSchema form={form} schema={schema} {...extra} />
       <FormControl margin="normal">
         <Button type="submit" variant="contained" color="primary">
           {label}

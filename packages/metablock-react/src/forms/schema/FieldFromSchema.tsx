@@ -7,10 +7,8 @@ const MissingSchema = (props: SchemaEntryProps) => {
   return <StringSchema disabled {...props} />;
 };
 
-const passthrough = (name: string, props: Record<string, any>) => props;
-
 const FieldFromSchema = (props: SchemaEntryProps) => {
-  const { schema, name, form, callback = passthrough, ...extra } = props;
+  const { schema, name, form, ...extra } = props;
   let type = schema.format ? `${schema.type}:${schema.format}` : schema.type;
   let SchemaComponent;
   while (type && !SchemaComponent) {
@@ -26,8 +24,7 @@ const FieldFromSchema = (props: SchemaEntryProps) => {
       name={name}
       form={form}
       schema={schema}
-      callback={callback}
-      {...callback(name, extra)}
+      {...form.fieldCallback(name, extra)}
     />
   );
 };
