@@ -46,10 +46,20 @@ const form = useForm({
   handleSubmit,
   defaultValues,
   fieldCallback
-});
+}, []);
 ```
 
 The `handleSubmit` function is an async function for handling form submissions, `defaultValues` are the initial/default values of the form and `fieldCallback` is an optional function for customizing props of form fields.
+
+The optional `callback` function can be used to further customize the UI. The signature is
+
+```typescript
+const fieldCallback = (name: str, extraProps: Record<string, any>): Record<string, any> => {
+  return extraProps;
+}
+```
+
+where `name` is the input name and `extraProps` are the additional props passed to the original [FormFromSchema](#formfromschema) component.
 
 ## Forms
 
@@ -57,12 +67,16 @@ The library has a tooling for rending Forms specified via JSON schema.
 
 ### FormFromSchema
 
-The entrypoint component for rendring froms from JSON schema
+The entry-point component for rendering forms from JSON schema
 
 ```js
 import {FormFromSchema, useForm} from "@metablock/react";
 
-<FormFromSchema form={form} schema={...} data={...} callback={inputCallback} {...extraProps}/>
+const MyForm = () => {
+  const form = useForm({...});
+
+  return <FormFromSchema form={form} schema={...} data={...} {...extraProps}/>
+};
 ```
 
 The `schema` is a valid subset of the [JSON schema](https://json-schema.org/). For example a simple name input can be defined as:
@@ -80,16 +94,6 @@ The `schema` is a valid subset of the [JSON schema](https://json-schema.org/). F
   }
 }
 ```
-
-The optional `callback` function can be used to further customize the UI. The signature is
-
-```typescript
-const callback = (name: str, extraProps: Record<string, any>): Record<string, any> => {
-  return props;
-}
-```
-
-where `name` is the input name and `extraProps` are the additional props passed to the original `FormFromSchema` component.
 
 ### SchemaRegistry
 
