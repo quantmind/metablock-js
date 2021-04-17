@@ -1,5 +1,5 @@
 {
-  "version": "0.9.2",
+  "version": "0.9.3",
   "private": true,
   "license": "ISC",
   "name": "metablock",
@@ -54,7 +54,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "faker": "5.5.3",
     "fs-extra": "^9.1.0",
-    "has-flag": "^4.0.0",
+    "has-flag": "^5.0.0",
     "husky": "^6.0.0",
     "jest": "^26.6.3",
     "jest-fetch-mock": "^3.0.3",

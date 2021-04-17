@@ -4,7 +4,7 @@ This package allow to serve meta-blocks during development.
 To use it install these two dependencies
 
 ```bash
-yarn add @metablock/server webpack-require-from
+yarn add @metablock/server webpack-require-from --dev
 ```
 
 and use it with webpack
