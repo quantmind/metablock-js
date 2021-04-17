@@ -90,7 +90,7 @@ class BrowserManager {
     try {
       // Intercept network requests
       await page.setRequestInterception(true);
-      page.on("request", (request: puppeteer.Request) => {
+      page.on("request", (request: puppeteer.HTTPRequest) => {
         for (let i = 0; i < this.interceptors.length; ++i) {
           if (this.interceptors[i](request)) return;
         }

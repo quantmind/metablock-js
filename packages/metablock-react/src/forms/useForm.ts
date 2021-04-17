@@ -1,3 +1,4 @@
+import isEqual from "lodash.isequal";
 import React from "react";
 
 export type FieldCallbackType = (
@@ -108,10 +109,12 @@ export class FormData {
   }
 }
 
-const useForm = (options: FormOptions) => {
+const useForm = (options: FormOptions, deps?: any[]) => {
   const [, render] = React.useState();
-  const form = React.useRef(new FormData(render, options));
-  return form.current;
+  const form = new FormData(render, options);
+  const ref = React.useRef({ deps, form });
+  if (!isEqual(ref.current.deps, deps)) ref.current = { deps, form };
+  return ref.current.form;
 };
 
 export default useForm;
