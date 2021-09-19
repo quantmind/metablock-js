@@ -1,9 +1,9 @@
 import autoExternal from "rollup-plugin-auto-external";
-import { terser } from "rollup-plugin-terser";
 import sourcemaps from "rollup-plugin-sourcemaps";
+import { terser } from "rollup-plugin-terser";
 import typescript from "rollup-plugin-typescript2";
-import pkg from "./package.json";
 import getBanner from "../../scripts/banner";
+import pkg from "./package.json";
 
 console.info("Build @metablock/notebook");
 

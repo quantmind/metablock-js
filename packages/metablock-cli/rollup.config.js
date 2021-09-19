@@ -1,6 +1,6 @@
 import autoExternal from "rollup-plugin-auto-external";
-import typescript from "rollup-plugin-typescript2";
 import copy from "rollup-plugin-copy";
+import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
 console.info("Build @metablock/cli");
