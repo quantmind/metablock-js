@@ -1,3 +1,4 @@
+import { log } from "console";
 import api from "./api";
 import { blockMiddleware, BrowserManager } from "./block";
 import requestMiddleware from "./request";
@@ -23,8 +24,13 @@ export const before = (blockUrl: string, metaOptions: any) => {
     const { ssr, ...ssrOptions } = metaOptions;
     const { app, compiler, options } = devServer;
     const { mode } = compiler.options;
-    const { publicPath } = options.static;
+    const publicPath = options.static[0].publicPath[0];
     const services = new DevServices(blockUrl, removeSlash(publicPath));
+    log("");
+    log(
+      "== metablock dev server == serving bundle from local path",
+      `"${services.bundleUrl}"`
+    );
     requestMiddleware(app);
     seoMiddleware(app, services);
     app.use("/.api", api(services));

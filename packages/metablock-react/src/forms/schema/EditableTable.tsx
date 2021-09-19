@@ -1,6 +1,5 @@
-import MaterialTable from "material-table";
 import React from "react";
-import { tableIcons } from "../../table";
+import { MetaTable } from "../../table";
 import { SchemaEntryProps } from "./interfaces";
 
 const copyData = (data: any[]) => {
@@ -33,10 +32,9 @@ const EditableTable = (props: SchemaEntryProps) => {
   };
 
   return (
-    <MaterialTable
+    <MetaTable
       columns={columnFromProps(properties)}
       data={copyData(form.data[name])}
-      icons={tableIcons}
       {...config}
     />
   );
