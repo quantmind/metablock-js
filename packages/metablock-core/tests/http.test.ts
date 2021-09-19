@@ -35,7 +35,7 @@ describe("Test http object", () => {
     fetch.mockReject(new Error("fake error message"));
     try {
       await http.get("/foo");
-    } catch (exc) {
+    } catch (exc: any) {
       expect(exc.status).toEqual(502);
     }
     loggerMock.verify();

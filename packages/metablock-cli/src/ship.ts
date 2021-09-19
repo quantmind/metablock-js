@@ -51,7 +51,7 @@ const ship = async (options: any) => {
     const body = await cli.blocks.ship(block, form);
     const response = JSON.stringify(body, null, 1);
     info(`:tada: upload successful!\n${response}`);
-  } catch (err) {
+  } catch (err: any) {
     const response = JSON.stringify(err.data, null, 1);
     throw new Error(`upload failed with status ${err.status}\n${response}`);
   }

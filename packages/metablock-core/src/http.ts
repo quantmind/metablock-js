@@ -56,7 +56,7 @@ class HttpClient implements HttpClientInterface {
     let response;
     try {
       response = await fetch(url, opts);
-    } catch (err) {
+    } catch (err: any) {
       response = err;
       this.logger.error(`Error fetching resource ${url}: ${err}`);
       if (!response.status) response = null;

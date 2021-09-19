@@ -83,7 +83,7 @@ const InnerForm = (props: InnerFormProps) => {
       try {
         await submit(stores, body);
         messageStore.success(successMessage, 3000);
-      } catch (errors) {
+      } catch (errors: any) {
         if (errors.status === 422) {
           const fields = new Map<string, string>(
             errors.errors.map((e: any) => [e.field, e.message])

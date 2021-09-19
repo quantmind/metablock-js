@@ -1,4 +1,3 @@
-import { Express } from "express";
 import api from "./api";
 import { blockMiddleware, BrowserManager } from "./block";
 import requestMiddleware from "./request";
@@ -8,17 +7,23 @@ import DevServices from "./services";
 const devServer = (blockUrl: string, options: any) => {
   const { ssr = false, docker, slowMo, ssrPlugins = [], ...dev } = options;
   return {
-    before: before(blockUrl, { ssr, slowMo, docker, plugins: ssrPlugins }),
+    onBeforeSetupMiddleware: before(blockUrl, {
+      ssr,
+      slowMo,
+      docker,
+      plugins: ssrPlugins,
+    }),
     ...dev,
   };
 };
 
-export const before = (blockUrl: string, options: any) => {
+export const before = (blockUrl: string, metaOptions: any) => {
   global.fetch = require("cross-fetch");
-  return (app: Express, server: any) => {
-    const { ssr, ...ssrOptions } = options;
-    const { mode } = server.compiler.options;
-    const { publicPath } = server.options;
+  return (devServer: any) => {
+    const { ssr, ...ssrOptions } = metaOptions;
+    const { app, compiler, options } = devServer;
+    const { mode } = compiler.options;
+    const { publicPath } = options.static;
     const services = new DevServices(blockUrl, removeSlash(publicPath));
     requestMiddleware(app);
     seoMiddleware(app, services);

@@ -32,7 +32,7 @@ class AuthStore {
       const jwt = await this.cli.auth.login(data);
       this.commonStore.setToken(jwt);
       await this.userStore.getUser();
-    } catch (errors) {
+    } catch (errors: any) {
       this.errors = errors;
     } finally {
       this.inProgress = false;
@@ -45,7 +45,7 @@ class AuthStore {
     try {
       this.commonStore.setToken(jwt);
       await this.userStore.getUser();
-    } catch (errors) {
+    } catch (errors: any) {
       this.errors = errors;
     } finally {
       this.inProgress = false;
