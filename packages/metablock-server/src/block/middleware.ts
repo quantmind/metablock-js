@@ -51,7 +51,7 @@ export default (app: Express, services: Services, options?: any) => {
     try {
       const result = await ssrManager.ssr(req, res);
       content = result.content;
-    } catch (err) {
+    } catch (err: any) {
       if (err.constructor && err.constructor.name === "TimeoutError")
         logger.warn({ url: reqUrl(req), message: err.toString() });
       else logger.error(err);

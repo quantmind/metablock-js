@@ -32,7 +32,7 @@ class UserStore {
     this.errors = undefined;
     try {
       this.current = await this.cli.user.getUser();
-    } catch (errors) {
+    } catch (errors: any) {
       this.errors = errors;
     }
   }
@@ -41,7 +41,7 @@ class UserStore {
     this.errors = undefined;
     try {
       this.current = await this.cli.user.update(body);
-    } catch (errors) {
+    } catch (errors: any) {
       this.errors = errors;
     }
   }
