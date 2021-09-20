@@ -23,5 +23,6 @@ export interface SchemaEntryProps {
 export interface SchemaFormProps {
   form: FormData;
   schema: SchemaEntry;
+  name?: string;
   [key: string]: any;
 }

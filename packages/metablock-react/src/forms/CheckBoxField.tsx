@@ -10,7 +10,7 @@ const CheckBoxField = (props: FormControlProps) => {
     name,
     label = "",
     Component = Checkbox,
-    color,
+    color = "default",
     form,
     helperText = "",
     ...extra
