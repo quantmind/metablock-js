@@ -3,7 +3,8 @@ import FieldFromSchema from "./FieldFromSchema";
 import { SchemaFormProps } from "./interfaces";
 
 const FormFromSchema = (props: SchemaFormProps) => {
-  return <FieldFromSchema name="" {...props} />;
+  const { name = "", ...extra } = props;
+  return <FieldFromSchema name={name} {...extra} />;
 };
 
 export default FormFromSchema;
