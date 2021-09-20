@@ -9,3 +9,13 @@ Tooling for metablock cloud.
 - [@metablock/react](./packages/metablock-react): Reusable React components.
 - [@metablock/cms](./packages/metablock-cms): A lightweight CMS
 - [@metablock/notebook](./packages/metablock-notebook): Experimental notebook app
+
+## Release
+
+To create a new release
+
+- edit the version in the [package.json](package.json) file
+- run `make version`, this will update the version in all the sub-packages
+- run `yarn install` to update the lock file
+- commit with the `Release <version>` message and push to master
+- The publish job will publish to npm and create a github tag
