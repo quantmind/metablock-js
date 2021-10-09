@@ -1,6 +1,7 @@
-import MuiPaper from "@material-ui/core/Paper";
-import { Theme, withStyles } from "@material-ui/core/styles";
-import { capitalize } from "@material-ui/core/utils";
+import MuiPaper from "@mui/material/Paper";
+import { Theme } from "@mui/material/styles";
+import withStyles from '@mui/styles/withStyles';
+import { capitalize } from "@mui/material/utils";
 import clsx from "clsx";
 import React from "react";
 

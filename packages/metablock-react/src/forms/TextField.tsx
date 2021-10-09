@@ -1,4 +1,4 @@
-import MuiTextField from "@material-ui/core/TextField";
+import MuiTextField from "@mui/material/TextField";
 import React from "react";
 import { FormControlProps } from "./ControlField";
 

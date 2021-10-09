@@ -1,9 +1,11 @@
-import MuiLink from "@material-ui/core/Link";
-import MuiList from "@material-ui/core/List";
-import MuiListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import MuiLink from "@mui/material/Link";
+import MuiList from "@mui/material/List";
+import MuiListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import { Theme } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import React from "react";
 import Link from "./Link";
 

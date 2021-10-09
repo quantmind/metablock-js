@@ -1,11 +1,9 @@
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import { Paginated } from "@metablock/core";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { useAsync } from "react-use";
 import Link from "../components/Link";
-import { useStores } from "../store";
 import CrudForm from "./Form";
 import { ExtensionData } from "./interfaces";
 import ListEntry from "./ListEntry";
@@ -15,17 +13,13 @@ interface ListItem {
   description: any;
   url?: string;
 }
-type ListResult = Paginated<ListItem>;
 
 const List = (props: ExtensionData<ListItem>) => {
   const { url, items, create } = props;
   if (!items) throw new Error("items async function must be provided");
-  const stores = useStores();
-  const { loading, value } = useAsync(async () => {
-    return await items(stores);
+  useAsync(async () => {
+    await items.loadData();
   });
-  if (loading) return null;
-  const p: ListResult = (value || { data: [] }) as ListResult;
 
   return (
     <Switch>
@@ -44,7 +38,7 @@ const List = (props: ExtensionData<ListItem>) => {
             </Link>
           </Box>
         ) : null}
-        {p.data.map((ext: ListItem, index: number) => {
+        {items.data.map((ext: ListItem, index: number) => {
           const { description, ...extra } = ext;
           return (
             <ListEntry {...extra} key={index}>

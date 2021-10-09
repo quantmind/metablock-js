@@ -1,5 +1,5 @@
-import Slider from "@material-ui/core/Slider";
-import Typography from "@material-ui/core/Typography";
+import Slider from "@mui/material/Slider";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import TextField from "../TextField";
 import { SchemaEntryProps } from "./interfaces";

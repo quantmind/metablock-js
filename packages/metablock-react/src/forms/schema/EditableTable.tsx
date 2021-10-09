@@ -1,5 +1,5 @@
 import React from "react";
-import { MetaTable } from "../../table";
+import { ApiDataGrid, StaticData } from "../../table";
 import { SchemaEntryProps } from "./interfaces";
 
 const copyData = (data: any[]) => {
@@ -32,9 +32,9 @@ const EditableTable = (props: SchemaEntryProps) => {
   };
 
   return (
-    <MetaTable
+    <ApiDataGrid
       columns={columnFromProps(properties)}
-      data={copyData(form.data[name])}
+      api={new StaticData(copyData(form.data[name]))}
       {...config}
     />
   );
@@ -43,9 +43,8 @@ const EditableTable = (props: SchemaEntryProps) => {
 export const columnFromProps = (props: Record<string, any>) => {
   return Object.keys(props).map((name: string) => {
     return {
-      field: name,
-      title: name.split("_").join(" "),
-      type: props[name].type,
+      key: name,
+      name: name.split("_").join(" "),
     };
   });
 };

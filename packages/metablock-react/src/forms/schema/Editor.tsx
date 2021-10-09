@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import { Notebook } from "@metablock/notebook";
 import clsx from "clsx";
 import React from "react";

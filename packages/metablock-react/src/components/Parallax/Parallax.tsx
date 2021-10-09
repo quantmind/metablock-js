@@ -1,10 +1,17 @@
-import Container from "@material-ui/core/Container";
-import { ThemeProvider } from "@material-ui/core/styles";
+import Container from "@mui/material/Container";
+import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
 import clsx from "clsx";
 import React from "react";
 import Image from "../Image";
 import ParallaxProps from "./props";
 import useStyles from "./styles";
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 const Parallax = (props: ParallaxProps) => {
   const {
@@ -66,7 +73,9 @@ const Parallax = (props: ParallaxProps) => {
       style={style}
     >
       {filter ? <div className={classes.over}></div> : null}
-      {theme ? <ThemeProvider theme={theme}>{inner}</ThemeProvider> : inner}
+      {theme ? <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>{inner}</ThemeProvider>
+      </StyledEngineProvider> : inner}
     </Image>
   );
 };

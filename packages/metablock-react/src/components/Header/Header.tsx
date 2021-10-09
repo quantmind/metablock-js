@@ -1,11 +1,11 @@
-import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import Toolbar from "@material-ui/core/Toolbar";
-import Menu from "@material-ui/icons/Menu";
+import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Drawer from "@mui/material/Drawer";
+import Hidden from "@mui/material/Hidden";
+import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+import Menu from "@mui/icons-material/Menu";
 import clsx from "clsx";
 import React from "react";
 import createColorChange from "./colorChange";
@@ -90,7 +90,7 @@ const Header = (props: HeaderProps) => {
           {LeftLinks ? brand : null}
           <div className={classes.flex}>
             {LeftLinks ? (
-              <Hidden smDown implementation="css">
+              <Hidden mdDown implementation="css">
                 <LeftLinks colorChange={colorChange} />
               </Hidden>
             ) : (
@@ -98,7 +98,7 @@ const Header = (props: HeaderProps) => {
             )}
           </div>
           {RightLinks ? (
-            <Hidden smDown implementation="css">
+            <Hidden mdDown implementation="css">
               <RightLinks colorChange={colorChange} />
             </Hidden>
           ) : null}
@@ -107,7 +107,7 @@ const Header = (props: HeaderProps) => {
               color="inherit"
               aria-label="open drawer"
               onClick={handleDrawerToggle}
-            >
+              size="large">
               <Menu />
             </IconButton>
           </Hidden>

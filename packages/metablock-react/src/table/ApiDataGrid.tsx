@@ -1,11 +1,11 @@
-import Box from "@material-ui/core/Box";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import FullscreenIcon from "@material-ui/icons/Fullscreen";
-import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
-import SearchIcon from "@material-ui/icons/Search";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
+import SearchIcon from "@mui/icons-material/Search";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import clsx from "clsx";
 import React from "react";
 import DataGrid, { Column } from "react-data-grid";
@@ -16,6 +16,7 @@ import useStyles from "./style";
 interface ApiDataGridProps<DataType, TSummaryRow = unknown> {
   api: DataGridApi<DataType>;
   columns: readonly Column<DataType, TSummaryRow>[];
+  title?: string;
   className?: string;
   search?: boolean;
   fullScreen?: boolean;

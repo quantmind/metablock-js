@@ -1,8 +1,10 @@
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Tab from "@material-ui/core/Tab";
-import MuiTabs from "@material-ui/core/Tabs";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import { Theme } from "@mui/material/styles";
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import Tab from "@mui/material/Tab";
+import MuiTabs from "@mui/material/Tabs";
 import React from "react";
 import { Link } from "react-router-dom";
 

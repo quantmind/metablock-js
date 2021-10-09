@@ -10,8 +10,7 @@ export interface DataGridApi<T> {
   // Array of items loaded so far.
   data: T[];
 
-  searchText?:
-   string;
+  searchText?: string;
 
   // Callback function responsible for loading the next page of items.
   loadData: () => Promise<void>;
@@ -20,6 +19,24 @@ export interface DataGridApi<T> {
   search: (searchText: string) => Promise<void>;
 }
 
-export interface DataGridApiFactory<T> {
-  loader: (query: any) => DataGridApi<T>;
+export class StaticData<T> implements DataGridApi<T> {
+  data: T[];
+  searchText = "";
+
+  constructor(data: T[]) {
+    this.data = data;
+  }
+
+  hasMoreData() {
+    return false;
+  }
+
+  isDataLoading() {
+    return false;
+  }
+
+  async loadData() {}
+  async search(searchText: string) {
+    this.searchText = searchText;
+  }
 }
