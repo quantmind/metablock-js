@@ -27,12 +27,13 @@
     "lodash.isequal": "^4.5.0",
     "mobx-react-lite": "^3.1.5",
     "react": "^17.0.1",
+    "react-data-grid": "^7.0.0-beta.7",
     "react-dom": "^17.0.1",
     "react-error-boundary": "^3.0.2",
+    "react-grid": "^4.0.4",
     "react-helmet": "^6.0.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-table": "^7.7.0",
     "react-use": "^17.1.1"
   },
   "scripts": {
@@ -49,6 +50,9 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-helmet": "^6.0.0",
     "@types/react-router-dom": "^5.1.5",
+    "@types/react-table": "^7.7.6",
+    "@types/react-window": "^1.8.5",
+    "@types/react-window-infinite-loader": "^1.0.5",
     "eslint": "^7.23.0",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4"

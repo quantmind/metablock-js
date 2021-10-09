@@ -1,23 +1,27 @@
 import HttpResponse from "../response";
+import { parseLinkHeader } from "./headers";
 
 export class Paginated<T> {
   data: T[];
   count: number;
   offset: number;
   limit: number;
+  links: Record<string, string>;
 
-  constructor(data: T[], count = 0, offset = 0, limit = 25) {
+  constructor(data: T[], count = 0, links = {}, offset = 0, limit = 25) {
     this.data = data;
     this.count = count;
     this.offset = offset;
     this.limit = limit;
+    this.links = links;
   }
 }
 
 export function paginatedResponse<T>(response: HttpResponse): Paginated<T> {
   const data = response.data as T[];
   const count = response.headers.get("x-total-count");
-  return new Paginated<T>(data, count ? +count : data.length);
+  const links = parseLinkHeader(response.headers.get("link"));
+  return new Paginated<T>(data, count ? +count : data.length, links);
 }
 
 export interface Org {

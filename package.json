@@ -28,9 +28,6 @@
       "post-commit": "git update-index --again"
     }
   },
-  "dependencies": {
-    "@metablock/react": "0.9.3"
-  },
   "installConfig": {
     "pnp": false
   },

@@ -23,5 +23,10 @@
     "build": "export NODE_ENV=production && rollup -c",
     "watch": "rollup -c -w"
   },
-  "homepage": "https://metablock.io"
+  "homepage": "https://metablock.io",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/parse-link-header": "^1.0.0"
+  }
 }
