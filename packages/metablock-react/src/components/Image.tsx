@@ -1,34 +1,28 @@
-import makeStyles from '@mui/styles/makeStyles';
-import clsx from "clsx";
+import { styled } from "@mui/system";
 import React from "react";
 import { useIntersectionObserver, useWindowSize } from "../hooks";
 
-const useStyles = makeStyles(() => ({
-  image: {
+const styledImage = (image: ImageEntry, opacity: number, fit: string) => {
+  let styling: Record<string, any> = {
     position: "absolute",
     top: 0,
     left: 0,
-  },
-  height: {
-    height: "100%",
-  },
-  width: {
-    width: "100%",
-  },
-  opacity: (props: any) => ({
-    opacity: props.opacity,
-  }),
-  full: {
-    transition: "opacity 400ms ease 0ms",
-    opacity: 0,
-  },
-  thumb: {
-    filter: "blur(20px)",
-    transform: "scale(1.1)",
-    transition: "visibility 0ms ease 400ms",
-    visibility: "visible",
-  },
-}));
+  };
+  if (fit === "height") styling = { height: "100%", ...styling };
+  else if (fit === "width") styling = { width: "100%", ...styling };
+  if (image.size === 0)
+    styling = {
+      filter: "blur(20px)",
+      transform: "scale(1.1)",
+      transition: "visibility 0ms ease 400ms",
+      visibility: "visible",
+      ...styling,
+    };
+  else
+    styling = { transition: "opacity 400ms ease 0ms", opacity: 0, ...styling };
+  if (image.loaded) styling[opacity] = opacity;
+  return styled("img")(styling);
+};
 
 interface ImageEntry {
   size: number;
@@ -39,7 +33,6 @@ interface ImageProps {
   container?: string;
   alt?: string;
   opacity?: number;
-  className?: string;
   fit?: string;
   onIsVisible?: () => void;
   selectImage?: (urls: string[], width: number | undefined) => number;
@@ -67,22 +60,10 @@ const Image = (props: ImageProps) => {
     opacity = 1,
     selectImage = defaultSelectImage,
     urls,
-    className,
     onIsVisible,
     children,
     ...extra
   } = props;
-  const classes = useStyles({ opacity });
-  const getClasses = (image: ImageEntry) =>
-    clsx({
-      [classes.image]: true,
-      [classes.height]: fit === "height",
-      [classes.width]: fit === "width",
-      [classes.thumb]: image.size === 0,
-      [classes.full]: image.size >= 1,
-      [classes.opacity]: image.loaded,
-      image: true,
-    });
   const createImage = (size: number): ImageEntry => ({
     size,
     loaded: false,
@@ -128,29 +109,31 @@ const Image = (props: ImageProps) => {
         break;
       }
     }
-    entries = images.map((image) => (
-      <img
-        key={image.size}
-        onLoad={() => {
-          image.loaded = true;
-          render(draws + 1);
-        }}
-        className={getClasses(image)}
-        style={
-          image.size
-            ? {}
-            : {
-                visibility: current > image.size ? "hidden" : "visible",
-              }
-        }
-        alt={alt}
-        src={urls[image.size]}
-      />
-    ));
+    entries = images.map((image) => {
+      const StyledImage = styledImage(image, opacity, fit);
+      return (
+        <StyledImage
+          key={image.size}
+          onLoad={() => {
+            image.loaded = true;
+            render(draws + 1);
+          }}
+          style={
+            image.size
+              ? {}
+              : {
+                  visibility: current > image.size ? "hidden" : "visible",
+                }
+          }
+          alt={alt}
+          src={urls[image.size]}
+        />
+      );
+    });
   }
   return React.createElement(
     container,
-    { className, ref, ...extra },
+    { ref, ...extra },
     entries.concat(children)
   );
 };

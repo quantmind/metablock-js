@@ -1,26 +1,22 @@
-import HttpResponse from "../response";
-import HttpComponent from "./httpComponent";
 import {
   Block,
   BlockPlugin,
   Deployment,
   Paginated,
   paginatedResponse,
-} from "./interfaces";
+} from "../interfaces";
+import HttpResponse from "../response";
+import HttpComponent from "./httpComponent";
 
 class Blocks extends HttpComponent {
   async getList(query: any): Promise<HttpResponse> {
     const url = this.urlQuery(`${this.cli.apiUrl}/services`, query);
-    return await this.cli.get(url, {
-      headers: this.cli.withToken(),
-    });
+    return await this.cli.get(url);
   }
 
   async get(block_id: string): Promise<Block> {
     const url = `${this.cli.apiUrl}/services/${block_id}`;
-    const response = await this.cli.get(url, {
-      headers: this.cli.withToken(),
-    });
+    const response = await this.cli.get(url);
     return response.data as Block;
   }
 
@@ -29,7 +25,6 @@ class Blocks extends HttpComponent {
     const url = `${this.cli.apiUrl}/spaces/${space_id}/services`;
     const response = await this.cli.post(url, {
       body,
-      headers: this.cli.withToken(),
     });
     return response.data as Block;
   }
@@ -38,23 +33,18 @@ class Blocks extends HttpComponent {
     const url = `${this.cli.apiUrl}/services/${block_id}`;
     const response = await this.cli.patch(url, {
       body,
-      headers: this.cli.withToken(),
     });
     return response.data as Block;
   }
 
   async delete(block_id: string): Promise<void> {
     const url = `${this.cli.apiUrl}/services/${block_id}`;
-    await this.cli.delete(url, {
-      headers: this.cli.withToken(),
-    });
+    await this.cli.delete(url);
   }
 
   async config(block_id: string): Promise<any> {
     const url = `${this.cli.apiUrl}/services/${block_id}/config`;
-    const response = await this.cli.get(url, {
-      headers: this.cli.withToken(),
-    });
+    const response = await this.cli.get(url);
     return response.data as any;
   }
 
@@ -66,9 +56,7 @@ class Blocks extends HttpComponent {
       `${this.cli.apiUrl}/services/${block_id}/plugins`,
       query
     );
-    const response = await this.cli.get(url, {
-      headers: this.cli.withToken(),
-    });
+    const response = await this.cli.get(url);
     return paginatedResponse<BlockPlugin>(response);
   }
 
@@ -76,7 +64,6 @@ class Blocks extends HttpComponent {
     const url = `${this.cli.apiUrl}/services/${block_id}/plugins`;
     const response = await this.cli.post(url, {
       body,
-      headers: this.cli.withToken(),
     });
     return response.data as BlockPlugin;
   }
@@ -89,9 +76,7 @@ class Blocks extends HttpComponent {
       `${this.cli.apiUrl}/services/${block_id}/deployments`,
       query
     );
-    const response = await this.cli.get(url, {
-      headers: this.cli.withToken(),
-    });
+    const response = await this.cli.get(url);
     return paginatedResponse<Deployment>(response);
   }
 
@@ -102,7 +87,6 @@ class Blocks extends HttpComponent {
     const url = `${this.cli.apiUrl}/services/${block_id}/deployments`;
     const response = await this.cli.post(url, {
       body,
-      headers: this.cli.withToken(),
     });
     return response.data;
   }

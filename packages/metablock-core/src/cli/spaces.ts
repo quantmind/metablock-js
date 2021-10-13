@@ -1,19 +1,17 @@
-import HttpResponse from "../response";
-import HttpComponent from "./httpComponent";
 import {
   Block,
   Paginated,
   paginatedResponse,
   Space,
   SpaceExtension,
-} from "./interfaces";
+} from "../interfaces";
+import HttpResponse from "../response";
+import HttpComponent from "./httpComponent";
 
 class Spaces extends HttpComponent {
   async getList(query: any): Promise<HttpResponse> {
     const url = this.urlQuery(`${this.cli.apiUrl}/spaces`, query);
-    return await this.cli.get(url, {
-      headers: this.cli.withToken(),
-    });
+    return await this.cli.get(url);
   }
 
   async orgSpaces(org_id: string, query: any): Promise<HttpResponse> {
@@ -21,16 +19,12 @@ class Spaces extends HttpComponent {
       `${this.cli.apiUrl}/orgs/${org_id}/spaces`,
       query
     );
-    return await this.cli.get(url, {
-      headers: this.cli.withToken(),
-    });
+    return await this.cli.get(url);
   }
 
   async get(space_id: string): Promise<Space> {
     const url = `${this.cli.apiUrl}/spaces/${space_id}`;
-    const response = await this.cli.get(url, {
-      headers: this.cli.withToken(),
-    });
+    const response = await this.cli.get(url);
     return response.data as Space;
   }
 
@@ -38,7 +32,6 @@ class Spaces extends HttpComponent {
     const url = `${this.cli.apiUrl}/orgs/${org_id}/spaces`;
     const response = await this.cli.post(url, {
       body,
-      headers: this.cli.withToken(),
     });
     return response.data as Space;
   }
@@ -47,16 +40,13 @@ class Spaces extends HttpComponent {
     const url = `${this.cli.apiUrl}/spaces/${space_id}`;
     const response = await this.cli.patch(url, {
       body,
-      headers: this.cli.withToken(),
     });
     return response.data as Space;
   }
 
   async delete(space_id: string): Promise<void> {
     const url = `${this.cli.apiUrl}/spaces/${space_id}`;
-    await this.cli.delete(url, {
-      headers: this.cli.withToken(),
-    });
+    await this.cli.delete(url);
   }
 
   async getBlocks(space_id: string, query?: any): Promise<Paginated<Block>> {
@@ -64,9 +54,7 @@ class Spaces extends HttpComponent {
       `${this.cli.apiUrl}/spaces/${space_id}/services`,
       query
     );
-    const response = await this.cli.get(url, {
-      headers: this.cli.withToken(),
-    });
+    const response = await this.cli.get(url);
     return paginatedResponse<Block>(response);
   }
 
@@ -78,9 +66,7 @@ class Spaces extends HttpComponent {
       `${this.cli.apiUrl}/spaces/${space_id}/extensions`,
       query
     );
-    const response = await this.cli.get(url, {
-      headers: this.cli.withToken(),
-    });
+    const response = await this.cli.get(url);
     return paginatedResponse<SpaceExtension>(response);
   }
 
@@ -88,7 +74,6 @@ class Spaces extends HttpComponent {
     const url = `${this.cli.apiUrl}/spaces/${space_id}/extensions`;
     const response = await this.cli.post(url, {
       body,
-      headers: this.cli.withToken(),
     });
     return response.data as SpaceExtension;
   }

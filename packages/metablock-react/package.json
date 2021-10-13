@@ -25,7 +25,7 @@
     "@mui/icons-material": "^5.0.3",
     "@mui/lab": "^5.0.0-alpha.50",
     "@mui/material": "^5.0.3",
-    "@mui/styles": "^5.0.1",
+    "@mui/system": "^5.0.3",
     "clsx": "^1.1.1",
     "lodash.isequal": "^4.5.0",
     "mobx-react-lite": "^3.1.5",

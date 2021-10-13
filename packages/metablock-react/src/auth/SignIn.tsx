@@ -1,9 +1,8 @@
+import { getBlock, urlQuery } from "@metablock/core";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import makeStyles from '@mui/styles/makeStyles';
 import Typography from "@mui/material/Typography";
-import { getBlock, urlQuery } from "@metablock/core";
 import React from "react";
 import { useAsync } from "react-use";
 import Link from "../components/Link";
@@ -12,23 +11,6 @@ import AppForm from "../views/AppForm";
 import NotFound from "../views/NotFound";
 import Icons from "./Icons";
 
-const useStyles = makeStyles((theme) => ({
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  provider: {
-    margin: theme.spacing(0, 0, 2),
-  },
-}));
-
 const DefaultHeader = () => (
   <Typography component="h1" variant="h5" paragraph>
     Sign in
@@ -36,7 +18,6 @@ const DefaultHeader = () => (
 );
 
 const SignIn = (props: any) => {
-  const classes = useStyles();
   const block = getBlock();
   const account = block.plugins.account;
   const { authStore, onSuccess, Header = DefaultHeader } = props;
@@ -83,7 +64,7 @@ const SignIn = (props: any) => {
         <FormErrorMessage paragraph>{form.errorMessage}</FormErrorMessage>
       ) : null}
       {account.password ? (
-        <form className={classes.form} onSubmit={form.onSubmit()} noValidate>
+        <form onSubmit={form.onSubmit()} noValidate>
           <TextField
             form={form}
             variant="outlined"
@@ -115,13 +96,7 @@ const SignIn = (props: any) => {
             color="primary"
             label="Remember me"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+          <Button type="submit" fullWidth variant="contained" color="primary">
             Sign In
           </Button>
         </form>
@@ -133,7 +108,6 @@ const SignIn = (props: any) => {
           fullWidth
           key={d.name}
           startIcon={Icons[d.name]}
-          className={classes.provider}
           href={d.url}
         >
           Sign in with {d.name}

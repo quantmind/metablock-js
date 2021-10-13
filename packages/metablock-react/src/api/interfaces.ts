@@ -1,5 +1,4 @@
-import { Org, Space } from "@metablock/core";
-import { DataGridApi } from "../table";
+import { DataApi, Org, Space } from "@metablock/core";
 
 export interface ExtensionData<T> {
   title: string;
@@ -7,7 +6,7 @@ export interface ExtensionData<T> {
   create?: any;
   Update?: any;
   options?: Record<string, any>;
-  items?: DataGridApi<T>;
+  items?: DataApi<T>;
 }
 
 export interface ExtensionOutput<T> extends ExtensionData<T> {

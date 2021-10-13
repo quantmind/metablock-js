@@ -1,3 +1,10 @@
+import { DataLoader } from "./data";
+import {
+  DataApi,
+  HttpClientInterface,
+  Paginated,
+  paginatedResponse,
+} from "./interfaces";
 import { getLogger } from "./logger";
 import HttpResponse from "./response";
 
@@ -7,19 +14,10 @@ export interface Options {
   body?: any;
 }
 
-export interface HttpClientInterface {
-  delete: (url: string, options?: any) => Promise<HttpResponse>;
-  get: (url: string, options?: any) => Promise<HttpResponse>;
-  head: (url: string, options?: any) => Promise<HttpResponse>;
-  patch: (url: string, options?: any) => Promise<HttpResponse>;
-  post: (url: string, options?: any) => Promise<HttpResponse>;
-  put: (url: string, options?: any) => Promise<HttpResponse>;
-}
-
 class HttpClient implements HttpClientInterface {
   name: string;
   logger: any;
-  defaultHeaders: Record<string, string>;
+  defaultHeaders: Record<string, string>
 
   constructor(name?: string) {
     this.name = name || "http";
@@ -51,6 +49,14 @@ class HttpClient implements HttpClientInterface {
     return await this.request(url, { ...options, method: "PUT" });
   }
 
+  async getList<DataType>(
+    url: string,
+    options?: any
+  ): Promise<Paginated<DataType>> {
+    const response = await this.get(url, options);
+    return paginatedResponse<DataType>(response);
+  }
+
   async request(url: string, options: Options): Promise<HttpResponse> {
     const opts = this.getOptions(options);
     let response;
@@ -70,11 +76,15 @@ class HttpClient implements HttpClientInterface {
     return respData;
   }
 
+  getDefaultHeaders(): Record<string, string> {
+    return this.defaultHeaders;
+  }
+
   getOptions(options: any): Options {
     const { body, method, headers, ...extra } = options;
     const opts: Options = {
       method: method || "GET",
-      headers: { ...this.defaultHeaders, ...headers },
+      headers: { ...this.getDefaultHeaders(), ...headers },
       ...extra,
     };
     if (body) {
@@ -84,6 +94,13 @@ class HttpClient implements HttpClientInterface {
       } else opts.body = body;
     }
     return opts;
+  }
+
+  loader<DataType>(
+    url: string,
+    query?: Record<string, any>
+  ): DataApi<DataType> {
+    return new DataLoader<DataType>(this, url, query || {});
   }
 
   async jsonBody(response: any) {

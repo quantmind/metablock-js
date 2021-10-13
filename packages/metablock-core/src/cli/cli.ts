@@ -1,9 +1,9 @@
 import HttpClient from "../http";
+import { Space } from "../interfaces";
 import MbAuth from "./auth";
 import Blocks from "./blocks";
 import Cache from "./cache";
 import Extensions from "./extensions";
-import { Space } from "./interfaces";
 import Orgs from "./orgs";
 import Photos from "./photos";
 import Plugins from "./plugins";
@@ -51,8 +51,8 @@ export class Metablock extends HttpClient {
     return `${this.baseUrl}/v1`;
   }
 
-  withToken(headers?: Record<string, string>): Record<string, string> {
-    if (!headers) headers = {};
+  getDefaultHeaders(): Record<string, string> {
+    const headers: Record<string, string> = { ...this.defaultHeaders };
     if (this.jwt) headers["authorization"] = `Bearer ${this.jwt}`;
     else if (this.token) headers["x-metablock-api-key"] = this.token;
     return headers;
