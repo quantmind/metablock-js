@@ -1,4 +1,4 @@
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Route, Switch } from "react-router-dom";

@@ -17,7 +17,7 @@ export interface Options {
 class HttpClient implements HttpClientInterface {
   name: string;
   logger: any;
-  defaultHeaders: Record<string, string>
+  defaultHeaders: Record<string, string>;
 
   constructor(name?: string) {
     this.name = name || "http";

@@ -1,7 +1,7 @@
 import MuiPaper from "@mui/material/Paper";
 import { Theme } from "@mui/material/styles";
-import withStyles from '@mui/styles/withStyles';
 import { capitalize } from "@mui/material/utils";
+import withStyles from "@mui/styles/withStyles";
 import clsx from "clsx";
 import React from "react";
 
