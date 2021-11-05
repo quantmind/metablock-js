@@ -1,21 +1,23 @@
-import Box from "@material-ui/core/Box";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import FullscreenIcon from "@material-ui/icons/Fullscreen";
-import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
-import SearchIcon from "@material-ui/icons/Search";
-import clsx from "clsx";
+import { DataApi } from "@metablock/core";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
+import SearchIcon from "@mui/icons-material/Search";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import DataGrid, { Column } from "react-data-grid";
 import { useAsync } from "react-use";
-import { DataGridApi } from "./loader";
-import useStyles from "./style";
+import { ApiDataGridActions, Maybe } from "./types";
 
 interface ApiDataGridProps<DataType, TSummaryRow = unknown> {
-  api: DataGridApi<DataType>;
+  api: DataApi<DataType>;
   columns: readonly Column<DataType, TSummaryRow>[];
+  headerRowHeight?: Maybe<number>;
+  dataGridCallback?: (actions: ApiDataGridActions) => void;
+  title?: string;
   className?: string;
   search?: boolean;
   fullScreen?: boolean;
@@ -31,7 +33,12 @@ const isAtBottom = ({
 };
 
 const SearchBox = (props: any) => {
-  const extra = { variant: "outlined", size: "small", ...props };
+  const extra = {
+    variant: "outlined",
+    size: "small",
+    color: "primary",
+    ...props,
+  };
   return (
     <TextField
       InputProps={{
@@ -49,7 +56,7 @@ const SearchBox = (props: any) => {
 const FullScreen = (props: any) => {
   const { full, ...extra } = props;
   return (
-    <IconButton aria-label="fullscreen" size="small" {...extra}>
+    <IconButton aria-label="fullscreen" size="small" color="primary" {...extra}>
       {full ? <FullscreenExitIcon /> : <FullscreenIcon />}
     </IconButton>
   );
@@ -65,31 +72,58 @@ const Loading = (props: any) => {
   );
 };
 
-const ApiDataGrid = <DataType, TSummaryRow = unknown>(
+export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
   props: ApiDataGridProps<DataType, TSummaryRow>
 ) => {
-  const { api, columns, className, search, fullScreen } = props;
+  const { api, search, fullScreen, dataGridCallback, ...gridProps } = props;
   const [ignored, render] = React.useState<any>({});
   const [full, setFullScreen] = React.useState<boolean>(false);
   const [loadingText, setLoading] = React.useState<string>("Loading data...");
-  const classes = useStyles();
-
-  const container = clsx({
-    [classes.container]: true,
-    [classes.fullScreen]: full,
+  const [actions, Ignored] = React.useState<ApiDataGridActions>({
+    async filter(key: string, value: any) {
+      message(`Filtering ${key}=${value}...`);
+      await api.filter(key, value);
+      render({});
+    },
   });
 
   // do the first loading
   useAsync(async () => {
     await api.loadData();
-  }, []);
+  }, [api]);
 
-  const message = (text: string) => {
-    setLoading(text);
+  React.useEffect(() => {
+    if (dataGridCallback) dataGridCallback(actions);
+  }, [dataGridCallback, actions]);
+
+  // Full screen handling
+  let container: Record<string, any> = {
+    width: "100%",
+    bgcolor: "background.paper",
   };
+
+  if (full)
+    container = {
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      height: "100vh",
+      zIndex: 99999,
+      ...container,
+    };
 
   const handleFullScreen = () => {
     setFullScreen(!full);
+  };
+
+  // handle row updates
+  const onRowsChange = (rows: DataType[]) => {
+    api.data = rows;
+    render({});
+  };
+
+  const message = (text: string) => {
+    setLoading(text);
   };
 
   const handleScroll = async (event: React.UIEvent<HTMLDivElement>) => {
@@ -104,11 +138,9 @@ const ApiDataGrid = <DataType, TSummaryRow = unknown>(
   const handleSearch = async (event: React.UIEvent<HTMLInputElement>) => {
     if (api.isDataLoading()) return;
     const text = event.currentTarget.value;
-    if (text && text.length > 1) {
-      message(`Searching for ${text}...`);
-      await api.search(text);
-      render({});
-    }
+    message(`Searching for ${text}...`);
+    await api.search(text);
+    render({});
   };
 
   const toolbar = [];
@@ -120,22 +152,30 @@ const ApiDataGrid = <DataType, TSummaryRow = unknown>(
     toolbar.push(<FullScreen onClick={handleFullScreen} full={full} />);
 
   return (
-    <div className={container}>
+    <Box sx={container}>
       {toolbar.length ? (
-        <Box pb={1} className={classes.toolbar}>
-          {toolbar}
+        <Box
+          pb={1}
+          pt={1}
+          sx={{
+            display: "flex",
+            flexDirection: "row-reverse",
+          }}
+        >
+          {toolbar.map((component: any, index: number) => (
+            <Box pr={1} key={index}>
+              {component}
+            </Box>
+          ))}
         </Box>
       ) : null}
       <DataGrid
-        columns={columns}
         rows={api.data}
-        onRowsChange={render}
+        onRowsChange={onRowsChange}
         onScroll={handleScroll}
-        className={className}
+        {...gridProps}
       />
       <Loading text={loadingText} api={api} />
-    </div>
+    </Box>
   );
 };
-
-export default ApiDataGrid;

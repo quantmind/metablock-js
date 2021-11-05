@@ -1,44 +1,28 @@
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { getBlock } from "@metablock/core";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import Link from "../components/Link";
 import { CheckBoxField, TextField, useForm } from "../forms";
 import AppForm from "../views/AppForm";
 
-const useStyles = makeStyles((theme) => ({
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
 const SignUp = (props: any) => {
-  const classes = useStyles();
   const block = getBlock();
-  const { onSubmit } = props;
+  const { onSubmit, color = "primary" } = props;
   const form = useForm({ handleSubmit: onSubmit });
 
   return (
     <AppForm>
-      <Avatar className={classes.avatar}>
+      <Avatar>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
         Sign up
       </Typography>
-      <form className={classes.form} onSubmit={form.onSubmit()} noValidate>
+      <form onSubmit={form.onSubmit()} noValidate>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -48,6 +32,7 @@ const SignUp = (props: any) => {
               variant="outlined"
               required
               fullWidth
+              color={color}
               id="firstName"
               label="First Name"
               autoFocus
@@ -59,6 +44,7 @@ const SignUp = (props: any) => {
               variant="outlined"
               required
               fullWidth
+              color={color}
               id="lastName"
               label="Last Name"
               name="lastName"
@@ -71,6 +57,7 @@ const SignUp = (props: any) => {
               variant="outlined"
               required
               fullWidth
+              color={color}
               id="email"
               label="Email Address"
               name="email"
@@ -83,6 +70,7 @@ const SignUp = (props: any) => {
               variant="outlined"
               required
               fullWidth
+              color={color}
               name="password"
               label="Password"
               type="password"
@@ -96,21 +84,15 @@ const SignUp = (props: any) => {
               fullWidth
               margin="normal"
               name="remember"
-              color="primary"
+              color={color}
               label="I want to receive inspiration, marketing promotions and updates via email."
             />
           </Grid>
         </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-        >
+        <Button type="submit" fullWidth variant="contained" color={color}>
           Sign Up
         </Button>
-        <Grid container justify="flex-end">
+        <Grid container justifyContent="flex-end">
           <Grid item>
             <Link to={block.plugins.account.login_url} variant="body2">
               Already have an account? Sign in

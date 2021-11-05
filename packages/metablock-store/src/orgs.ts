@@ -31,7 +31,9 @@ class UserOrgStore {
   }
 
   async getOrgs() {
-    this.orgs = await this.cli.user.getOrgs();
+    const loader = this.cli.user.orgsLoader();
+    await loader.loadData();
+    this.orgs = loader.data;
     return this.orgs;
   }
 

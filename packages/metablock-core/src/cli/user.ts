@@ -1,4 +1,4 @@
-import HttpResponse from "../response";
+import { ApiToken, DataApi } from "../interfaces";
 import HttpComponent from "./httpComponent";
 
 export interface User {
@@ -20,50 +20,36 @@ export interface UserOrg {
 
 class MbUser extends HttpComponent {
   async getUser(): Promise<User> {
-    const response = await this.cli.get(`${this.cli.apiUrl}/user`, {
-      headers: this.cli.withToken(),
-    });
+    const response = await this.cli.get(`${this.cli.apiUrl}/user`);
     return response.data as User;
   }
 
   async update(body: any): Promise<User> {
     const response = await this.cli.patch(`${this.cli.apiUrl}/user`, {
       body,
-      headers: this.cli.withToken(),
     });
     return response.data as User;
   }
 
-  async getOrgs(): Promise<UserOrg[]> {
-    const response = await this.cli.get(`${this.cli.apiUrl}/user/orgs`, {
-      headers: this.cli.withToken(),
-    });
-    return response.data as UserOrg[];
+  orgsLoader(): DataApi<UserOrg> {
+    return this.cli.loader(`${this.cli.apiUrl}/user/orgs`);
   }
 
-  async getTokens(): Promise<HttpResponse> {
-    return await this.cli.get(`${this.cli.apiUrl}/user/tokens`, {
-      headers: this.cli.withToken(),
-    });
+  tokensLoader(): DataApi<ApiToken> {
+    return this.cli.loader(`${this.cli.apiUrl}/user/tokens`);
   }
 
   async createToken(): Promise<Record<string, string>> {
-    const response = await this.cli.post(`${this.cli.apiUrl}/user/tokens`, {
-      headers: this.cli.withToken(),
-    });
+    const response = await this.cli.post(`${this.cli.apiUrl}/user/tokens`);
     return response.data as Record<string, string>;
   }
 
   async deleteToken(tokenId: string): Promise<void> {
-    await this.cli.delete(`${this.cli.apiUrl}/user/tokens/${tokenId}`, {
-      headers: this.cli.withToken(),
-    });
+    await this.cli.delete(`${this.cli.apiUrl}/user/tokens/${tokenId}`);
   }
 
   async logout(): Promise<void> {
-    await this.cli.delete(`${this.cli.apiUrl}/user/jwt`, {
-      headers: this.cli.withToken(),
-    });
+    await this.cli.delete(`${this.cli.apiUrl}/user/jwt`);
   }
 }
 

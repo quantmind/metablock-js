@@ -1,15 +1,14 @@
-import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import Toolbar from "@material-ui/core/Toolbar";
-import Menu from "@material-ui/icons/Menu";
-import clsx from "clsx";
+import Menu from "@mui/icons-material/Menu";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Drawer from "@mui/material/Drawer";
+import Hidden from "@mui/material/Hidden";
+import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
 import React from "react";
 import createColorChange from "./colorChange";
-import useStyles from "./headerStyles";
 
 interface HeaderComponentProps {
   colorChange: boolean;
@@ -40,31 +39,32 @@ const Header = (props: HeaderProps) => {
     maxWidth = "lg",
     fixed,
     absolute,
-    paddingTop = 0,
-    paddingBottom = 0,
     LeftLinks,
     RightLinks,
     changeColorOnScroll,
   } = props;
-  const classes: Record<string, any> = useStyles({
-    paddingTop,
-    paddingBottom,
-    backgroundColor,
-    color,
-    changeColorOnScroll,
-  });
   const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
   const [colorChange, setColorChange] = React.useState<boolean>(false);
   const headerColorChange = changeColorOnScroll
-    ? createColorChange(changeColorOnScroll, classes, color, setColorChange)
+    ? createColorChange(changeColorOnScroll, {}, color, setColorChange)
     : null;
-  const appBarClasses = clsx(classes.appBar, classes.defaultColor, {
-    [classes.absolute]: absolute,
-    [classes.fixed]: fixed,
-  });
-  const {
-    BrandComponent = () => <Button className={classes.title}>brand</Button>,
-  } = props;
+  let sxAppBar: Record<string, any> = {
+    display: "flex",
+    border: "0",
+    width: "100%",
+    transition: "all 150ms ease 0s",
+    alignItems: "center",
+    flexFlow: "row nowrap",
+    justifyContent: "flex-start",
+    position: "relative",
+    zIndex: "unset",
+    backgroundColor: `${backgroundColor} !important`,
+    color,
+    boxShadow: "none",
+  };
+  if (absolute) sxAppBar = { ...sxAppBar, position: "absolute", zIndex: 1100 };
+  else if (fixed) sxAppBar = { ...sxAppBar, position: "fixed", zIndex: 1100 };
+  const { BrandComponent = () => <Button>brand</Button> } = props;
 
   React.useEffect(() => {
     if (headerColorChange) {
@@ -84,21 +84,21 @@ const Header = (props: HeaderProps) => {
   const brand = <BrandComponent colorChange={colorChange} />;
 
   return (
-    <AppBar color="transparent" className={appBarClasses}>
+    <AppBar color="transparent" sx={sxAppBar}>
       <Container maxWidth={maxWidth}>
-        <Toolbar className={classes.container} disableGutters={true}>
+        <Toolbar sx={{ width: "100%" }} disableGutters={true}>
           {LeftLinks ? brand : null}
-          <div className={classes.flex}>
+          <Box sx={{ flex: 1 }}>
             {LeftLinks ? (
-              <Hidden smDown implementation="css">
+              <Hidden mdDown implementation="css">
                 <LeftLinks colorChange={colorChange} />
               </Hidden>
             ) : (
               brand
             )}
-          </div>
+          </Box>
           {RightLinks ? (
-            <Hidden smDown implementation="css">
+            <Hidden mdDown implementation="css">
               <RightLinks colorChange={colorChange} />
             </Hidden>
           ) : null}
@@ -107,6 +107,7 @@ const Header = (props: HeaderProps) => {
               color="inherit"
               aria-label="open drawer"
               onClick={handleDrawerToggle}
+              size="large"
             >
               <Menu />
             </IconButton>
@@ -117,15 +118,16 @@ const Header = (props: HeaderProps) => {
             variant="temporary"
             anchor={"right"}
             open={mobileOpen}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
             onClose={handleDrawerToggle}
           >
-            <div className={classes.appResponsive}>
+            <Box
+              sx={{
+                margin: "20px 10px",
+              }}
+            >
               {LeftLinks ? <LeftLinks colorChange={colorChange} /> : null}
               {RightLinks ? <RightLinks colorChange={colorChange} /> : null}
-            </div>
+            </Box>
           </Drawer>
         </Hidden>
       </Container>

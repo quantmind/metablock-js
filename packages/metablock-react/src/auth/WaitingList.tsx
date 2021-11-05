@@ -1,7 +1,7 @@
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import { getBlock, urlQuery } from "@metablock/core";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import makeStyles from "@mui/styles/makeStyles";
 import React from "react";
 import { useAsync } from "react-use";
 import { FormErrorMessage, TextField, useForm } from "../forms";

@@ -1,16 +1,10 @@
-import { HttpClientInterface } from "../http";
 import urlQuery from "../url";
-
-interface HttpClient extends HttpClientInterface {
-  apiUrl: string;
-  withToken: (headers?: Record<string, string>) => Record<string, string>;
-}
+import Metablock from "./cli";
 
 class HttpComponent {
-  // add metablock JWT header to the headers dictionary
-  cli: HttpClient;
+  cli: Metablock;
 
-  constructor(cli: HttpClient) {
+  constructor(cli: Metablock) {
     this.cli = cli;
   }
 

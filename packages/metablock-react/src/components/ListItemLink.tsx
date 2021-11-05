@@ -1,4 +1,4 @@
-import MuiListItem from "@material-ui/core/ListItem";
+import MuiListItem from "@mui/material/ListItem";
 import React from "react";
 import { Link } from "react-router-dom";
 

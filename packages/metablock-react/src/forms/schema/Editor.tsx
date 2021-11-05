@@ -1,21 +1,10 @@
-import { makeStyles } from "@material-ui/core/styles";
 import { Notebook } from "@metablock/notebook";
-import clsx from "clsx";
+import Box from "@mui/material/Box";
 import React from "react";
 import { SchemaEntryProps } from "./interfaces";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    border: `1px solid ${theme.palette.divider}`,
-  },
-  error: {
-    border: `1px solid ${theme.palette.error.dark}`,
-  },
-}));
-
 const EditorSchema = (props: SchemaEntryProps) => {
   const { form, name, schema } = props;
-  const classes = useStyles();
   const notebook = React.useRef<Notebook>();
   const [error, setError] = React.useState<boolean>(false);
   const ref = React.useRef<HTMLDivElement>();
@@ -50,12 +39,9 @@ const EditorSchema = (props: SchemaEntryProps) => {
     }
   };
 
-  return (
-    <div
-      className={clsx({ [classes.root]: !error, [classes.error]: error })}
-      ref={setRef}
-    ></div>
-  );
+  const border = error ? "1px solid error.dark" : "1px solid divider";
+
+  return <Box sx={{ border }} ref={setRef}></Box>;
 };
 
 export default EditorSchema;

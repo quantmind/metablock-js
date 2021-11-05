@@ -1,4 +1,4 @@
-import { Org, Paginated, Space } from "@metablock/core";
+import { DataApi, Org, Space } from "@metablock/core";
 
 export interface ExtensionData<T> {
   title: string;
@@ -6,7 +6,7 @@ export interface ExtensionData<T> {
   create?: any;
   Update?: any;
   options?: Record<string, any>;
-  items?: (stores: Record<string, any>, query?: any) => Paginated<T>;
+  items?: DataApi<T>;
 }
 
 export interface ExtensionOutput<T> extends ExtensionData<T> {

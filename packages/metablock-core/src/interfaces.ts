@@ -1,5 +1,32 @@
-import HttpResponse from "../response";
 import { parseLinkHeader } from "./headers";
+import HttpResponse from "./response";
+
+export interface DataApi<T> {
+  // Are there more items to load?
+  // (This information comes from the most recent API request.)
+  hasMoreData: () => boolean;
+
+  // Are we currently loading a page of items?
+  // (This may be an in-flight flag in your Redux store for example.)
+  isDataLoading: () => boolean;
+
+  // Array of items loaded so far.
+  data: T[];
+
+  searchText?: string;
+
+  // Callback function responsible for loading the next page of items.
+  loadData: () => Promise<void>;
+
+  // Callback function responsible for full text search
+  search: (searchText: string) => Promise<void>;
+
+  // Callback function responsible for filtering a column
+  filter: (key: string, value: any) => Promise<void>;
+
+  // query
+  query: Record<string, string>;
+}
 
 export class Paginated<T> {
   data: T[];
@@ -15,6 +42,17 @@ export class Paginated<T> {
     this.limit = limit;
     this.links = links;
   }
+}
+
+export interface HttpClientInterface {
+  delete: (url: string, options?: any) => Promise<HttpResponse>;
+  get: (url: string, options?: any) => Promise<HttpResponse>;
+  head: (url: string, options?: any) => Promise<HttpResponse>;
+  patch: (url: string, options?: any) => Promise<HttpResponse>;
+  post: (url: string, options?: any) => Promise<HttpResponse>;
+  put: (url: string, options?: any) => Promise<HttpResponse>;
+  getList: <T>(url: string, options?: any) => Promise<Paginated<T>>;
+  loader: <T>(url: string, query?: Record<string, any>) => DataApi<T>;
 }
 
 export function paginatedResponse<T>(response: HttpResponse): Paginated<T> {

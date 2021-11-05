@@ -1,7 +1,6 @@
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import React from "react";
-import useStyles from "./styles";
 
 interface SectionProps {
   component?: React.ElementType;
@@ -9,10 +8,16 @@ interface SectionProps {
 }
 
 const Section = (props: SectionProps) => {
-  const classes = useStyles();
   const { children, component = "section" } = props;
   return (
-    <Typography component={component} className={classes.container}>
+    <Typography
+      component={component}
+      sx={{
+        display: "flex",
+        position: "relative",
+        backgroundColor: "background.default",
+      }}
+    >
       <Container maxWidth="lg">{children}</Container>
     </Typography>
   );

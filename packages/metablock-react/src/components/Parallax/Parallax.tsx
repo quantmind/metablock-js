@@ -1,16 +1,14 @@
-import Container from "@material-ui/core/Container";
-import { ThemeProvider } from "@material-ui/core/styles";
-import clsx from "clsx";
+import Container from "@mui/material/Container";
+import { ThemeProvider } from "@mui/material/styles";
+import { styled } from "@mui/system";
 import React from "react";
 import Image from "../Image";
 import ParallaxProps from "./props";
-import useStyles from "./styles";
 
 const Parallax = (props: ParallaxProps) => {
   const {
     filter,
     opacity,
-    className = "",
     children,
     small,
     theme,
@@ -20,15 +18,6 @@ const Parallax = (props: ParallaxProps) => {
     minScrollWidth = 768,
     speed = 3,
   } = props;
-  const classes = useStyles({
-    filter,
-    maxHeight,
-  });
-  const parallaxClasses = clsx({
-    [classes.parallax]: true,
-    [classes.small]: small,
-    [className]: className,
-  });
   const windowScrollTop =
     window.innerWidth >= minScrollWidth ? window.pageYOffset / speed : 0;
   const [transform, setTransform] = React.useState(
@@ -54,18 +43,42 @@ const Parallax = (props: ParallaxProps) => {
   if (minScrollWidth > 0) style.transform = transform;
 
   const inner = (
-    <Container maxWidth={maxWidth} className={classes.main}>
+    <Container maxWidth={maxWidth} sx={{ zIndex: 10 }}>
       {children}
     </Container>
   );
+  const sxImage = {
+    position: "relative",
+    height: "90vh",
+    overflow: "hidden",
+    margin: "0",
+    padding: "0",
+    border: "0",
+    display: "flex",
+    alignItems: "center",
+    "& img.image": {
+      zIndex: 1,
+      backgroundPosition: "center center",
+      width: "100%",
+      objectFit: "cover",
+    },
+    maxHeight: small ? "380px" : maxHeight,
+  };
+  const Filter = styled("div")({
+    zIndex: 2,
+    content: "''",
+    backgroundColor: `rgba(0, 0, 0, ${filter || 0.5})`,
+    position: "absolute",
+    left: 0,
+    top: 0,
+    bottom: 0,
+    right: 0,
+    width: "100%",
+    height: "100%",
+  });
   return (
-    <Image
-      className={parallaxClasses}
-      opacity={opacity}
-      urls={urls}
-      style={style}
-    >
-      {filter ? <div className={classes.over}></div> : null}
+    <Image sx={sxImage} opacity={opacity} urls={urls} style={style}>
+      {filter ? <Filter /> : null}
       {theme ? <ThemeProvider theme={theme}>{inner}</ThemeProvider> : inner}
     </Image>
   );

@@ -1,8 +1,8 @@
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Tab from "@material-ui/core/Tab";
-import MuiTabs from "@material-ui/core/Tabs";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import { Theme } from "@mui/material/styles";
+import Tab from "@mui/material/Tab";
+import MuiTabs from "@mui/material/Tabs";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -16,28 +16,11 @@ interface TabsProps {
 }
 
 const TabRoutes = (props: TabsProps) => {
-  const {
-    routes,
-    children,
-    value,
-    backgroundColor,
-    maxWidth = "lg",
-    ...tabProps
-  } = props;
-  const useStyles = makeStyles((theme: Theme) => {
-    const root: Record<string, any> = {};
-    if (backgroundColor) {
-      root[" & .Mui-selected"] = {
-        backgroundColor: backgroundColor(theme),
-      };
-    }
-    return createStyles({ root });
-  });
-  const classes = useStyles();
+  const { routes, children, value, maxWidth = "lg", ...tabProps } = props;
 
   return (
     <>
-      <MuiTabs value={value} {...tabProps} className={classes.root}>
+      <MuiTabs value={value} {...tabProps}>
         {routes.map(({ label, url }) => (
           <Tab
             key={url}
