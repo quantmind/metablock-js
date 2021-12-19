@@ -1,25 +1,21 @@
-import LinearProgress from "@material-ui/core/LinearProgress";
-import { makeStyles } from "@material-ui/core/styles";
 import { getWindowSize } from "@metablock/react";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 import React from "react";
-
-const useStyles = makeStyles((theme) => ({
-  root: (props: any) => ({
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
-    height: props.height,
-  }),
-}));
 
 const EntryLoading = () => {
   const height = getWindowSize().height || 200;
-  const classes = useStyles({ height: `${height}px` });
+  const sx = {
+    width: "100%",
+    height: `${height}px`,
+    "& > * + *": {
+      marginTop: 2,
+    },
+  };
   return (
-    <div className={classes.root}>
+    <Box sx={sx}>
       <LinearProgress />
-    </div>
+    </Box>
   );
 };
 
