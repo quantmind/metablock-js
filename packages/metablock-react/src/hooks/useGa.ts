@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -16,16 +16,12 @@ declare global {
 // Google Analytics for SPA
 // https://developers.google.com/analytics/devguides/collection/gtagjs/single-page-applications
 const useGa = (trackingId: string) => {
-  const { listen } = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
-    const unListen = listen((location) => {
-      if (!window.gtag || !trackingId) return;
-      window.gtag("config", trackingId, { page_path: location.pathname });
-    });
-
-    return unListen;
-  }, [trackingId, listen]);
+    if (!window.gtag || !trackingId) return;
+    window.gtag("config", trackingId, { page_path: location.pathname });
+  }, [trackingId, location]);
 };
 
 export default useGa;

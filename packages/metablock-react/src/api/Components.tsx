@@ -1,7 +1,7 @@
 import Alert from "@mui/material/Alert";
 import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useStores } from "../store";
 import { NotFound, Page } from "../views";
 import { ExtensionFailure, ExtensionLoaded, ExtensionType } from "./Extensions";
@@ -59,25 +59,23 @@ const ExtensionsComponent = (props: ExtensionsProps) => {
       e1.output.url < e2.output.url ? 1 : -1
     );
   return (
-    <Switch>
+    <Routes>
       {routes.map((e: ExtensionLoaded) => {
         const { output, extension } = e;
         return (
-          <Route
-            path={output.url}
-            key={extension.id}
-            render={() => (
-              <ExtensionComponent
-                {...output}
-                extension={extension}
-                render={render}
-              />
-            )}
-          />
+          <Route path={output.url} key={extension.id}>
+            <ExtensionComponent
+              {...output}
+              extension={extension}
+              render={render}
+            />
+          </Route>
         );
       })}
-      <Route component={NotFound} />
-    </Switch>
+      <Route>
+        <NotFound />
+      </Route>
+    </Routes>
   );
 };
 

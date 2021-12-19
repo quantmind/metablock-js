@@ -1,6 +1,6 @@
 import { NotFound } from "@metablock/react";
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import CmsEntry from "./CmsEntry";
 import CmsPaginate from "./CmsPaginate";
 
@@ -29,53 +29,43 @@ const CmsRoute = (props: CmsProps) => {
   let path = match.url;
   if (path.substring(path.length - 1) === "/")
     path = path.substring(0, path.length - 1);
+
+  const CmsPage = (props: any) => {
+    const { match, params } = props;
+    const cmsParams = { ...match.params, ...params };
+    return (
+      <CmsEntry
+        params={cmsParams}
+        topic={topic}
+        slug={slug}
+        Component={EntryComponent}
+        NotFoundComponent={NotFoundComponent}
+        {...extra}
+      />
+    );
+  };
+
   return (
-    <Switch>
+    <Routes>
       {ListComponent === false ? (
-        <Route
-          exact
-          path={match.url}
-          render={() => (
-            <CmsEntry
-              params={{ slug: "index" }}
-              topic={topic}
-              slug={slug}
-              Component={EntryComponent}
-              NotFoundComponent={NotFoundComponent}
-              {...extra}
-            />
-          )}
-        />
+        <Route path={match.url}>
+          <CmsPage params={{ slug: "index" }} />
+        </Route>
       ) : (
-        <Route
-          exact
-          path={path}
-          render={() => (
-            <CmsPaginate
-              path={match.url}
-              topic={topic}
-              slug={slug}
-              Component={ListComponent}
-            />
-          )}
-        />
-      )}
-      <Route
-        exact
-        path={`${path}/${entryPath}`}
-        render={(p) => (
-          <CmsEntry
-            params={p.match.params}
+        <Route path={path}>
+          <CmsPaginate
+            path={match.url}
             topic={topic}
             slug={slug}
-            Component={EntryComponent}
-            NotFoundComponent={NotFoundComponent}
-            {...extra}
+            Component={ListComponent}
           />
-        )}
-      />
-      <Route component={NotFoundComponent} />
-    </Switch>
+        </Route>
+      )}
+      <Route path={`${path}/${entryPath}`}>
+        <CmsPage />
+      </Route>
+      <Route element={NotFoundComponent} />
+    </Routes>
   );
 };
 

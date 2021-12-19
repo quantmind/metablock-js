@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useAsync } from "react-use";
 import Link from "../components/Link";
 import CrudForm from "./Form";
@@ -22,13 +22,13 @@ const List = (props: ExtensionData<ListItem>) => {
   });
 
   return (
-    <Switch>
+    <Routes>
       {create ? (
-        <Route path={`${url}/new`} exact>
+        <Route path={`${url}/new`}>
           <CrudForm {...create} />
         </Route>
       ) : null}
-      <Route path={url} exact>
+      <Route path={url}>
         {create ? (
           <Box pb={2}>
             <Link to={`${url}/new`}>
@@ -47,7 +47,7 @@ const List = (props: ExtensionData<ListItem>) => {
           );
         })}
       </Route>
-    </Switch>
+    </Routes>
   );
 };
 
