@@ -18,4 +18,8 @@ To create a new release
 - run `make version`, this will update the version in all the sub-packages
 - run `yarn install` to update the lock file
 - commit with the `Release <version>` message and push to master
+- to force commit after a merge to master you can use
+  ```
+  git commit -m "Release <version>" --allow-empty
+  ```
 - The publish job will publish to npm and create a github tag
