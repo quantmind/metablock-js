@@ -1,6 +1,6 @@
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
 import { Page, Parallax } from "@metablock/react";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import { CmsData } from "./interfaces";
 import { dateFormat } from "./op";
