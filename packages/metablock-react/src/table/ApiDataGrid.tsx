@@ -21,6 +21,7 @@ interface ApiDataGridProps<DataType, TSummaryRow = unknown> {
   className?: string;
   search?: boolean;
   fullScreen?: boolean;
+  style?: any;
 }
 
 const isAtBottom = ({
@@ -107,6 +108,8 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
       position: "absolute",
       top: 0,
       bottom: 0,
+      left: 0,
+      right: 0,
       height: "100vh",
       zIndex: 99999,
       ...container,
