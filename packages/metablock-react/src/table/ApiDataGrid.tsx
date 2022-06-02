@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import DataGrid, { Column } from "react-data-grid";
 import { useAsync } from "react-use";
+import { DataGridFilters, useDataGridFilters } from "./hooks";
 import { ApiDataGridActions, Maybe } from "./types";
 
 interface ApiDataGridProps<DataType, TSummaryRow = unknown> {
@@ -17,6 +18,7 @@ interface ApiDataGridProps<DataType, TSummaryRow = unknown> {
   columns: readonly Column<DataType, TSummaryRow>[];
   headerRowHeight?: Maybe<number>;
   dataGridCallback?: (actions: ApiDataGridActions) => void;
+  dataGridFilters?: DataGridFilters;
   title?: string;
   className?: string;
   search?: boolean;
@@ -76,26 +78,18 @@ const Loading = (props: any) => {
 export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
   props: ApiDataGridProps<DataType, TSummaryRow>
 ) => {
-  const { api, search, fullScreen, dataGridCallback, ...gridProps } = props;
+  const { api, search, fullScreen, dataGridFilters, ...gridProps } = props;
   const [ignored, render] = React.useState<any>({});
   const [full, setFullScreen] = React.useState<boolean>(false);
   const [loadingText, setLoading] = React.useState<string>("Loading data...");
-  const [actions, Ignored] = React.useState<ApiDataGridActions>({
-    async filter(key: string, value: any) {
-      message(`Filtering ${key}=${value}...`);
-      await api.filter(key, value);
-      render({});
-    },
-  });
+  const defaultDataGridFilters = useDataGridFilters();
+  const dgFilters = dataGridFilters || defaultDataGridFilters;
 
   // do the first loading
   useAsync(async () => {
+    api.reset(dgFilters.filters);
     await api.loadData();
-  }, [api]);
-
-  React.useEffect(() => {
-    if (dataGridCallback) dataGridCallback(actions);
-  }, [dataGridCallback, actions]);
+  }, [api, dgFilters.filters]);
 
   // Full screen handling
   let container: Record<string, any> = {
@@ -142,8 +136,8 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
     if (api.isDataLoading()) return;
     const text = event.currentTarget.value;
     message(`Searching for ${text}...`);
-    await api.search(text);
-    render({});
+    api.setSearch(text);
+    dgFilters.setAll({ ...api.query });
   };
 
   const toolbar = [];

@@ -24,6 +24,12 @@ export interface DataApi<T> {
   // Callback function responsible for filtering a column
   filter: (key: string, value: any) => Promise<void>;
 
+  // Callback function responsible for filtering a column
+  reset: (query: Record<string, any>) => void;
+
+  // Callback function responsible for full text search
+  setSearch: (searchText: string) => void;
+
   // query
   query: Record<string, string>;
 }

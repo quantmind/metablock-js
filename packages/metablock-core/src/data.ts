@@ -20,13 +20,21 @@ export class StaticData<T> implements DataApi<T> {
 
   async loadData() {}
 
+  reset(query: Record<string, any>) {
+    this.query = query;
+  }
+
+  setSearch(searchText: string) {
+    this.reset({ ...this.query, search: searchText });
+  }
+
   async filter(key: string, value: any): Promise<void> {
     if (value) this.query[key] = value;
     else delete this.query[key];
   }
 
   async search(searchText: string) {
-    this.query.search = searchText;
+    this.setSearch(searchText);
   }
 }
 
@@ -55,6 +63,10 @@ export class DataLoader<DataType> implements DataApi<DataType> {
     this.query = query;
   }
 
+  setSearch(searchText: string) {
+    this.reset({ ...this.query, search: searchText });
+  }
+
   hasMoreData(): boolean {
     return !this.links || this.links.next ? true : false;
   }
@@ -81,7 +93,7 @@ export class DataLoader<DataType> implements DataApi<DataType> {
   }
 
   async search(searchText: string): Promise<void> {
-    this.reset({ ...this.query, search: searchText });
+    this.setSearch(searchText);
     this.data = await this.load();
   }
 
