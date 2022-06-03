@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import debounce from "lodash.debounce";
 import React from "react";
 import DataGrid, { Column } from "react-data-grid";
 import { useAsync } from "react-use";
@@ -21,8 +22,10 @@ interface ApiDataGridProps<DataType, TSummaryRow = unknown> {
   dataGridFilters?: DataGridFilters;
   title?: string;
   className?: string;
+  resizable?: boolean;
   search?: boolean;
   fullScreen?: boolean;
+  searchWait?: number;
   style?: any;
 }
 
@@ -78,18 +81,43 @@ const Loading = (props: any) => {
 export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
   props: ApiDataGridProps<DataType, TSummaryRow>
 ) => {
-  const { api, search, fullScreen, dataGridFilters, ...gridProps } = props;
+  const {
+    api,
+    search,
+    fullScreen,
+    dataGridFilters,
+    searchWait = 500,
+    resizable = false,
+    ...gridProps
+  } = props;
   const [ignored, render] = React.useState<any>({});
   const [full, setFullScreen] = React.useState<boolean>(false);
+  const targetRef = React.useRef<HTMLDivElement>(null);
   const [loadingText, setLoading] = React.useState<string>("Loading data...");
   const defaultDataGridFilters = useDataGridFilters();
   const dgFilters = dataGridFilters || defaultDataGridFilters;
+  api.reset(dgFilters.filters);
 
   // do the first loading
   useAsync(async () => {
-    api.reset(dgFilters.filters);
     await api.loadData();
   }, [api, dgFilters.filters]);
+
+  React.useEffect(() => {
+    let handleResize: any = null;
+    if (resizable) {
+      handleResize = debounce(() => {
+        render({});
+      }, 100);
+      window.addEventListener("resize", handleResize);
+    }
+
+    return () => {
+      if (handleResize) {
+        window.removeEventListener("resize", handleResize);
+      }
+    };
+  });
 
   // Full screen handling
   let container: Record<string, any> = {
@@ -132,12 +160,18 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
     }
   };
 
-  const handleSearch = async (event: React.UIEvent<HTMLInputElement>) => {
-    if (api.isDataLoading()) return;
-    const text = event.currentTarget.value;
+  const doSearch = debounce((text) => {
+    if (api.isDataLoading()) {
+      doSearch(text);
+      return;
+    }
     message(`Searching for ${text}...`);
     api.setSearch(text);
     dgFilters.setAll({ ...api.query });
+  }, searchWait);
+
+  const handleSearch = (event: React.UIEvent<HTMLInputElement>) => {
+    doSearch(event.currentTarget.value);
   };
 
   const toolbar = [];
@@ -148,8 +182,11 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
   if (fullScreen)
     toolbar.push(<FullScreen onClick={handleFullScreen} full={full} />);
 
+  if (gridProps.style && gridProps.style instanceof Function)
+    gridProps.style = gridProps.style(api.data.length);
+
   return (
-    <Box sx={container}>
+    <Box sx={container} ref={targetRef}>
       {toolbar.length ? (
         <Box
           pb={1}

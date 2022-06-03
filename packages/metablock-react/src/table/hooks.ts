@@ -16,6 +16,7 @@ export const useDataGridActions = (): [
 export interface DataGridFilters {
   readonly filters: Record<string, any>;
   set: (key: string, value: any) => void;
+  setSome: (someFilters: Record<string, any>) => void;
   setAll: (filters: Record<string, any>) => void;
 }
 
@@ -38,6 +39,11 @@ export const useDataGridFilters = (
     set(key: string, value: any) {
       const newFilters = { ...currentFilters, [key]: value };
       if (value === "") delete newFilters[key];
+      this.setAll(newFilters);
+    }
+
+    setSome(someFilters: Record<string, any>) {
+      const newFilters = { ...currentFilters, ...someFilters };
       this.setAll(newFilters);
     }
 
