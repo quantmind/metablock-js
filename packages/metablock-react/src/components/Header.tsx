@@ -8,7 +8,6 @@ import Hidden from "@mui/material/Hidden";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import React from "react";
-import createColorChange from "./colorChange";
 
 interface HeaderComponentProps {
   colorChange: boolean;
@@ -32,6 +31,18 @@ export interface HeaderProps {
   };
 }
 
+const getColours = (
+  colorChange: boolean,
+  defaults: any,
+  changed?: any
+): Record<string, string> => {
+  const colors = colorChange ? changed || defaults : defaults;
+  return {
+    color: colors.color,
+    backgroundColor: `${colors.backgroundColor} !important`,
+  };
+};
+
 const Header = (props: HeaderProps) => {
   const {
     color = "transparent",
@@ -43,11 +54,9 @@ const Header = (props: HeaderProps) => {
     RightLinks,
     changeColorOnScroll,
   } = props;
+  const ref = React.useRef<any>();
   const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
   const [colorChange, setColorChange] = React.useState<boolean>(false);
-  const headerColorChange = changeColorOnScroll
-    ? createColorChange(changeColorOnScroll, {}, color, setColorChange)
-    : null;
   let sxAppBar: Record<string, any> = {
     display: "flex",
     border: "0",
@@ -58,22 +67,27 @@ const Header = (props: HeaderProps) => {
     justifyContent: "flex-start",
     position: "relative",
     zIndex: "unset",
-    backgroundColor: `${backgroundColor} !important`,
-    color,
     boxShadow: "none",
+    ...getColours(colorChange, { color, backgroundColor }, changeColorOnScroll),
   };
   if (absolute) sxAppBar = { ...sxAppBar, position: "absolute", zIndex: 1100 };
   else if (fixed) sxAppBar = { ...sxAppBar, position: "fixed", zIndex: 1100 };
   const { BrandComponent = () => <Button>brand</Button> } = props;
 
   React.useEffect(() => {
-    if (headerColorChange) {
-      window.addEventListener("scroll", headerColorChange);
-    }
-    return () => {
-      if (headerColorChange) {
-        window.removeEventListener("scroll", headerColorChange);
+    if (!changeColorOnScroll) return;
+
+    const headerColorChange = () => {
+      const windowsScrollTop = window.pageYOffset;
+      if (windowsScrollTop > changeColorOnScroll.height) {
+        setColorChange(true);
+      } else {
+        setColorChange(false);
       }
+    };
+    window.addEventListener("scroll", headerColorChange);
+    return () => {
+      window.removeEventListener("scroll", headerColorChange);
     };
   });
 
@@ -84,7 +98,7 @@ const Header = (props: HeaderProps) => {
   const brand = <BrandComponent colorChange={colorChange} />;
 
   return (
-    <AppBar color="transparent" sx={sxAppBar}>
+    <AppBar ref={ref} sx={sxAppBar}>
       <Container maxWidth={maxWidth}>
         <Toolbar sx={{ width: "100%" }} disableGutters={true}>
           {LeftLinks ? brand : null}

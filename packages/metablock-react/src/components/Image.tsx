@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import { styled } from "@mui/system";
 import React from "react";
 import { useIntersectionObserver, useWindowSize } from "../hooks";
@@ -30,7 +31,6 @@ interface ImageEntry {
 }
 
 interface ImageProps {
-  container?: string;
   alt?: string;
   opacity?: number;
   fit?: string;
@@ -54,7 +54,6 @@ const defaultSelectImage = (
 // urls returned should be in the form of an array of increased size
 const Image = (props: ImageProps) => {
   const {
-    container = "div",
     alt = "image",
     fit = "height",
     opacity = 1,
@@ -62,7 +61,7 @@ const Image = (props: ImageProps) => {
     urls,
     onIsVisible,
     children,
-    ...extra
+    ...boxProps
   } = props;
   const createImage = (size: number): ImageEntry => ({
     size,
@@ -80,10 +79,10 @@ const Image = (props: ImageProps) => {
   });
 
   // check if we need to load a new image
-  if (currentImage.size < currentSize) {
+  React.useEffect(() => {
     images.push(createImage(currentSize));
     if (draws) render(draws + 1);
-  }
+  }, [currentImage.size < currentSize]);
 
   useIntersectionObserver({
     target: ref,
@@ -116,7 +115,7 @@ const Image = (props: ImageProps) => {
           key={image.size}
           onLoad={() => {
             image.loaded = true;
-            render(draws + 1);
+            //render(draws + 1);
           }}
           style={
             image.size
@@ -131,10 +130,11 @@ const Image = (props: ImageProps) => {
       );
     });
   }
-  return React.createElement(
-    container,
-    { ref, ...extra },
-    entries.concat(children)
+  return (
+    <Box ref={ref} {...boxProps}>
+      {entries}
+      {children}
+    </Box>
   );
 };
 

@@ -1,6 +1,6 @@
 export { default as Breadcrumbs } from "./Breadcrumbs";
 export { default as Copyright } from "./Copyright";
-export * from "./Header";
+export { default as Header } from "./Header";
 export { default as Image } from "./Image";
 export { default as Link } from "./Link";
 export { default as List } from "./List";
