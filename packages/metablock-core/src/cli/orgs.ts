@@ -1,11 +1,12 @@
 import {
+  DataApi,
+  Extension,
   Org,
   OrgMember,
   OrgRole,
   Paginated,
   paginatedResponse,
 } from "../interfaces";
-import HttpResponse from "../response";
 import HttpComponent from "./httpComponent";
 
 class Orgs extends HttpComponent {
@@ -32,8 +33,16 @@ class Orgs extends HttpComponent {
     return response.data as Org;
   }
 
-  async extensions(org_id: string): Promise<HttpResponse> {
-    return await this.cli.get(`${this.url}/${org_id}/extensions`);
+  extensionLoader(org_id: string): DataApi<Extension> {
+    return this.cli.loader(`${this.url}/${org_id}/extensions`);
+  }
+
+  membersLoader(org_id: string): DataApi<OrgMember> {
+    return this.cli.loader(`${this.url}/${org_id}/members`);
+  }
+
+  rolesLoader(org_id: string): DataApi<OrgRole> {
+    return this.cli.loader(`${this.url}/${org_id}/roles`);
   }
 
   async getMembers(org_id: string, query?: any): Promise<Paginated<OrgMember>> {

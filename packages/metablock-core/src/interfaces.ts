@@ -136,7 +136,9 @@ export interface Extension {
 
 export interface SpaceExtension {
   id: string;
+  space_id: string;
   name: string;
+  description: string;
   script?: string;
   config: Record<string, any>;
 }
@@ -146,6 +148,7 @@ export interface Plugin {
   name: string;
   description: string;
   schema: Record<string, any>;
+  org_name: string;
   extension_id?: string;
 }
 

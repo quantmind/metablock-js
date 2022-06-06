@@ -7,16 +7,16 @@ import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { useAsync } from "react-use";
+import { useStores } from "../store";
+import { Page } from "../views";
+import FormErrorMessage from "./ErrorMessage";
 import {
   flattenData,
-  FormErrorMessage,
   FormFromSchema,
   SchemaEntry,
   unFlattenData,
-  useForm,
-} from "../forms";
-import { useStores } from "../store";
-import { Page } from "../views";
+} from "./schema";
+import useForm from "./useForm";
 
 type SchemaPromiseFunction = () => Promise<SchemaEntry>;
 

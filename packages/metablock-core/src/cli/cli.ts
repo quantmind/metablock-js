@@ -30,6 +30,7 @@ export class Metablock extends HttpClient {
   plugins: Plugins;
   photos: Photos;
   cache: Cache;
+  private _spec?: any;
 
   constructor(options?: MetablockOptions) {
     super(options?.name || "metablock");
@@ -61,6 +62,16 @@ export class Metablock extends HttpClient {
   async genesis(): Promise<Space> {
     const response = await this.get(`${this.apiUrl}/space`);
     return response.data as Space;
+  }
+
+  schemaLoader(name: string) {
+    return async () => {
+      if (!this._spec) {
+        const response = await this.get(`${this.apiUrl}/spec`);
+        this._spec = response.data;
+      }
+      return this._spec.components.schemas[name];
+    };
   }
 }
 

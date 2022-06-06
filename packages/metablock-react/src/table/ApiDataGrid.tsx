@@ -27,6 +27,8 @@ interface ApiDataGridProps<DataType, TSummaryRow = unknown> {
   fullScreen?: boolean;
   searchWait?: number;
   style?: any;
+  sx?: any;
+  [extra: string]: any;
 }
 
 const isAtBottom = ({
@@ -85,6 +87,7 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
     api,
     search,
     fullScreen,
+    sx,
     dataGridFilters,
     searchWait = 500,
     resizable = false,
@@ -123,6 +126,7 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
   let container: Record<string, any> = {
     width: "100%",
     bgcolor: "background.paper",
+    ...sx,
   };
 
   if (full)

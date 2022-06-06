@@ -1,6 +1,7 @@
 import {
   Block,
   BlockPlugin,
+  DataApi,
   Deployment,
   Paginated,
   paginatedResponse,
@@ -48,6 +49,10 @@ class Blocks extends HttpComponent {
     return response.data as any;
   }
 
+  pluginsLoader(block_id: string): DataApi<BlockPlugin> {
+    return this.cli.loader(`${this.cli.apiUrl}/services/${block_id}/plugins`);
+  }
+
   async getPlugins(
     block_id: string,
     query?: any
@@ -68,16 +73,10 @@ class Blocks extends HttpComponent {
     return response.data as BlockPlugin;
   }
 
-  async deployments(
-    block_id: string,
-    query?: any
-  ): Promise<Paginated<Deployment>> {
-    const url = this.urlQuery(
-      `${this.cli.apiUrl}/services/${block_id}/deployments`,
-      query
+  deploymentsLoader(block_id: string): DataApi<Deployment> {
+    return this.cli.loader(
+      `${this.cli.apiUrl}/services/${block_id}/deployments`
     );
-    const response = await this.cli.get(url);
-    return paginatedResponse<Deployment>(response);
   }
 
   async ship(
