@@ -123,7 +123,7 @@ const SignIn = (props: any) => {
           </Typography>
           <Typography align="center" variant="caption" pt={0.5}>
             <Link to={block.plugins.account.signup_url} variant="body2">
-              Don't have an account? Sign Up
+              {"Don't have an account? Sign Up"}
             </Link>
           </Typography>
         </>
