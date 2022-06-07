@@ -1,7 +1,5 @@
 import { getBlock, urlQuery } from "@metablock/core";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { useAsync } from "react-use";
@@ -114,23 +112,21 @@ const SignIn = (props: any) => {
         </Button>
       ))}
       {account.password ? (
-        <Box pt={2}>
-          <Grid container>
-            <Grid item xs>
-              <Link
-                to={block.plugins.account.forgot_password_url}
-                variant="body2"
-              >
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link to={block.plugins.account.signup_url} variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
+        <>
+          <Typography align="center" variant="caption" pt={2}>
+            <Link
+              to={block.plugins.account.forgot_password_url}
+              variant="body2"
+            >
+              Forgot password?
+            </Link>
+          </Typography>
+          <Typography align="center" variant="caption" pt={0.5}>
+            <Link to={block.plugins.account.signup_url} variant="body2">
+              Don't have an account? Sign Up
+            </Link>
+          </Typography>
+        </>
       ) : null}
     </AppForm>
   );

@@ -1,34 +1,52 @@
 import Box from "@mui/material/Box";
-import { styled } from "@mui/system";
 import React from "react";
 import { useIntersectionObserver, useWindowSize } from "../hooks";
-
-const styledImage = (image: ImageEntry, opacity: number, fit: string) => {
-  let styling: Record<string, any> = {
-    position: "absolute",
-    top: 0,
-    left: 0,
-  };
-  if (fit === "height") styling = { height: "100%", ...styling };
-  else if (fit === "width") styling = { width: "100%", ...styling };
-  if (image.size === 0)
-    styling = {
-      filter: "blur(20px)",
-      transform: "scale(1.1)",
-      transition: "visibility 0ms ease 400ms",
-      visibility: "visible",
-      ...styling,
-    };
-  else
-    styling = { transition: "opacity 400ms ease 0ms", opacity: 0, ...styling };
-  if (image.loaded) styling[opacity] = opacity;
-  return styled("img")(styling);
-};
 
 interface ImageEntry {
   size: number;
   loaded: boolean;
 }
+
+const imageSx = (
+  image: ImageEntry,
+  opacity: number,
+  fit: string,
+  current: number
+) => {
+  let sx: Record<string, any> = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+  };
+  if (fit === "height") sx = { height: "100%", ...sx };
+  else if (fit === "width") sx = { width: "100%", ...sx };
+  else {
+    sx = {
+      height: "100%",
+      width: "100%",
+      backgroundPosition: "center center",
+      objectFit: "cover",
+      ...sx,
+    };
+  }
+  if (image.size === 0)
+    sx = {
+      ...sx,
+      filter: "blur(20px)",
+      transform: "scale(1.1)",
+      transition: "visibility 0ms ease 400ms",
+      visibility: "visible",
+    };
+  else
+    sx = {
+      ...sx,
+      transition: "opacity 400ms ease 0ms",
+      opacity: 0,
+      visibility: current > image.size ? "hidden" : "visible",
+    };
+  if (image.loaded) sx = { ...sx, opacity };
+  return sx;
+};
 
 interface ImageProps {
   alt?: string;
@@ -55,7 +73,7 @@ const defaultSelectImage = (
 const Image = (props: ImageProps) => {
   const {
     alt = "image",
-    fit = "height",
+    fit = "cover",
     opacity = 1,
     selectImage = defaultSelectImage,
     urls,
@@ -80,9 +98,11 @@ const Image = (props: ImageProps) => {
 
   // check if we need to load a new image
   React.useEffect(() => {
-    images.push(createImage(currentSize));
-    if (draws) render(draws + 1);
-  }, [currentImage.size < currentSize]);
+    if (currentImage.size < currentSize) {
+      images.push(createImage(currentSize));
+      if (draws) render(draws + 1);
+    }
+  }, [currentImage.size, currentSize]);
 
   useIntersectionObserver({
     target: ref,
@@ -108,27 +128,21 @@ const Image = (props: ImageProps) => {
         break;
       }
     }
-    entries = images.map((image) => {
-      const StyledImage = styledImage(image, opacity, fit);
-      return (
-        <StyledImage
-          key={image.size}
-          onLoad={() => {
+    entries = images.map((image) => (
+      <Box
+        component="img"
+        sx={imageSx(image, opacity, fit, current)}
+        key={image.size}
+        onLoad={() => {
+          if (!image.loaded) {
             image.loaded = true;
-            //render(draws + 1);
-          }}
-          style={
-            image.size
-              ? {}
-              : {
-                  visibility: current > image.size ? "hidden" : "visible",
-                }
+            render(draws + 1);
           }
-          alt={alt}
-          src={urls[image.size]}
-        />
-      );
-    });
+        }}
+        alt={alt}
+        src={urls[image.size]}
+      />
+    ));
   }
   return (
     <Box ref={ref} {...boxProps}>

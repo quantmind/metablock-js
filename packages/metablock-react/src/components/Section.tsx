@@ -5,10 +5,11 @@ import React from "react";
 interface SectionProps {
   component?: React.ElementType;
   children: any;
+  [x: string]: any;
 }
 
 const Section = (props: SectionProps) => {
-  const { children, component = "section" } = props;
+  const { children, component = "section", ...extra } = props;
   return (
     <Typography
       component={component}
@@ -17,6 +18,7 @@ const Section = (props: SectionProps) => {
         position: "relative",
         backgroundColor: "background.default",
       }}
+      {...extra}
     >
       <Container maxWidth="lg">{children}</Container>
     </Typography>
