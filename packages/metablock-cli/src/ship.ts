@@ -1,4 +1,4 @@
-import { Metablock } from "@metablock/core";
+import mb from "@metablock/core";
 import archiver from "archiver";
 import fs from "fs";
 import prettyBytes from "pretty-bytes";
@@ -39,7 +39,7 @@ const ship = async (options: any) => {
   archive.directory(bundle, false);
   archive.finalize();
   //
-  const cli = new Metablock({ baseUrl: settings.METABLOCK_API_URL });
+  const cli = new mb.Metablock({ baseUrl: settings.METABLOCK_API_URL });
   cli.token = token;
   const data: any = await waiter;
   const form = new FormData();

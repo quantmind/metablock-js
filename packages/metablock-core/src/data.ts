@@ -97,7 +97,7 @@ export class DataLoader<DataType> implements DataApi<DataType> {
     this.data = await this.load();
   }
 
-  private async load(): Promise<DataType[]> {
+  async load(): Promise<DataType[]> {
     let paginated: Paginated<DataType>;
     this.loading = true;
     try {

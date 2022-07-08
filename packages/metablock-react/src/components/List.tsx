@@ -37,12 +37,12 @@ const styling: Record<string, any> = {
   horizontalLeftItem: {
     width: "auto",
     padding: 0,
-    //paddingRight: theme.spacing(2),
+    pr: 2,
   },
   horizontalRightItem: {
     width: "auto",
     padding: 0,
-    //paddingLeft: theme.spacing(2),
+    pl: 2,
   },
   vertical: {},
   verticalItem: {},

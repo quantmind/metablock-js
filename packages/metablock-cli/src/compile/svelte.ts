@@ -1,11 +1,11 @@
 import nodeResolve from "@rollup/plugin-node-resolve";
 import fs from "fs";
 import { resolve } from "path";
+import { rollup } from "rollup";
+import svelte from "rollup-plugin-svelte";
 import { info } from "../log";
 import { contentType } from "./compiler";
 
-const svelte = require("rollup-plugin-svelte");
-const rollup = require("rollup");
 const compileContentTypes = new Set([
   "application/javascript",
   "application/svelte",
@@ -23,7 +23,7 @@ const compileBundle = async (
   const fileName = config.js_source.trim();
   const srcPath = resolve(config.sourceDir, fileName);
 
-  const bundle = await rollup.rollup({
+  const bundle = await rollup({
     input: srcPath,
     plugins: [
       svelte({

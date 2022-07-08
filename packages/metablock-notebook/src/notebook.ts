@@ -3,6 +3,7 @@ import code from "./code";
 import { Library } from "./config";
 import Editor from "./editor";
 import { asArray } from "./lib/utils";
+import loadJs from "./loadJs";
 import Markdown, { defaultMarkdownExtensions } from "./markdown";
 import math from "./math";
 import jsmod from "./module";
@@ -67,13 +68,16 @@ class Notebook implements Library {
   // Render a markdown text into an element
   async render(text: string, element: any, options?: any): Promise<any> {
     const opts = options || {};
-    if (opts.stylesheet) {
-      await Promise.all(
-        asArray(opts.stylesheet).map(
-          async (stylesheet: string) => await this.loadStyle(stylesheet)
-        )
-      );
-    }
+    const promises: Promise<any>[] = [];
+    if (opts.stylesheet)
+      asArray(opts.stylesheet).forEach((stylesheet: string) => {
+        promises.push(this.loadStyle(stylesheet));
+      });
+    if (opts.js)
+      asArray(opts.js).forEach((js: string) => {
+        promises.push(loadJs(js));
+      });
+    if (promises.length) await Promise.all(promises);
     return await this.md.render(text, element, opts);
   }
 

@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-const { createClient } = require("./index");
+import { createClient } from "@metablock/cli";
 
 createClient().parse(process.argv);

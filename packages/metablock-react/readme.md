@@ -109,6 +109,13 @@ SchemaRegistry.set("number", NumberSchema);
 SchemaRegistry.set("object", ObjectSchema);
 ```
 
-## CrudForm
+### CrudForm
 
 This is a higher level component to render Forms with side actions. It uses the `FormFromSchema` component in conjunction with the [useForm](#useform) hook.
+
+
+## ApiDataGrid
+
+A Component for rendering tabular data, it allows to fetch server side data via the `ApiData` interface.
+
+* uses [react-data-grid](https://github.com/adazzle/react-data-grid)

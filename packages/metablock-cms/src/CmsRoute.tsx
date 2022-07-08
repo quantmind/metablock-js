@@ -1,12 +1,11 @@
 import { NotFound } from "@metablock/react";
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import CmsEntry from "./CmsEntry";
 import CmsPaginate from "./CmsPaginate";
 
 interface CmsProps {
-  match: any;
-  topic?: string;
+  topic: string;
   slug?: string[];
   NotFoundComponent?: any;
   ListComponent?: any;
@@ -16,26 +15,29 @@ interface CmsProps {
 
 const CmsRoute = (props: CmsProps) => {
   const {
-    match,
     slug = ["slug"],
     NotFoundComponent = NotFound,
     ListComponent,
     EntryComponent,
+    topic,
     ...extra
   } = props;
-  let { topic = "" } = props;
-  if (!topic) topic = match.url.substring(1);
   const entryPath = slug.map((s: string) => `:${s}`).join("/");
-  let path = match.url;
-  if (path.substring(path.length - 1) === "/")
-    path = path.substring(0, path.length - 1);
+  //if (path.substring(path.length - 1) === "/")
+  //  path = path.substring(0, path.length - 1);
 
   const CmsPage = (props: any) => {
-    const { match, params } = props;
-    const cmsParams = { ...match.params, ...params };
+    let { params } = props;
+    const parameters = useParams();
+    if (!params) {
+      params = slug.reduce((o: any, s: string) => {
+        if (s in parameters) o[s] = parameters[s];
+        return o;
+      }, {});
+    }
     return (
       <CmsEntry
-        params={cmsParams}
+        params={params}
         topic={topic}
         slug={slug}
         Component={EntryComponent}
@@ -48,23 +50,17 @@ const CmsRoute = (props: CmsProps) => {
   return (
     <Routes>
       {ListComponent === false ? (
-        <Route path={match.url}>
-          <CmsPage params={{ slug: "index" }} />
-        </Route>
+        <Route path="" element={<CmsPage params={{ slug: "index" }} />} />
       ) : (
-        <Route path={path}>
-          <CmsPaginate
-            path={match.url}
-            topic={topic}
-            slug={slug}
-            Component={ListComponent}
-          />
-        </Route>
+        <Route
+          path=""
+          element={
+            <CmsPaginate topic={topic} slug={slug} Component={ListComponent} />
+          }
+        />
       )}
-      <Route path={`${path}/${entryPath}`}>
-        <CmsPage />
-      </Route>
-      <Route element={NotFoundComponent} />
+      <Route path={`/${entryPath}`} element={<CmsPage />} />
+      <Route path="*" element={<NotFoundComponent />} />
     </Routes>
   );
 };

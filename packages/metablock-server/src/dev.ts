@@ -8,7 +8,7 @@ import DevServices from "./services";
 const devServer = (blockUrl: string, options: any) => {
   const { ssr = false, docker, slowMo, ssrPlugins = [], ...dev } = options;
   return {
-    onBeforeSetupMiddleware: before(blockUrl, {
+    setupMiddlewares: devBlockMiddleware(blockUrl, {
       ssr,
       slowMo,
       docker,
@@ -18,9 +18,9 @@ const devServer = (blockUrl: string, options: any) => {
   };
 };
 
-export const before = (blockUrl: string, metaOptions: any) => {
+export const devBlockMiddleware = (blockUrl: string, metaOptions: any) => {
   global.fetch = require("cross-fetch");
-  return (devServer: any) => {
+  return (middlewares: any[], devServer: any) => {
     const { ssr, ...ssrOptions } = metaOptions;
     const { app, compiler, options } = devServer;
     const { mode } = compiler.options;
@@ -38,6 +38,7 @@ export const before = (blockUrl: string, metaOptions: any) => {
       ? new BrowserManager(services, { mode, ...ssrOptions })
       : null;
     blockMiddleware(app, services, { publicPath, ssrManager });
+    return middlewares;
   };
 };
 

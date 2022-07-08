@@ -21,21 +21,15 @@ const imageProvider = (props: any) => {
   } else return {};
 };
 const EntryImage = (props: any) => {
-  const { title, className, ...extra } = props;
+  const { title, ...extra } = props;
   const image = imageProvider(props);
   if (image.provider === "unsplash")
     return (
-      <UnsplashImage
-        photoId={image.id}
-        alt={title}
-        fit="width"
-        className={className}
-        {...extra}
-      />
+      <UnsplashImage photoId={image.id} alt={title} fit="width" {...extra} />
     );
   else if (image.urls)
-    return <Image {...image} alt={title} className={className} fit="width" />;
-  else return <div className={className} />;
+    return <Image fit="width" {...image} {...extra} alt={title} />;
+  else return <Box {...extra}></Box>;
 };
 
 const ListLayout = (props: CmsListProps) => {
@@ -50,50 +44,49 @@ const ListLayout = (props: CmsListProps) => {
       ? {
           backgroundColor: "action.disabled",
           width: "100%",
+          mb: 3,
         }
-      : {};
+      : { mb: 4 };
 
   return (
     <List>
       {data.map((entry, index) => (
-        <ListItem key={index}>
-          <Box sx={sx(entry)}>
-            <Link to={entry.urlPath} color="inherit" underline="none">
-              <Grid container spacing={3}>
-                <Grid item>
-                  <EntryImage
-                    {...extra}
-                    {...entry}
-                    imageHeight={imageHeight}
-                    imageWidth={imageWidth}
-                    sx={sxImage}
-                  />
-                </Grid>
-                <Grid item xs={12} sm container>
-                  <ListItemText
-                    primary={
-                      <Typography component="h2" variant="h5">
-                        {entry.title}
-                      </Typography>
-                    }
-                    secondary={
-                      <>
-                        <Typography component="p" variant="subtitle1">
-                          {entry.description}
-                        </Typography>
-                        <Typography component="p" variant="subtitle2">
-                          by {entry.author}
-                          {entry.date instanceof Date
-                            ? ` on ${dateFormat()(entry.date)}`
-                            : ""}
-                        </Typography>
-                      </>
-                    }
-                  />
-                </Grid>
+        <ListItem key={index} disablePadding sx={sx(entry)}>
+          <Link to={entry.urlPath} color="inherit" underline="none">
+            <Grid container>
+              <Grid item>
+                <EntryImage {...extra} {...entry} sx={sxImage} />
               </Grid>
-            </Link>
-          </Box>
+              <Grid item xs={12} sm container>
+                <ListItemText
+                  sx={{ pl: 3, mt: 0, mb: 0 }}
+                  disableTypography
+                  primary={
+                    <Typography component="h2" variant="h5">
+                      {entry.title}
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography component="div">
+                      <Typography component="p" variant="subtitle2">
+                        {entry.description}
+                      </Typography>
+                      <Typography
+                        component="p"
+                        variant="caption"
+                        color="primary.main"
+                      >
+                        by {entry.author}
+                        {entry.date instanceof Date
+                          ? ` on ${dateFormat()(entry.date)}`
+                          : ""}
+                      </Typography>
+                    </Typography>
+                  }
+                />
+              </Grid>
+            </Grid>
+          </Link>
         </ListItem>
       ))}
     </List>
