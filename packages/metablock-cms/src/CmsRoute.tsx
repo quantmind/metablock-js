@@ -1,6 +1,6 @@
 import { NotFound } from "@metablock/react";
 import React from "react";
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import CmsEntry from "./CmsEntry";
 import CmsPaginate from "./CmsPaginate";
 
