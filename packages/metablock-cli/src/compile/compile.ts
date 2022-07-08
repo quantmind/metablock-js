@@ -1,5 +1,5 @@
 import fs from "fs";
-import { readJson } from "fs-extra";
+import fse from "fs-extra";
 import { basename, resolve } from "path";
 import { warning } from "../log";
 import getCompiler from "./compiler";
@@ -45,7 +45,7 @@ const compileDirectory = async (
 ) => {
   const configPath = resolve(sourceDir, configName);
   const config: Record<string, any> = fs.existsSync(configPath)
-    ? await readJson(configPath)
+    ? await fse.readJson(configPath)
     : {};
   let path = config.path || "";
   if (!prevConfig.outputDir)

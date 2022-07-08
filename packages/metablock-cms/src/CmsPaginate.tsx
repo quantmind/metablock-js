@@ -1,5 +1,6 @@
 import { bundleUrl } from "@metablock/core";
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { useAsync } from "react-use";
 import { CmsListData } from "./interfaces";
 import ListLayout from "./ListLayout";
@@ -7,14 +8,14 @@ import { render, urlPath } from "./op";
 import store from "./store";
 
 interface CmsPaginateProps {
-  path: string;
   topic: string;
   slug: string[];
   Component?: any;
 }
 
 const CmsPaginate = (props: CmsPaginateProps) => {
-  const { path, topic, slug, Component = ListLayout } = props;
+  const path = useLocation().pathname;
+  const { topic, slug, Component = ListLayout } = props;
   const url = bundleUrl(`${topic}/index.json`);
   const result = useAsync(async () => await store.get(url), [url]);
   const data = result.value || [];

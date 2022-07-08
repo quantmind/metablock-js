@@ -24,6 +24,7 @@ export interface HeaderProps {
   RightLinks?: React.FC<HeaderComponentProps>;
   paddingTop?: number;
   paddingBottom?: number;
+  hideSize?: string;
   changeColorOnScroll?: {
     height: number;
     color: string;
@@ -53,6 +54,7 @@ const Header = (props: HeaderProps) => {
     LeftLinks,
     RightLinks,
     changeColorOnScroll,
+    hideSize = "md",
   } = props;
   const ref = React.useRef<any>();
   const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
@@ -73,6 +75,8 @@ const Header = (props: HeaderProps) => {
   if (absolute) sxAppBar = { ...sxAppBar, position: "absolute", zIndex: 1100 };
   else if (fixed) sxAppBar = { ...sxAppBar, position: "fixed", zIndex: 1100 };
   const { BrandComponent = () => <Button>brand</Button> } = props;
+  const hiddenProps: any = { implementation: "css" };
+  hiddenProps[`${hideSize}Down`] = true;
 
   React.useEffect(() => {
     if (!changeColorOnScroll) return;
@@ -104,7 +108,7 @@ const Header = (props: HeaderProps) => {
           {LeftLinks ? brand : null}
           <Box sx={{ flex: 1 }}>
             {LeftLinks ? (
-              <Hidden mdDown implementation="css">
+              <Hidden {...hiddenProps}>
                 <LeftLinks colorChange={colorChange} />
               </Hidden>
             ) : (
@@ -112,7 +116,7 @@ const Header = (props: HeaderProps) => {
             )}
           </Box>
           {RightLinks ? (
-            <Hidden mdDown implementation="css">
+            <Hidden {...hiddenProps}>
               <RightLinks colorChange={colorChange} />
             </Hidden>
           ) : null}

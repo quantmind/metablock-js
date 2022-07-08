@@ -1,7 +1,7 @@
-import { compileOptions } from "@metablock/core";
+import mb from "@metablock/core";
 import { timeFormat } from "d3-time-format";
 import fs from "fs";
-import { writeJson } from "fs-extra";
+import fse from "fs-extra";
 import mime from "mime-types";
 import { basename, dirname, resolve } from "path";
 import slugify from "slugify";
@@ -19,7 +19,7 @@ const compileMarkdown = async (
   const text = fs.readFileSync(srcPath, { encoding: "utf-8" });
   const bits = text.split("---");
   try {
-    const json = compileOptions(bits[0]);
+    const json = mb.compileOptions(bits[0]);
     if (production && json.private) return;
     if (json.date) json.date = formatDate(new Date(json.date));
     json.index = index;
@@ -59,7 +59,7 @@ const write = async (
   fs.mkdirSync(outputDir, { recursive: true });
   const outPath = resolve(outputDir, `${json.slug}.json`);
   const options = production ? {} : { spaces: 2 };
-  await writeJson(outPath, json, options);
+  await fse.writeJson(outPath, json, options);
   return { ...json, outputDir, outPath, srcPath };
 };
 

@@ -131,12 +131,9 @@ class BrowserManager {
   async getBrowser(): Promise<puppeteer.Browser> {
     return this._lock.acquire("browser", async () => {
       if (!this._browser) {
-        let cfg: Record<string, any> = {};
+        let cfg: Record<string, any> = { headless: true };
         if (this.config.mode === "development" && this.config.slowMo > 0)
-          cfg = {
-            headless: false,
-            slowMo: this.config.slowMo,
-          };
+          cfg = { headless: false, slowMo: this.config.slowMo };
         if (this.config.docker) {
           cfg.args = [
             // Required for Docker version of Puppeteer

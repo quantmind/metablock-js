@@ -23,8 +23,7 @@ export default [
     input: "src/index.ts",
     output: {
       file: pkg.main,
-      format: "cjs",
-      // format: "es",
+      format: "es",
       name: "metablock",
       sourcemap: true,
       globals,

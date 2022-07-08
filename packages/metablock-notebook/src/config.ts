@@ -3,7 +3,7 @@ export default {
   PURIFY: "dompurify@2.0.12/dist/purify.min.js",
   HL_ROOT: "https://cdn.jsdelivr.net/npm/@observablehq/highlight.js@2.0.0",
   HL_CSS: "https://cdn.jsdelivr.net/npm/highlightjs@9.16.2/styles",
-  KATEX: "https://cdn.jsdelivr.net/npm/katex@0.11.1",
+  KATEX: "https://cdn.jsdelivr.net/npm/katex@0.16.0",
   CODEMIRROR: "https://cdn.jsdelivr.net/npm/codemirror@5.59.0",
   defaultHighlightStyle: "default",
 };
