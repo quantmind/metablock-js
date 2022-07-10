@@ -30,7 +30,7 @@ const CmsEntry = (props: CmsProps) => {
   const url = bundleUrl(`${topic}/${params.slug}.json`);
   const result = useAsync(async () => await store.get(url), [url]);
   if (result.loading) return <Loading />;
-  if (!result.value) return <NotFoundComponent/>;
+  if (!result.value) return <NotFoundComponent />;
   const data = result.value as any;
   const entry = render(data) as CmsData;
   const baseUrl = entry.index

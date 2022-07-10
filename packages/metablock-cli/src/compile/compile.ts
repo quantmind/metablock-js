@@ -1,7 +1,7 @@
 import fs from "fs";
 import fse from "fs-extra";
 import { basename, resolve } from "path";
-import { info, warning } from "../log";
+import { warning } from "../log";
 import getCompiler from "./compiler";
 import pagination from "./pagination";
 import compileBundle from "./svelte";
