@@ -3,7 +3,7 @@ import fs from "fs";
 import { resolve } from "path";
 import { rollup } from "rollup";
 import svelte from "rollup-plugin-svelte";
-import { info } from "../log";
+import { error, info } from "../log";
 import { contentType } from "./compiler";
 
 const compileContentTypes = new Set([
@@ -22,30 +22,43 @@ const compileBundle = async (
   }
   const fileName = config.js_source.trim();
   const srcPath = resolve(config.sourceDir, fileName);
-
-  const bundle = await rollup({
-    input: srcPath,
-    plugins: [
-      svelte({
-        include: `${config.sourceDir}/*.svelte`,
-      }),
-      nodeResolve(),
-    ],
-  });
+  const output = await safeRollup(srcPath, config);
+  if (!output) return;
   const outPath = resolve(config.sourceDir, `compiled.${fileName}`);
-  //
-  const { output } = await bundle.generate({
-    sourcemap: true,
-    format: "es",
-  });
   config.js_compiled = new Set();
   output.forEach((out: any) => {
     const target =
       out.facadeModuleId === srcPath ? outPath : out.facadeModuleId;
     config.js_compiled.add(target);
     fs.writeFileSync(target, out.code);
-    info(`:tada: written javascript compiled file ${target}`);
+    info(`:blue_heart: written javascript compiled file ${target}`);
   });
 };
 
+const safeRollup = async (
+  srcPath: string,
+  config: Record<string, any>
+): Promise<any[] | null> => {
+  try {
+    const bundle = await rollup({
+      input: srcPath,
+      plugins: [
+        svelte({
+          include: `${config.sourceDir}/*.svelte`,
+          emitCss: false,
+        }),
+        nodeResolve(),
+      ],
+    });
+    //
+    const { output } = await bundle.generate({
+      sourcemap: true,
+      format: "es",
+    });
+    return output;
+  } catch (exc) {
+    error(exc);
+    return null;
+  }
+};
 export default compileBundle;

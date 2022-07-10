@@ -27,10 +27,10 @@ export default (app: Express, services: Services, options?: any) => {
           ssrManager ? serve_html : serve_raw,
         ];
         const serveMiddleware = (err?: any) => {
+          const handler = middleware.shift();
           if (err) next(err);
-          else if (!middleware.length) next();
+          else if (!handler) next();
           else {
-            const handler = middleware.shift();
             if (handler.constructor === String) serveMiddleware();
             else handler(mReq, res, serveMiddleware);
           }
@@ -46,10 +46,17 @@ export default (app: Express, services: Services, options?: any) => {
     res.send(rawHtml(req.context, req));
   };
 
-  const serve_html = async (req: MetablockRequest, res: Response) => {
+  const serve_html = async (
+    req: MetablockRequest,
+    res: Response,
+    ignored?: any
+  ) => {
     let content;
     try {
       const result = await ssrManager.ssr(req, res);
+      logger.info(
+        `SSR rendered ${req.url} with ${result.requestCount} requests in ${result.time} milliseconds - content-length ${result.content.length}`
+      );
       content = result.content;
     } catch (err: any) {
       if (err.constructor && err.constructor.name === "TimeoutError")

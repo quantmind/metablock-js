@@ -1,9 +1,10 @@
 import fs from "fs";
 import fse from "fs-extra";
 import { basename, resolve } from "path";
-import { warning } from "../log";
+import { info, warning } from "../log";
 import getCompiler from "./compiler";
 import pagination from "./pagination";
+import compileBundle from "./svelte";
 import watch from "./watch";
 
 const configName = "collection.json";
@@ -94,6 +95,7 @@ const compileContent = async (
   }
 };
 
+// Compile a directory
 const compileContentDir = async (
   dirPath: string,
   prevConfig: Record<string, any>,
@@ -116,6 +118,9 @@ const compileContentDir = async (
   const output = await compiler(index, config, true);
   if (!output) return;
   targets[dirPath] = { ...output, config };
+  if (config.js_source) {
+    await compileBundle(config, resolve(config.sourceDir, config.js_source));
+  }
 
   const files = fs.readdirSync(dirPath);
   for (let i = 0; i < files.length; ++i) {

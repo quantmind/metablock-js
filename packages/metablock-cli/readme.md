@@ -25,9 +25,9 @@ metablock ship --help
 
 ## Compile Content
 
-The `compile` command scans the repository for directories containing the `collection.json` file and
+The `compile` command scans a repository for directories containing the `collection.json` file and
 
-- Compile Markdown files into JSON data files and compile minimal requirement javascript files for inclusion in [@metablock/notebooks](https://github.com/quantmind/metablock-js/tree/master/packages/metablock-notebook)
+- Compile Markdown files into JSON data files and compile minimal requirement javascript files for inclusion in [@metablock/notebooks](../metablock-notebook)
 - Build sitemap files
 
 The `collection.json` has the following entries (all optionals with those default values)
@@ -54,3 +54,11 @@ metablock compile --help
 - **slug**: defines how the relative path of an entry is constructed
 - **outDir**: this is really needed only by the top level `collection.json` file to point where compiled files should be saved
 - **paginate**: if set to `true` a pagination index data file is created (this is useful for markdown data files)
+
+
+### Content
+
+The content can be either a markdown file `my-content.md` or a directory with multiple files. When a directory these rules must be followed
+
+* there must be n `index.md` file (if not provided the compilr will log a warning and skip the directory)
+* nested content directories are not supported and therefore they will be skipped by  the compiler

@@ -10,6 +10,8 @@ export const contentCompilers: Record<string, any> = {
   "text/plain": copyFile,
   "application/javascript": copyFile,
   "application/svelte": copyFile,
+  "image/png": copyFile,
+  "image/svg+xml": copyFile,
 };
 
 export const contentType = (fileName: string): any => {

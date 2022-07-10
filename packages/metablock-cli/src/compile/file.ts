@@ -13,7 +13,7 @@ export const copyFile = async (
   fs.mkdirSync(config.outputDir, { recursive: true });
   fs.copyFileSync(srcPath, outPath);
   const contentType = mime.lookup(srcPath);
-  info(`:tada: copied ${contentType} file to ${outPath}`);
+  info(`:arrow_right: copied ${contentType} file to ${outPath}`);
   return {
     contentType,
     paginate: false,

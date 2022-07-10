@@ -1,3 +1,4 @@
+import { getLogger } from "@metablock/core";
 import AsyncLock from "async-lock";
 import { Request, Response } from "express";
 import { performance } from "perf_hooks";
@@ -5,6 +6,7 @@ import puppeteer from "puppeteer";
 import { Services } from "../interfaces";
 import { reqUrl } from "../request";
 
+const logger = getLogger({ name: "ssr" });
 const whitelistResources = new Set(["document", "script", "xhr", "fetch"]);
 const blacklist = [
   "www.google-analytics.com",
@@ -74,13 +76,7 @@ class BrowserManager {
   }
 
   async ssr(req: Request, res: Response): Promise<Record<string, any>> {
-    if (this.services) {
-      return await this.services.fromCache(fullUrl(req).toString(), () =>
-        this.render(req, res)
-      );
-    } else {
-      return await this.render(req, res);
-    }
+    return await this.render(req, res);
   }
 
   async render(req: Request, res: Response): Promise<Record<string, any>> {
@@ -91,6 +87,7 @@ class BrowserManager {
       // Intercept network requests
       await page.setRequestInterception(true);
       page.on("request", (request: puppeteer.HTTPRequest) => {
+        logger.debug(request);
         for (let i = 0; i < this.interceptors.length; ++i) {
           if (this.interceptors[i](request)) return;
         }

@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import fetch from "cross-fetch";
 import FormData from "form-data";
-import compile from "./compile/compile";
+import { compile } from "./compile";
 import safe from "./safe";
 import ship from "./ship";
 
