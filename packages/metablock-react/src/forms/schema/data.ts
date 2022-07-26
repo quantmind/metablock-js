@@ -31,7 +31,9 @@ export const flattenData = (
         const prop: any = schema.properties[name];
         const propData: any = keys.has(name) ? data[name] : prop.default;
         name = propName(name, prefix);
-        if (prop.type === "object")
+        // when a pure object, flatten it recursively
+        // if the format is given it must be dealt by custom widgets (like JSON editing for example)
+        if (prop.type === "object" && !prop.format)
           record = { ...record, ...flattenData(prop, propData, name) };
         else if (propData !== undefined) record[name] = propData;
         return record;
