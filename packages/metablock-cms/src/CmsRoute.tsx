@@ -7,6 +7,7 @@ import CmsPaginate from "./CmsPaginate";
 interface CmsProps {
   topic: string;
   slug?: string[];
+  defaultSlug?: string;
   NotFoundComponent?: any;
   ListComponent?: any;
   EntryComponent?: any;
@@ -16,6 +17,7 @@ interface CmsProps {
 const CmsRoute = (props: CmsProps) => {
   const {
     slug = ["slug"],
+    defaultSlug = "index",
     NotFoundComponent = NotFound,
     ListComponent,
     EntryComponent,
@@ -50,7 +52,7 @@ const CmsRoute = (props: CmsProps) => {
   return (
     <Routes>
       {ListComponent === false ? (
-        <Route path="" element={<CmsPage params={{ slug: "index" }} />} />
+        <Route path="" element={<CmsPage params={{ slug: defaultSlug }} />} />
       ) : (
         <Route
           path=""

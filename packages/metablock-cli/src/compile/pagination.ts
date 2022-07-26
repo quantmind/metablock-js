@@ -17,6 +17,7 @@ const pagination = async (entries: Record<string, any>, outputDir: string) => {
       title: entry.title,
       author: entry.author,
       date: entry.date,
+      order: entry.order,
       image: entry.indexImage || entry.image,
       description: entry.description,
       slug: entry.slug,

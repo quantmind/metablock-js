@@ -31,13 +31,12 @@ const compile = async (
 
 //
 // Compile a directory and return a config object if the directory marked as content
-// To marke a directory as content add a collection.json with "content": true.
+// To mark a directory as content add a collection.json with "content": true.
 //
 //  - sourceDir: absolute path to the directory containing the source files
 //  - outputDir: absolute path to the directory containing the output files
 //  - indexDir: absolute path to the directory containing the index.json file (usually same as outputDir)
 //  - content: this should be true (only when this is true a directory is processed)
-//  - package: when true the content is a package directory
 const compileDirectory = async (
   sourceDir: string,
   options: Record<string, any>,
@@ -113,7 +112,6 @@ const compileContentDir = async (
     ...prevConfig,
     sourceDir: dirPath,
     outputDir: resolve(prevConfig.outputDir, basename(dirPath)),
-    package: true,
   };
   const output = await compiler(index, config, true);
   if (!output) return;

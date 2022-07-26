@@ -39,9 +39,14 @@ const EditorSchema = (props: SchemaEntryProps) => {
     }
   };
 
-  const border = error ? "1px solid error.dark" : "1px solid divider";
+  const borderColor = error ? "error.dark" : "divider";
 
-  return <Box sx={{ border }} ref={setRef}></Box>;
+  return (
+    <Box
+      sx={{ border: 1, borderColor, borderRadius: "4px" }}
+      ref={setRef}
+    ></Box>
+  );
 };
 
 export default EditorSchema;

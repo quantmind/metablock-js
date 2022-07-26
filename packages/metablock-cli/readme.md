@@ -50,10 +50,10 @@ metablock compile --help
 
 ### Parameters
 
-- **content**: if `true` the directory is considered a content directory and its files/subfolders will be used to build JSON data files and sitemaps.
+- **content**: if `true` the directory is considered a content directory and its files/sub-folders will be used to build JSON data files and sitemaps.
 - **slug**: defines how the relative path of an entry is constructed
 - **outDir**: this is really needed only by the top level `collection.json` file to point where compiled files should be saved
-- **paginate**: if set to `true` a pagination index data file is created (this is useful for markdown data files)
+- **paginate**: if set to `true` a pagination index data file is created (this is useful for markdown data files). To exclude a markdown file from pagination you can add the `pagination: false` header
 
 
 ### Content

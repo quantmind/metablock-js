@@ -1,3 +1,4 @@
+export { default as CmsPaginate } from "./CmsPaginate";
 export { default as CmsRoute } from "./CmsRoute";
 export { default as EntryLayout } from "./EntryLayout";
 export * from "./interfaces";

@@ -10,12 +10,17 @@ import store from "./store";
 interface CmsPaginateProps {
   topic: string;
   slug: string[];
+  path?: string;
   Component?: any;
 }
 
 const CmsPaginate = (props: CmsPaginateProps) => {
-  const path = useLocation().pathname;
-  const { topic, slug, Component = ListLayout } = props;
+  const {
+    topic,
+    slug,
+    Component = ListLayout,
+    path = useLocation().pathname,
+  } = props;
   const url = bundleUrl(`${topic}/index.json`);
   const result = useAsync(async () => await store.get(url), [url]);
   const data = result.value || [];
@@ -25,7 +30,7 @@ const CmsPaginate = (props: CmsPaginateProps) => {
     return entry;
   });
   entries.sort((a: CmsListData, b: CmsListData) => (a.date > b.date ? -1 : 1));
-  return <Component data={entries} slug={slug} />;
+  return <Component data={entries} topic={topic} slug={slug} />;
 };
 
 export default CmsPaginate;

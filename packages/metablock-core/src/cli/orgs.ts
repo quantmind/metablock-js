@@ -81,6 +81,13 @@ class Orgs extends HttpComponent {
   async deleteRole(orgId: string, roleName: any): Promise<void> {
     await this.cli.delete(`${this.url}/${orgId}/roles/${roleName}`);
   }
+
+  async createExtension(orgId: string, body: any): Promise<Extension> {
+    const response = await this.cli.post(`${this.url}/${orgId}/extensions`, {
+      body,
+    });
+    return response.data as Extension;
+  }
 }
 
 export default Orgs;

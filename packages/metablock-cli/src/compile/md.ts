@@ -48,7 +48,8 @@ const write = async (
     name = bits.slice(0, bits.length - 1).join(".");
   }
   json.slug = json.slug || slugify(name);
-  json.paginate = config.package ? json.index : true;
+  if (json.paginate !== false)
+    json.paginate = config.content ? !json.index : false;
   //
   // modify config when a markdown index file (in a directory)
   if (json.index) {
