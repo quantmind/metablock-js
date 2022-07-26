@@ -15,12 +15,8 @@ interface CmsPaginateProps {
 }
 
 const CmsPaginate = (props: CmsPaginateProps) => {
-  const {
-    topic,
-    slug,
-    Component = ListLayout,
-    path = useLocation().pathname,
-  } = props;
+  const { pathname } = useLocation();
+  const { topic, slug, Component = ListLayout, path = pathname } = props;
   const url = bundleUrl(`${topic}/index.json`);
   const result = useAsync(async () => await store.get(url), [url]);
   const data = result.value || [];
