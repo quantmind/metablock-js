@@ -1,11 +1,9 @@
-import { Extension, Paginated, paginatedResponse, Plugin } from "../interfaces";
+import { DataApi, Extension, Plugin } from "../interfaces";
 import HttpComponent from "./httpComponent";
 
 class Extensions extends HttpComponent {
-  async getList(query: any): Promise<Paginated<Extension>> {
-    const url = this.urlQuery(`${this.cli.apiUrl}/extensions`, query);
-    const response = await this.cli.get(url);
-    return paginatedResponse<Extension>(response);
+  loader(): DataApi<Extension> {
+    return this.cli.loader(`${this.cli.apiUrl}/extensions`);
   }
 
   async get(name_or_id: string): Promise<Extension> {
