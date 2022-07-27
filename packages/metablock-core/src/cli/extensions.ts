@@ -1,4 +1,4 @@
-import { Extension, Paginated, paginatedResponse } from "../interfaces";
+import { Extension, Paginated, paginatedResponse, Plugin } from "../interfaces";
 import HttpComponent from "./httpComponent";
 
 class Extensions extends HttpComponent {
@@ -18,6 +18,13 @@ class Extensions extends HttpComponent {
     const url = `${this.cli.apiUrl}/extensions/${name_or_id}`;
     const response = await this.cli.patch(url, { body });
     return response.data as Extension;
+  }
+
+  async createPlugin(extension: Extension, body: any): Promise<Plugin> {
+    const url = `${this.cli.apiUrl}/orgs/${extension.org_id}/plugins`;
+    body.extension_id = extension.id;
+    const response = await this.cli.post(url, { body });
+    return response.data as Plugin;
   }
 }
 

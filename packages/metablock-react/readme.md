@@ -59,7 +59,7 @@ const fieldCallback = (name: str, extraProps: Record<string, any>): Record<strin
 }
 ```
 
-where `name` is the input name and `extraProps` are the additional props passed to the original [FormFromSchema](#formfromschema) component.
+where `name` is the input name and `extraProps` are the additional props passed to the original [FormFromSchema](#formfromschema) component. If the function returns nothing for a given field name, the field is not displayed in the form.
 
 ## Forms
 

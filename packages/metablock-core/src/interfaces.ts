@@ -130,8 +130,11 @@ export interface Extension {
   id: string;
   name: string;
   description: string;
+  marketplace: boolean;
   script?: string;
   schema: Record<string, any>;
+  org_id: string;
+  org_name: string;
 }
 
 export interface SpaceExtension {

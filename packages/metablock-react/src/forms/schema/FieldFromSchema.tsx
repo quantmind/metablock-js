@@ -19,13 +19,10 @@ const FieldFromSchema = (props: SchemaEntryProps) => {
     }
   }
   if (!SchemaComponent) SchemaComponent = MissingSchema;
+  const extraProps = form.fieldCallback(name, extra);
+  if (!extraProps) return null;
   return (
-    <SchemaComponent
-      name={name}
-      form={form}
-      schema={schema}
-      {...form.fieldCallback(name, extra)}
-    />
+    <SchemaComponent name={name} form={form} schema={schema} {...extraProps} />
   );
 };
 
