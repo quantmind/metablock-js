@@ -22,11 +22,11 @@ export const flattenData = (
   data?: any,
   prefix?: string
 ): Record<string, any> => {
-  const flatData = {};
+  let flatData = {};
   if (!schema) return flatData;
   if (schema.properties) {
     const keys = new Set(Object.keys(data || {}));
-    Object.keys(schema.properties).reduce(
+    flatData = Object.keys(schema.properties).reduce(
       (record: Record<string, any>, name: string) => {
         const prop: any = schema.properties[name];
         const propData: any = keys.has(name) ? data[name] : prop.default;

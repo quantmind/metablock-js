@@ -19,7 +19,11 @@ export default (app: Express, services: Services, options?: any) => {
       const mReq: MetablockRequest = req as MetablockRequest;
       const context = await services.getConfig(req);
       mReq.context = context;
-      if (!context.web.id || (ssrManager && req.query._ssr === "yes"))
+      if (
+        !context.web.id ||
+        !context.web.plugins.ssr ||
+        (ssrManager && req.query._ssr === "yes")
+      )
         serve_raw(mReq, res);
       else {
         const middleware = [

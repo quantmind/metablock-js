@@ -6,6 +6,12 @@ class Extensions extends HttpComponent {
     return this.cli.loader(`${this.cli.apiUrl}/extensions`);
   }
 
+  deliveryLoader(name_or_id: string): DataApi<any> {
+    return this.cli.loader(
+      `${this.cli.apiUrl}/extensions/${name_or_id}/deliveries`
+    );
+  }
+
   async get(name_or_id: string): Promise<Extension> {
     const url = `${this.cli.apiUrl}/extensions/${name_or_id}`;
     const response = await this.cli.get(url);
@@ -23,6 +29,15 @@ class Extensions extends HttpComponent {
     body.extension_id = extension.id;
     const response = await this.cli.post(url, { body });
     return response.data as Plugin;
+  }
+
+  async getDelivery(name_or_id: string, deliveryId: string): Promise<any> {
+    const url = this.urlQuery(
+      `${this.cli.apiUrl}/extensions/${name_or_id}/deliveries`,
+      { id: deliveryId }
+    );
+    const result = await this.cli.get(url);
+    return result.data.length ? result.data[0] : null;
   }
 }
 

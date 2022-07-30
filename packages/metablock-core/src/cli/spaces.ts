@@ -86,6 +86,14 @@ class Spaces extends HttpComponent {
     });
     return response.data as SpaceExtension;
   }
+
+  async removeExtension(
+    space_id: string,
+    extension_name: string
+  ): Promise<void> {
+    const url = `${this.cli.apiUrl}/spaces/${space_id}/extensions/${extension_name}`;
+    await this.cli.delete(url);
+  }
 }
 
 export default Spaces;

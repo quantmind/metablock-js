@@ -19,8 +19,7 @@ const Title = (props: TitleProps) => {
   const { pathname } = window.location;
   const { title = "", tabs = [], crumbs = false, children } = props;
   const block = getBlock();
-  const pageTitle =
-    props.pageTitle || title ? `${block.name} ${title}` : block.name;
+  const pageTitle = props.pageTitle || (title ? `${title}` : block.name);
   let tabIndex = "";
   tabs.forEach((crumb: Crumb) => {
     if (crumb.to) {

@@ -1,6 +1,6 @@
 {
   "name": "@metablock/core",
-  "version": "0.18.4",
+  "version": "0.18.5",
   "description": "Metablock core library",
   "main": "dist/index.min.js",
   "types": "dist/index.d.ts",
