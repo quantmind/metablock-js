@@ -151,8 +151,11 @@ export interface Plugin {
   name: string;
   description: string;
   schema: Record<string, any>;
+  org_id: string;
   org_name: string;
-  extension_id?: string;
+  extension_id: string;
+  extension_name: string;
+  marketplace: boolean;
 }
 
 export interface BlockPlugin {

@@ -10,7 +10,7 @@ type Direction = "vertical" | "horizontal";
 type Align = "left" | "right";
 
 interface ListItem {
-  text?: string;
+  text?: any;
   href?: string;
   to?: string;
   icon?: React.ReactNode;
