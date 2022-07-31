@@ -54,7 +54,9 @@ const CrudForm = (props: CrudFormProps) => {
       </Container>
     </Page>
   ) : loading ? null : (
-    <InnerForm {...extra} schema={value as SchemaEntry} />
+    <Container maxWidth={maxWidth}>
+      <InnerForm {...extra} schema={value as SchemaEntry} />
+    </Container>
   );
 };
 
