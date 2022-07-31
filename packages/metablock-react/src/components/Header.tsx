@@ -1,4 +1,5 @@
 import Menu from "@mui/icons-material/Menu";
+import { Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -36,7 +37,7 @@ const getColours = (
   colorChange: boolean,
   defaults: any,
   changed?: any
-): Record<string, string> => {
+): Record<string, any> => {
   const colors = colorChange ? changed || defaults : defaults;
   return {
     color: colors.color,
@@ -46,7 +47,7 @@ const getColours = (
 
 const Header = (props: HeaderProps) => {
   const {
-    color = "transparent",
+    color = "inherit",
     backgroundColor = "inherit",
     maxWidth = "lg",
     fixed,
@@ -59,6 +60,11 @@ const Header = (props: HeaderProps) => {
   const ref = React.useRef<any>();
   const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
   const [colorChange, setColorChange] = React.useState<boolean>(false);
+  const colors = getColours(
+    colorChange,
+    { color, backgroundColor },
+    changeColorOnScroll
+  );
   let sxAppBar: Record<string, any> = {
     display: "flex",
     border: "0",
@@ -70,7 +76,7 @@ const Header = (props: HeaderProps) => {
     position: "relative",
     zIndex: "unset",
     boxShadow: "none",
-    ...getColours(colorChange, { color, backgroundColor }, changeColorOnScroll),
+    backgroundColor: colors.backgroundColor,
   };
   if (absolute) sxAppBar = { ...sxAppBar, position: "absolute", zIndex: 1100 };
   else if (fixed) sxAppBar = { ...sxAppBar, position: "fixed", zIndex: 1100 };
@@ -106,7 +112,7 @@ const Header = (props: HeaderProps) => {
       <Container maxWidth={maxWidth}>
         <Toolbar sx={{ width: "100%" }} disableGutters={true}>
           {LeftLinks ? brand : null}
-          <Box sx={{ flex: 1 }}>
+          <Typography sx={{ flex: 1 }} color={colors.color} component="div">
             {LeftLinks ? (
               <Hidden {...hiddenProps}>
                 <LeftLinks colorChange={colorChange} />
@@ -114,10 +120,12 @@ const Header = (props: HeaderProps) => {
             ) : (
               brand
             )}
-          </Box>
+          </Typography>
           {RightLinks ? (
             <Hidden {...hiddenProps}>
-              <RightLinks colorChange={colorChange} />
+              <Typography color={colors.color} component="div">
+                <RightLinks colorChange={colorChange} />
+              </Typography>
             </Hidden>
           ) : null}
           <Hidden mdUp>
@@ -138,14 +146,15 @@ const Header = (props: HeaderProps) => {
             open={mobileOpen}
             onClose={handleDrawerToggle}
           >
-            <Box
+            <Typography
+              color={colors.color}
               sx={{
                 margin: "20px 10px",
               }}
             >
               {LeftLinks ? <LeftLinks colorChange={colorChange} /> : null}
               {RightLinks ? <RightLinks colorChange={colorChange} /> : null}
-            </Box>
+            </Typography>
           </Drawer>
         </Hidden>
       </Container>

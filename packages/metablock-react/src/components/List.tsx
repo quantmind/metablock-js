@@ -18,6 +18,8 @@ interface ListItem {
 
 interface ListProps {
   items: ListItem[];
+  color?: any;
+  underline?: any;
   direction?: Direction;
   align?: Align;
 }
@@ -53,7 +55,13 @@ const styling: Record<string, any> = {
 };
 
 const List = (props: ListProps) => {
-  const { items, direction = "vertical", align = "left" } = props;
+  const {
+    items,
+    direction = "vertical",
+    align = "left",
+    color = "inherit",
+    underline = "always",
+  } = props;
   const name = `${direction}${align
     .substring(0, 1)
     .toUpperCase()}${align.substring(1)}`;
@@ -65,14 +73,19 @@ const List = (props: ListProps) => {
         .filter((item) => item.text || item.href || item.to)
         .map((item, index) => (
           <MuiListItem key={index} sx={sxItem}>
-            <ListItemIcon sx={styling.icon}>{item.icon}</ListItemIcon>
+            {item.icon ? (
+              <ListItemIcon sx={styling.icon}>{item.icon}</ListItemIcon>
+            ) : null}
             <ListItemText
-              secondaryTypographyProps={{ component: "div" }}
-              secondary={
+              primary={
                 item.href ? (
-                  <MuiLink href={item.href}>{item.text || item.href}</MuiLink>
+                  <MuiLink href={item.href} color={color} underline={underline}>
+                    {item.text || item.href}
+                  </MuiLink>
                 ) : item.to ? (
-                  <Link to={item.to}>{item.text || item.to}</Link>
+                  <Link to={item.to} color={color} underline={underline}>
+                    {item.text || item.to}
+                  </Link>
                 ) : (
                   item.text
                 )
