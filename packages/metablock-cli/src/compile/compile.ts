@@ -1,8 +1,9 @@
 import fs from "fs";
 import fse from "fs-extra";
 import { basename, resolve } from "path";
-import { warning } from "../log";
+import { info, warning } from "../log";
 import getCompiler from "./compiler";
+import { Config, Entry } from "./interfaces";
 import pagination from "./pagination";
 import compileBundle from "./svelte";
 import watch from "./watch";
@@ -41,10 +42,10 @@ const compileDirectory = async (
   sourceDir: string,
   options: Record<string, any>,
   prevConfig: Record<string, any>,
-  targets: Record<string, any>
+  targets: Record<string, Entry>
 ) => {
   const configPath = resolve(sourceDir, configName);
-  const config: Record<string, any> = fs.existsSync(configPath)
+  const config: Config = fs.existsSync(configPath)
     ? await fse.readJson(configPath)
     : {};
   let path = config.path || "";
@@ -72,15 +73,14 @@ const compileDirectory = async (
       await compileDirectory(sourcePath, options, config, targets);
     }
   }
-  if (config.content) {
-    if (config.paginate) await pagination(targets, config.outputDir);
-  }
+  if (config.content && config.paginate)
+    await pagination(targets, config.outputDir);
 };
 
 const compileContent = async (
   sourcePath: string,
-  config: Record<string, any>,
-  targets: Record<string, any>
+  config: Config,
+  targets: Record<string, Entry>
 ) => {
   // the fullPath can either be a file or a directory
   if (fs.lstatSync(sourcePath).isDirectory())
@@ -94,11 +94,11 @@ const compileContent = async (
   }
 };
 
-// Compile a directory
+// Compile a content directory
 const compileContentDir = async (
   dirPath: string,
-  prevConfig: Record<string, any>,
-  targets: Record<string, any>
+  prevConfig: Config,
+  targets: Record<string, Entry>
 ) => {
   const index = resolve(dirPath, indexFile);
   const compiler = getCompiler(index);
@@ -108,7 +108,7 @@ const compileContentDir = async (
     );
     return;
   }
-  const config: any = {
+  const config: Config = {
     ...prevConfig,
     sourceDir: dirPath,
     outputDir: resolve(prevConfig.outputDir, basename(dirPath)),

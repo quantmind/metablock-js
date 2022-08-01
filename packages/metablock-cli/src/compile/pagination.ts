@@ -1,9 +1,13 @@
 import fse from "fs-extra";
 import { resolve } from "path";
 import { info } from "../log";
+import { Entry } from "./interfaces";
 import { production } from "./settings";
 
-const pagination = async (entries: Record<string, any>, outputDir: string) => {
+const pagination = async (
+  entries: Record<string, Entry>,
+  outputDir: string
+) => {
   const targets = Object.keys(entries)
     .map((key) => entries[key])
     .filter(

@@ -6,6 +6,7 @@ import mime from "mime-types";
 import { basename, dirname, resolve } from "path";
 import slugify from "slugify";
 import { error, info } from "../log";
+import { Config, Entry } from "./interfaces";
 import { production } from "./settings";
 
 // compile markdown files
@@ -13,9 +14,9 @@ const formatDate = timeFormat("%B %d, %Y");
 
 const compileMarkdown = async (
   srcPath: string,
-  config: Record<string, any>,
+  config: Config,
   index = false
-): Promise<Record<string, any> | undefined> => {
+): Promise<Entry | undefined> => {
   const text = fs.readFileSync(srcPath, { encoding: "utf-8" });
   const bits = text.split("---");
   try {
@@ -35,9 +36,9 @@ const compileMarkdown = async (
 
 const write = async (
   srcPath: string,
-  config: Record<string, any>,
+  config: Config,
   json: any
-): Promise<Record<string, any>> => {
+): Promise<Entry> => {
   let outputDir = config.outputDir;
   let name = basename(srcPath);
   if (json.index) {
@@ -48,8 +49,7 @@ const write = async (
     name = bits.slice(0, bits.length - 1).join(".");
   }
   json.slug = json.slug || slugify(name);
-  if (json.paginate !== false)
-    json.paginate = config.content ? !json.index : false;
+  if (json.paginate !== false) json.paginate = config.content ? true : false;
   //
   // modify config when a markdown index file (in a directory)
   if (json.index) {
