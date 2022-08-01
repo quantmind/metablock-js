@@ -19,17 +19,14 @@ export default (app: Express, services: Services, options?: any) => {
       const mReq: MetablockRequest = req as MetablockRequest;
       const context = await services.getConfig(req);
       mReq.context = context;
-      if (
-        !context.web.id ||
-        !context.web.plugins.ssr ||
-        (ssrManager && req.query._ssr === "yes")
-      )
-        serve_raw(mReq, res);
+      // if this is a ssr request, render the raw html
+      if (ssrManager && req.query._ssr === "yes") serve_raw(mReq, res);
       else {
-        const middleware = [
-          ...mReq.context.middleware,
-          ssrManager ? serve_html : serve_raw,
-        ];
+        const serve_handle =
+          ssrManager && context.web.id && context.web.plugins.ssr
+            ? serve_html
+            : serve_raw;
+        const middleware = [...mReq.context.middleware, serve_handle];
         const serveMiddleware = (err?: any) => {
           const handler = middleware.shift();
           if (err) next(err);
