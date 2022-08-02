@@ -1,4 +1,5 @@
 import {
+  Asset,
   Block,
   BlockPlugin,
   DataApi,
@@ -77,6 +78,32 @@ class Blocks extends HttpComponent {
     return this.cli.loader(
       `${this.cli.apiUrl}/services/${block_id}/deployments`
     );
+  }
+
+  async assets(block_id: string): Promise<Asset[]> {
+    const response = await this.cli.get(
+      `${this.cli.apiUrl}/services/${block_id}/assets`
+    );
+    return response.data as Asset[];
+  }
+
+  async uploadAssets(block_id: string, assetFiles: any[]): Promise<void> {
+    for (let i = 0; i < assetFiles.length; ++i) {
+      const asset = assetFiles[i];
+      const response = await this.cli.get(
+        this.urlQuery(
+          `${this.cli.apiUrl}/services/${block_id}/assets-upload-url`,
+          { path: asset.path, type: asset.type }
+        )
+      );
+      const d = response.data;
+      const body = new FormData();
+      Object.keys(d.fields).forEach((key: string) => {
+        body.append(key, d.fields[key]);
+      });
+      body.append("file", asset);
+      await fetch(d.url, { body, method: "POST" });
+    }
   }
 
   async ship(

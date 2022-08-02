@@ -178,3 +178,9 @@ export interface Deployment {
   env: string;
   created: string;
 }
+
+export interface Asset {
+  name: string;
+  last_modified: string;
+  size: number;
+}
