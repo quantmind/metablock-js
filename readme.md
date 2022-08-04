@@ -2,13 +2,13 @@
 
 Tooling for metablock cloud.
 
-- [@metablock/core](./packages/metablock-core): a Metablock client for both node and the browser.
+- [@metablock/core](./packages/metablock-core): a [Metablock API](https://api.metablock.io/v1/docs) client for both node and the browser.
 - [@metablock/cli](./packages/metablock-cli): command line client for interacting with metablock API.
-- [@metablock/server](./packages/metablock-server): a dev server for metablocks.
+- [@metablock/server](./packages/metablock-server): a dev server for HTML metablocks.
 - [@metablock/store](./packages/metablock-store): stores for metablock authentication plugin.
-- [@metablock/react](./packages/metablock-react): Reusable React components.
-- [@metablock/cms](./packages/metablock-cms): A lightweight CMS
-- [@metablock/notebook](./packages/metablock-notebook): Experimental notebook app
+- [@metablock/react](./packages/metablock-react): reusable react components.
+- [@metablock/cms](./packages/metablock-cms): a lightweight CMS
+- [@metablock/notebook](./packages/metablock-notebook): experimental notebook app
 
 ## Release
 
@@ -22,4 +22,4 @@ To create a new release
   ```
   git commit -m "Release <version>" --allow-empty
   ```
-- The publish job will publish to npm and create a github tag
+- the publish job will publish to npm and create a github tag
