@@ -14,6 +14,7 @@ interface ListItem {
   href?: string;
   to?: string;
   icon?: React.ReactNode;
+  [x: string]: any;
 }
 
 interface ListProps {
@@ -71,28 +72,40 @@ const List = (props: ListProps) => {
     <MuiList sx={sxList}>
       {items
         .filter((item) => item.text || item.href || item.to)
-        .map((item, index) => (
-          <MuiListItem key={index} sx={sxItem}>
-            {item.icon ? (
-              <ListItemIcon sx={styling.icon}>{item.icon}</ListItemIcon>
-            ) : null}
-            <ListItemText
-              primary={
-                item.href ? (
-                  <MuiLink href={item.href} color={color} underline={underline}>
-                    {item.text || item.href}
-                  </MuiLink>
-                ) : item.to ? (
-                  <Link to={item.to} color={color} underline={underline}>
-                    {item.text || item.to}
-                  </Link>
-                ) : (
-                  item.text
-                )
-              }
-            />
-          </MuiListItem>
-        ))}
+        .map(({ icon, href, to, text, ...extra }: ListItem, index: number) => {
+          return (
+            <MuiListItem key={index} sx={sxItem}>
+              {icon ? (
+                <ListItemIcon sx={styling.icon}>{icon}</ListItemIcon>
+              ) : null}
+              <ListItemText
+                primary={
+                  href ? (
+                    <MuiLink
+                      href={href}
+                      color={color}
+                      underline={underline}
+                      {...extra}
+                    >
+                      {text || href}
+                    </MuiLink>
+                  ) : to ? (
+                    <Link
+                      to={to}
+                      color={color}
+                      underline={underline}
+                      {...extra}
+                    >
+                      {text || to}
+                    </Link>
+                  ) : (
+                    text
+                  )
+                }
+              />
+            </MuiListItem>
+          );
+        })}
     </MuiList>
   );
 };

@@ -2,23 +2,17 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import React from "react";
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const AppForm = (props: Props) => {
-  const { children } = props;
-
+const AppForm = (props: any) => {
+  const { children, sx, maxWidth = "xs", mt = 8, ...extra } = props;
+  const sxx = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    ...sx,
+  };
   return (
-    <Container maxWidth="xs">
-      <Box
-        mt={8}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+    <Container maxWidth={maxWidth} disableGutters>
+      <Box mt={mt} sx={sxx} {...extra}>
         {children}
       </Box>
     </Container>

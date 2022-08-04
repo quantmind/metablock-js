@@ -51,14 +51,28 @@ export class FormData {
     };
   }
 
-  setValue(name: string, value: any) {
+  setValue(name: string, value: any, render = true): boolean {
     this.data[name] = value;
     if (this.defaults[name] === this.data[name]) delete this.dirty[name];
     else this.dirty[name] = this.data[name];
     if (this.errors.has(name)) {
       this.errors.delete(name);
-      this._render({});
+      if (render) this._render({});
+      return !render;
     }
+    return false;
+  }
+
+  setValues(data: Record<string, any>, render = true): boolean {
+    let dorender = false;
+    Object.keys(data).forEach((key: string) => {
+      dorender = this.setValue(key, data[key], false) || dorender;
+    });
+    if (dorender) {
+      if (render) this._render({});
+      return !render;
+    }
+    return false;
   }
 
   setNewState(data: Record<string, any>, render = false) {
