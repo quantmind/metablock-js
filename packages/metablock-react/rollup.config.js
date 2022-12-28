@@ -21,7 +21,7 @@ const onwarn = (warning, warn) => {
   )
     return;
   warn(warning);
-}
+};
 
 export default [
   {

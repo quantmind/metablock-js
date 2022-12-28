@@ -4,22 +4,20 @@ import React from "react";
 
 interface Props {
   background?: string;
-  classes: Record<string, string>;
   className?: string;
-  padding?: boolean;
+  padding?: any;
 }
 
 const Paper = (props: Props) => {
   const theme = useTheme();
   const {
     background = "light",
-    classes,
     className,
-    padding = false,
+    padding = 1,
     ...other
   } = props;
   // @ts-ignore
-  const sx: any = {backgroundColor: theme.palette.secondary[background], padding: 1};
+  const sx: any = {backgroundColor: theme.palette.secondary[background], padding};
   return (
     <MuiPaper
       sx={sx}
