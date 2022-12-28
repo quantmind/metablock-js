@@ -1,8 +1,10 @@
+import SelectSchema from "./Select";
 import React from "react";
 import TextField from "../TextField";
 import { SchemaEntryProps } from "./interfaces";
 
 const StringSchema: React.FC<SchemaEntryProps> = (prop: SchemaEntryProps) => {
+  if (prop.options) return <SelectSchema {...prop} />;
   const { name, schema, ...extra } = prop;
   const { description } = schema;
   return (
@@ -17,5 +19,6 @@ const StringSchema: React.FC<SchemaEntryProps> = (prop: SchemaEntryProps) => {
     />
   );
 };
+
 
 export default StringSchema;

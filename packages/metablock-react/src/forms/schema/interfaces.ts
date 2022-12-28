@@ -10,6 +10,12 @@ export interface SchemaEntry {
   items?: SchemaEntry;
   minimum?: number;
   maximum?: number;
+  enum?: string[];
+}
+
+export interface SelectOption {
+  label: string;
+  value: string | number;
 }
 
 export interface SchemaEntryProps {
@@ -17,6 +23,7 @@ export interface SchemaEntryProps {
   schema: SchemaEntry;
   name: string;
   required?: boolean;
+  options?: SelectOption[];
   [key: string]: any;
 }
 

@@ -20,8 +20,8 @@
     "mobx": "^6.0.3"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && rollup -c",
-    "watch": "rollup -c -w"
+    "build": "export NODE_ENV=production && rollup -c --bundleConfigAsCjs",
+    "watch": "rollup -c -w --bundleConfigAsCjs"
   },
   "homepage": "https://metablock.io"
 }

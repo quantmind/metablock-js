@@ -1,20 +1,45 @@
 # A dev server for metablock
 
-This package allow to serve meta-blocks during development.
-To use it install these two dependencies
-
+This package allow to serve metablocks during development.
 ```bash
-yarn add @metablock/server webpack-require-from --dev
+yarn add @metablock/server --dev
 ```
 
-and use it with webpack
+To enable SSR (server side rendering) via [puppeteer](https://github.com/puppeteer/puppeteer) you may need to
+```
+apt install libcairo2 libpango-1.0-0 libxkbcommon-x11-0 libgbm-dev libatk-bridge2.0-0 libcups2 libnss3
+```
+
+## Use with webpack
+
+To use it install this additional dev dependency
+
+```bash
+yarn add webpack-require-from --dev
+```
+
+and use it with `webpack.config.js`
 
 ```javascript
 import RequireFrom from "webpack-require-from";
 import { devServer } from "@metablock/server";
 
+const PWD = process.cwd();
+const resolvePath = (relativePath) => path.resolve(PWD, relativePath);
+
+
+const STATIC_PATH = "/dist/";
+
 const webPackConfig = {
-  devServer: devServer("https://myblock.mblock.sh", { hot: true }),
+  devServer: devServer("https://myblock.mblock.me", {
+    ssr: true,
+    hot: true,
+    ssrPlugins: [statusCode],
+    static: {
+      directory: resolvePath(`.${STATIC_PATH}`),
+      publicPath: STATIC_PATH,
+    },
+  }),
   plugins: [
     new RequireFrom({
       variableName: "__bundle_url__",

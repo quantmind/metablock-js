@@ -2,7 +2,7 @@ import { getLogger } from "@metablock/core";
 import AsyncLock from "async-lock";
 import { Request, Response } from "express";
 import { performance } from "perf_hooks";
-import puppeteer from "puppeteer";
+import puppeteer, { Browser, HTTPRequest, Page } from "puppeteer";
 import { Services } from "../interfaces";
 import { reqUrl } from "../request";
 
@@ -53,7 +53,7 @@ class BrowserManager {
   public plugins: any[];
   public interceptors: any[];
   public onFinish: FinishCallbackType;
-  private _browser?: puppeteer.Browser;
+  private _browser?: Browser;
   private _browserWsEndpoint?: string;
   private _lock: AsyncLock;
 
@@ -86,7 +86,7 @@ class BrowserManager {
     try {
       // Intercept network requests
       await page.setRequestInterception(true);
-      page.on("request", (request: puppeteer.HTTPRequest) => {
+      page.on("request", (request: HTTPRequest) => {
         logger.debug(request);
         for (let i = 0; i < this.interceptors.length; ++i) {
           if (this.interceptors[i](request)) return;
@@ -119,13 +119,13 @@ class BrowserManager {
     }
   }
 
-  async newPage(): Promise<puppeteer.Page> {
+  async newPage(): Promise<Page> {
     const browserWSEndpoint = await this.getWsEndpoint();
     const browser = await puppeteer.connect({ browserWSEndpoint });
     return await browser.newPage();
   }
 
-  async getBrowser(): Promise<puppeteer.Browser> {
+  async getBrowser(): Promise<Browser> {
     return this._lock.acquire("browser", async () => {
       if (!this._browser) {
         let cfg: Record<string, any> = { headless: true };

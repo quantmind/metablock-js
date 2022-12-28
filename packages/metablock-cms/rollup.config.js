@@ -28,7 +28,7 @@ const plugins = [
 function onwarn(warning, warn) {
   if (
     warning.code === "UNRESOLVED_IMPORT" &&
-    warning.source.substring(0, 5) === "@mui/"
+    warning.exporter.substring(0, 5) === "@mui/"
   )
     return;
   warn(warning);

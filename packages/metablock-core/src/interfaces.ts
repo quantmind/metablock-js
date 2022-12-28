@@ -100,8 +100,10 @@ export interface OrgRole {
 export interface Block {
   id: string;
   name: string; // name of the metablock site
+  full_name: string; // full name of the metablock site
   title: string; // default title
   description: string; // default description
+  url: string; // metablock site url
   apiUrl: string; // metablock api url
   assetsUrl: string; // base url of the javascript bundle
   date_format: string;
@@ -111,7 +113,7 @@ export interface Block {
   forgot_password_url: string;
   space: Space;
   plugins?: Paginated<BlockPlugin>;
-  [x: string]: any;
+  user_id?: string;
 }
 
 export interface Space {

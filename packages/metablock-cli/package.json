@@ -13,18 +13,18 @@
   "license": "ISC",
   "dependencies": {
     "@metablock/core": "^0.19.2",
-    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
     "archiver": "^5.1.0",
     "colors": "^1.4.0",
     "commander": "^9.3.0",
     "cross-fetch": "^3.0.5",
     "d3-time-format": "^4.0.0",
     "form-data": "^4.0.0",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^11.1.0",
     "mime-types": "^2.1.27",
     "node-emoji": "^1.10.0",
     "pretty-bytes": "^6.0.0",
-    "rollup": "^2.18.2",
+    "rollup": "^3.8.1",
     "rollup-plugin-svelte": "^7.0.0",
     "slugify": "^1.4.2",
     "svelte": "^3.23.2",
@@ -45,9 +45,9 @@
     "rollup-plugin-copy": "^3.3.0"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && rollup -c",
+    "build": "export NODE_ENV=production && rollup -c --bundleConfigAsCjs",
     "dev": "ts-node src/metablock.ts",
-    "watch": "rollup -c -w"
+    "watch": "rollup -c -w --bundleConfigAsCjs"
   },
   "homepage": "https://metablock.io"
 }

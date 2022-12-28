@@ -39,8 +39,8 @@
     "react-use": "^17.1.1"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && rollup -c",
-    "watch": "rollup -c -w"
+    "build": "export NODE_ENV=production && rollup -c --bundleConfigAsCjs",
+    "watch": "rollup -c -w --bundleConfigAsCjs"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.10.1",

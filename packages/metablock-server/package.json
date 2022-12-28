@@ -21,7 +21,7 @@
     "mime-types": "^2.1.27",
     "mustache": "^4.0.1",
     "on-finished": "^2.3.0",
-    "puppeteer": "^15.3.2",
+    "puppeteer": "^19.4.1",
     "sitemap": "^7.0.0"
   },
   "devDependencies": {
@@ -31,7 +31,6 @@
     "@types/mime-types": "^2.1.0",
     "@types/mustache": "^4.0.1",
     "@types/on-finished": "^2.3.1",
-    "@types/puppeteer": "^5.4.4",
     "@types/supertest": "^2.0.10",
     "jest-puppeteer": "^6.0.3",
     "path-to-regexp": "^6.1.0",
@@ -39,8 +38,8 @@
     "webpack-require-from": "^1.8.1"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && rollup -c",
-    "watch": "rollup -c -w"
+    "build": "export NODE_ENV=production && rollup -c --bundleConfigAsCjs",
+    "watch": "rollup -c -w --bundleConfigAsCjs"
   },
   "homepage": "https://metablock.io"
 }

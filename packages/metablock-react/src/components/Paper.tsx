@@ -1,24 +1,6 @@
 import MuiPaper from "@mui/material/Paper";
-import { Theme } from "@mui/material/styles";
-import { capitalize } from "@mui/material/utils";
-import withStyles from "@mui/styles/withStyles";
-import clsx from "clsx";
+import { useTheme } from "@mui/material/styles";
 import React from "react";
-
-const styles = (theme: Theme) => ({
-  backgroundLight: {
-    backgroundColor: theme.palette.secondary.light,
-  },
-  backgroundMain: {
-    backgroundColor: theme.palette.secondary.main,
-  },
-  backgroundDark: {
-    backgroundColor: theme.palette.secondary.dark,
-  },
-  padding: {
-    padding: theme.spacing(1),
-  },
-});
 
 interface Props {
   background?: string;
@@ -28,6 +10,7 @@ interface Props {
 }
 
 const Paper = (props: Props) => {
+  const theme = useTheme();
   const {
     background = "light",
     classes,
@@ -35,20 +18,17 @@ const Paper = (props: Props) => {
     padding = false,
     ...other
   } = props;
+  // @ts-ignore
+  const sx: any = {backgroundColor: theme.palette.secondary[background], padding: 1};
   return (
     <MuiPaper
+      sx={sx}
       elevation={0}
       square
-      className={clsx(
-        classes[`background${capitalize(background)}`],
-        {
-          [classes.padding]: padding,
-        },
-        className
-      )}
+      className={className}
       {...other}
     />
   );
 };
 
-export default withStyles(styles)(Paper);
+export default Paper;

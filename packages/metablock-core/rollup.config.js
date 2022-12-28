@@ -1,6 +1,6 @@
 import { terser } from "rollup-plugin-terser";
 import typescript from "rollup-plugin-typescript2";
-import getBanner from "../../scripts/banner";
+import getBanner from "../../scripts/banner.js";
 import pkg from "./package.json";
 
 console.info("Build @metablock/core");

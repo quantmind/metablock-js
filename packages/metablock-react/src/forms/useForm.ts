@@ -3,7 +3,8 @@ import React from "react";
 
 export type FieldCallbackType = (
   name: string,
-  props: Record<string, any>
+  props: Record<string, any>,
+  schema: any,
 ) => Record<string, any>;
 
 export type FormSubmitType = (

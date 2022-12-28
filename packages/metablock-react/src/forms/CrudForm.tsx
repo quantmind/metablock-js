@@ -16,21 +16,33 @@ import {
   SchemaEntry,
   unFlattenData,
 } from "./schema";
-import useForm from "./useForm";
+import useForm, {FieldCallbackType} from "./useForm";
 
 type SchemaPromiseFunction = () => Promise<SchemaEntry>;
 
-interface CrudFormProps {
+export type CrudFormSubmitType = (
+  stores: any,
+  body: Record<string, any>,
+) => Promise<void>;
+
+interface CrudFormBaseProps {
+  submit: CrudFormSubmitType;
+  fieldCallback?: FieldCallbackType;
+  defaults?: any;
+  [key: string]: any;
+}
+
+
+interface CrudFormProps extends CrudFormBaseProps {
   schema: SchemaPromiseFunction;
-  [key: string]: any;
+  title?: string;
 }
 
-interface InnerFormProps {
+interface InnerFormProps extends CrudFormBaseProps {
   schema: SchemaEntry;
-  [key: string]: any;
 }
 
-const CrudForm = (props: CrudFormProps) => {
+export const CrudForm = (props: CrudFormProps) => {
   const { title, schema, maxWidth = "md", ...extra } = props;
   const result = useAsync(schema);
   const { loading, value } = result;
@@ -116,5 +128,3 @@ const InnerForm = (props: InnerFormProps) => {
     </form>
   );
 };
-
-export default CrudForm;

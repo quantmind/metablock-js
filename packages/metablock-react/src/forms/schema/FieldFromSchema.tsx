@@ -9,6 +9,8 @@ const MissingSchema = (props: SchemaEntryProps) => {
 
 const FieldFromSchema = (props: SchemaEntryProps) => {
   const { schema, name, form, ...extra } = props;
+  const extraProps = form.fieldCallback(name, extra, schema);
+  if (!extraProps) return null;
   let type = schema.format ? `${schema.type}:${schema.format}` : schema.type;
   let SchemaComponent;
   while (type && !SchemaComponent) {
@@ -19,7 +21,6 @@ const FieldFromSchema = (props: SchemaEntryProps) => {
     }
   }
   if (!SchemaComponent) SchemaComponent = MissingSchema;
-  const extraProps = form.fieldCallback(name, extra);
   if (!extraProps) return null;
   return (
     <SchemaComponent name={name} form={form} schema={schema} {...extraProps} />

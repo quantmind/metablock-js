@@ -1,4 +1,4 @@
-import { ApiToken, DataApi } from "../interfaces";
+import { ApiToken, Block, DataApi } from "../interfaces";
 import HttpComponent from "./httpComponent";
 
 export interface User {
@@ -50,6 +50,14 @@ class MbUser extends HttpComponent {
 
   async logout(): Promise<void> {
     await this.cli.delete(`${this.cli.apiUrl}/user/jwt`);
+  }
+
+  async createBlock(body: Record<string, any>): Promise<Block> {
+    const url = `${this.cli.apiUrl}/user/services`;
+    const response = await this.cli.post(url, {
+      body,
+    });
+    return response.data as Block;
   }
 }
 

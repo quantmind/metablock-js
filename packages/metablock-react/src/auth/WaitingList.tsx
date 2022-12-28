@@ -1,29 +1,12 @@
 import { getBlock, urlQuery } from "@metablock/core";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import makeStyles from "@mui/styles/makeStyles";
 import React from "react";
 import { useAsync } from "react-use";
 import { FormErrorMessage, TextField, useForm } from "../forms";
 import AppForm from "../views/AppForm";
 import NotFound from "../views/NotFound";
 
-const useStyles = makeStyles((theme) => ({
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  provider: {
-    margin: theme.spacing(0, 0, 2),
-  },
-}));
 
 const DefaultHeader = () => (
   <Typography component="h1" variant="h5" paragraph>
@@ -32,7 +15,6 @@ const DefaultHeader = () => (
 );
 
 const WaitingList = (props: any) => {
-  const classes = useStyles();
   const block = getBlock();
   const account = block.plugins.account;
   const {
@@ -82,7 +64,7 @@ const WaitingList = (props: any) => {
       {form.errorMessage ? (
         <FormErrorMessage paragraph>{form.errorMessage}</FormErrorMessage>
       ) : null}
-      <form className={classes.form} onSubmit={form.onSubmit()} noValidate>
+      <form onSubmit={form.onSubmit()} noValidate>
         <TextField
           form={form}
           variant="outlined"
@@ -99,7 +81,6 @@ const WaitingList = (props: any) => {
           fullWidth
           variant="contained"
           color="primary"
-          className={classes.submit}
         >
           {submitText}
         </Button>

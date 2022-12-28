@@ -18,8 +18,8 @@
     "d3-require": "^1.2.4"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && rollup -c",
-    "watch": "rollup -c -w"
+    "build": "export NODE_ENV=production && rollup -c --bundleConfigAsCjs",
+    "watch": "rollup -c -w --bundleConfigAsCjs"
   },
   "devDependencies": {
     "@types/d3-require": "^1.2.0"

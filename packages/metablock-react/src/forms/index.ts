@@ -1,6 +1,6 @@
 export { default as CheckBoxField } from "./CheckBoxField";
 export { default as ControlField } from "./ControlField";
-export { default as CrudForm } from "./CrudForm";
+export * from "./CrudForm";
 export { default as FormErrorMessage } from "./ErrorMessage";
 export * from "./schema";
 export { default as TextField } from "./TextField";

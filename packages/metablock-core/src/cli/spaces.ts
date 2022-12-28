@@ -4,7 +4,7 @@ import {
   Paginated,
   paginatedResponse,
   Space,
-  SpaceExtension,
+  SpaceExtension
 } from "../interfaces";
 import HttpResponse from "../response";
 import HttpComponent from "./httpComponent";
@@ -57,6 +57,10 @@ class Spaces extends HttpComponent {
     );
     const response = await this.cli.get(url);
     return paginatedResponse<Block>(response);
+  }
+
+  loader(query?: any): DataApi<Space> {
+    return this.cli.loader(`${this.cli.apiUrl}/spaces`, query);
   }
 
   blocksLoader(space_id: string): DataApi<Block> {

@@ -50,6 +50,12 @@ class Blocks extends HttpComponent {
     return response.data as any;
   }
 
+  async certificate(block_id: string): Promise<any> {
+    const url = `${this.cli.apiUrl}/services/${block_id}/certificate`;
+    const response = await this.cli.get(url);
+    return response.data as any;
+  }
+
   pluginsLoader(block_id: string): DataApi<BlockPlugin> {
     return this.cli.loader(`${this.cli.apiUrl}/services/${block_id}/plugins`);
   }
