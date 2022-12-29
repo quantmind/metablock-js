@@ -27,11 +27,13 @@ const compileBundle = async (
   const outPath = resolve(config.sourceDir, `compiled.${fileName}`);
   config.js_compiled = new Set();
   output.forEach((out: any) => {
-    const target =
-      out.facadeModuleId === srcPath ? outPath : out.facadeModuleId;
-    config.js_compiled.add(target);
-    fs.writeFileSync(target, out.code);
-    info(`:blue_heart: written javascript compiled file ${target}`);
+    if (out.code) {
+      const target =
+        out.facadeModuleId === srcPath ? outPath : out.facadeModuleId;
+      config.js_compiled.add(target);
+      fs.writeFileSync(target, out.code);
+      info(`:blue_heart: written javascript compiled file ${target}`);
+    }
   });
 };
 

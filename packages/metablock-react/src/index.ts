@@ -1,4 +1,5 @@
 export * from "./auth";
+export * from "./Cms";
 export * from "./components";
 export * from "./forms";
 export * from "./hooks";

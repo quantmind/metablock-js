@@ -1,4 +1,3 @@
-import { Image, Link, UnsplashImage } from "@metablock/react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
@@ -6,6 +5,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import React from "react";
+import { Image, Link, UnsplashImage } from "../components";
 import { CmsListProps } from "./interfaces";
 import { dateFormat } from "./op";
 
@@ -32,7 +32,7 @@ const EntryImage = (props: any) => {
   else return <Box {...extra}></Box>;
 };
 
-const ListLayout = (props: CmsListProps) => {
+const CmsListLayout = (props: CmsListProps) => {
   const { data, imageWidth = 200, imageHeight = 150, ...extra } = props;
   const sxImage = {
     width: `${imageWidth}px`,
@@ -93,4 +93,4 @@ const ListLayout = (props: CmsListProps) => {
   );
 };
 
-export default ListLayout;
+export default CmsListLayout;

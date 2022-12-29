@@ -1,7 +1,6 @@
+export { default as CmsEntryLayout } from "./CmsEntryLayout";
+export { default as CmsListLayout } from "./CmsListLayout";
 export { default as CmsPaginate } from "./CmsPaginate";
 export { default as CmsRoute } from "./CmsRoute";
-export { default as EntryLayout } from "./EntryLayout";
 export * from "./interfaces";
-export { default as ListLayout } from "./ListLayout";
-export * from "./op";
 export { CmsStore } from "./store";

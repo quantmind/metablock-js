@@ -5,7 +5,7 @@ import pkg from "./package.json";
 console.info("Build @metablock/react");
 
 const external = ["tslib"];
-const globals = { tslib: "tslib" };
+const globals = { tslib: "tslib", "d3-time-format": "d3" };
 
 const plugins = [
   autoExternal(),

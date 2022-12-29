@@ -7,7 +7,7 @@ import { Services } from "../interfaces";
 import { reqUrl } from "../request";
 
 const logger = getLogger({ name: "ssr" });
-const whitelistResources = new Set(["document", "script", "xhr", "fetch"]);
+const whitelistResources = new Set(["document", "script", "fetch", "xhr", "image"]);
 const blacklist = [
   "www.google-analytics.com",
   "/gtag/js",
@@ -18,6 +18,7 @@ const blacklist = [
 const whiteList = (resources: Set<string>) => {
   return (request: any) => {
     if (!resources.has(request.resourceType())) {
+      logger.info("aborting request type", request.resourceType(), ":", request.url());
       request.abort();
       return true;
     }
@@ -79,7 +80,11 @@ class BrowserManager {
     return await this.render(req, res);
   }
 
-  async render(req: Request, res: Response): Promise<Record<string, any>> {
+  async screenshot(req: Request, res: Response, screenshot: any): Promise<Record<string, any>> {
+    return await this.render(req, res, screenshot);
+  }
+
+  async render(req: Request, res: Response, screenshot?: any): Promise<Record<string, any>> {
     const t0 = performance.now();
     let requestCount = 0;
     const page = await this.newPage();
@@ -103,7 +108,11 @@ class BrowserManager {
         const meta = await this.plugins[i](page);
         if (meta) result = { ...meta, ...result };
       }
-      result.content = await page.content();
+      if (screenshot) {
+        result.screenshot = await page.screenshot(screenshot);
+      } else {
+        result.content = await page.content();
+      }
       result.time = Math.round(performance.now() - t0);
       result.requestCount = requestCount;
       res

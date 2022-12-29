@@ -7,8 +7,7 @@
       "displayName": "@metablock/core",
       "testEnvironment": "jsdom",
       "testMatch": ["<rootDir>/tests/*.test.ts"],
-      "setupFiles": ["./setupTests.ts"],
-      "transformIgnorePatterns": ["/node_modules/(?!@metablock)"]
+      "setupFiles": ["./setupTests.ts"]
     },
     {
       "preset": "ts-jest",
@@ -31,16 +30,6 @@
     },
     {
       "preset": "ts-jest",
-      "rootDir": "./packages/metablock-react",
-      "automock": false,
-      "displayName": "@metablock/react",
-      "testEnvironment": "jsdom",
-      "testMatch": ["<rootDir>/**/*.test.ts", "<rootDir>/**/*.test.tsx"],
-      "setupFilesAfterEnv": ["./setupTests.ts"],
-      "transformIgnorePatterns": ["/node_modules/(?!@metablock)"]
-    },
-    {
-      "preset": "ts-jest",
       "rootDir": "./packages/metablock-store",
       "automock": false,
       "displayName": "@metablock/store",
@@ -50,6 +39,7 @@
       "transformIgnorePatterns": ["/node_modules/(?!@metablock)"]
     }
   ],
+  "transformIgnorePatterns": ["/node_modules/d3-time-format/"],
   "coverageReporters": ["json", "html", "lcov", "text", "text-summary"],
   "coveragePathIgnorePatterns": ["node_modules", "dist", ".storybook"],
   "coverageThreshold": {

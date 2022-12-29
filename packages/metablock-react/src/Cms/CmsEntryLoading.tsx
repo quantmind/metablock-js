@@ -1,9 +1,9 @@
-import { getWindowSize } from "@metablock/react";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import React from "react";
+import { getWindowSize } from "../hooks";
 
-const EntryLoading = () => {
+const CmsEntryLoading: React.FC = () => {
   const height = getWindowSize().height || 200;
   const sx = {
     width: "100%",
@@ -19,4 +19,4 @@ const EntryLoading = () => {
   );
 };
 
-export default EntryLoading;
+export default CmsEntryLoading;

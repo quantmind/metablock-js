@@ -1,8 +1,8 @@
 import { bundleUrl } from "@metablock/core";
 import React from "react";
 import { useAsync } from "react-use";
-import EntryLayout from "./EntryLayout";
-import EntryLoading from "./EntryLoading";
+import EntryLayout from "./CmsEntryLayout";
+import EntryLoading from "./CmsEntryLoading";
 import { CmsData } from "./interfaces";
 import { matchSlug, render } from "./op";
 import store from "./store";

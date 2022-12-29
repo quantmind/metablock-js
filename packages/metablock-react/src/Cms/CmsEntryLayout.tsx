@@ -1,11 +1,12 @@
-import { Page, Parallax } from "@metablock/react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import React from "react";
+import { Parallax } from "../components";
+import { Page } from "../views";
 import { CmsData } from "./interfaces";
 import { dateFormat } from "./op";
 
-const EntryLayout = (props: CmsData) => {
+const CmsEntryLayout = (props: CmsData) => {
   const maxWidth = "md";
   const formatDate =
     props.date instanceof Date ? ` on ${dateFormat()(props.date)}` : "";
@@ -36,4 +37,4 @@ const EntryLayout = (props: CmsData) => {
   );
 };
 
-export default EntryLayout;
+export default CmsEntryLayout;

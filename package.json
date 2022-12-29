@@ -1,5 +1,5 @@
 {
-  "version": "0.20.0",
+  "version": "0.21.0",
   "private": true,
   "license": "ISC",
   "name": "metablock",
@@ -93,15 +93,13 @@
     "build:store": "yarn workspace @metablock/store build",
     "build:server": "yarn workspace @metablock/server build",
     "build:react": "yarn workspace @metablock/react build",
-    "build:cms": "yarn workspace @metablock/cms build",
     "build:notebook": "yarn workspace @metablock/notebook build",
-    "watch": "npm-run-all --parallel watch:server watch:core watch:cli watch:store watch:react watch:cms watch:notebook",
+    "watch": "npm-run-all --parallel watch:server watch:core watch:cli watch:store watch:react watch:notebook",
     "watch:cli": "yarn workspace @metablock/cli watch",
     "watch:core": "yarn workspace @metablock/core watch",
     "watch:store": "yarn workspace @metablock/store watch",
     "watch:server": "yarn workspace @metablock/server watch",
     "watch:react": "yarn workspace @metablock/react watch",
-    "watch:cms": "yarn workspace @metablock/cms watch",
     "watch:notebook": "yarn workspace @metablock/notebook watch",
     "postinstall": "husky install"
   }

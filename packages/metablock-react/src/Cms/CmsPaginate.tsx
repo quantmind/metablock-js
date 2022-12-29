@@ -2,8 +2,8 @@ import { bundleUrl } from "@metablock/core";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useAsync } from "react-use";
+import ListLayout from "./CmsListLayout";
 import { CmsListData } from "./interfaces";
-import ListLayout from "./ListLayout";
 import { render, urlPath } from "./op";
 import store from "./store";
 
