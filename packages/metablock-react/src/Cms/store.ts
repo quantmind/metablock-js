@@ -1,14 +1,10 @@
 import { HttpClient } from "@metablock/core";
-import { action, makeObservable } from "mobx";
 
 export class CmsStore {
   cli: HttpClient;
   data: Record<string, any>;
 
   constructor() {
-    makeObservable(this, {
-      get: action,
-    });
     this.data = {};
     this.cli = new HttpClient();
   }

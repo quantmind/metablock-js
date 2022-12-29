@@ -87,7 +87,7 @@
     "cli:dev": "yarn workspace metablock-cli dev",
     "test": "jest -c --coverage --forceExit --detectOpenHandles",
     "test:watch": "jest -c --coverage --watch",
-    "build": "yarn build:core && yarn build:notebook && yarn build:store && yarn build:cli && yarn build:server && yarn build:react && yarn build:cms",
+    "build": "yarn build:core && yarn build:notebook && yarn build:store && yarn build:cli && yarn build:server && yarn build:react",
     "build:cli": "yarn workspace @metablock/cli build",
     "build:core": "yarn workspace @metablock/core build",
     "build:store": "yarn workspace @metablock/store build",
