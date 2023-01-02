@@ -24,7 +24,7 @@ export default (ctx: Context, req?: Request) => {
 
   return render(
     `<!doctype html>
-<html>
+<html lang="${ctx.html.lang}">
 <head>
   ${head.join("\n")}
 </head>

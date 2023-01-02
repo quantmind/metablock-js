@@ -67,6 +67,7 @@ const compileDirectory = async (
     const sourcePath = resolve(sourceDir, name);
     if (options.verbose) console.debug(sourcePath);
     if (config.content) {
+      // if the directory is a content directory, compile content in it
       await compileContent(sourcePath, config, targets);
     } else if (fs.lstatSync(sourcePath).isDirectory()) {
       // recursive call
