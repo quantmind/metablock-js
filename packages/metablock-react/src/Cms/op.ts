@@ -17,7 +17,7 @@ export const slugValues = (entry: CmsListData): Record<string, string> => {
   return date
     ? {
         yyyy: "" + (date as Date).getFullYear(),
-        mm: "" + (date as Date).getMonth(),
+        mm: "" + String((date as Date).getMonth() + 1).padStart(2, "0"),
         slug: entry.slug,
       }
     : { slug: entry.slug };
