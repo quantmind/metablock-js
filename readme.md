@@ -3,11 +3,10 @@
 Tooling for metablock cloud.
 
 - [@metablock/core](./packages/metablock-core): a [Metablock API](https://api.metablock.io/v1/docs) client for both node and the browser.
-- [@metablock/cli](./packages/metablock-cli): command line client for interacting with metablock API.
-- [@metablock/server](./packages/metablock-server): a dev server for HTML metablocks.
-- [@metablock/store](./packages/metablock-store): stores for metablock authentication plugin.
-- [@metablock/react](./packages/metablock-react): reusable react components.
-- [@metablock/cms](./packages/metablock-cms): a lightweight CMS
+- [@metablock/cli](./packages/metablock-cli): command line client for interacting with metablock API
+- [@metablock/server](./packages/metablock-server): a dev server for HTML metablocks
+- [@metablock/store](./packages/metablock-store): stores for metablock authentication plugin
+- [@metablock/react](./packages/metablock-react): reusable react components
 - [@metablock/notebook](./packages/metablock-notebook): experimental notebook app
 
 ## Release
