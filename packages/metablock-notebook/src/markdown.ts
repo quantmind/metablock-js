@@ -5,6 +5,7 @@ export const defaultMarkdownExtensions: any[] = [];
 class Markdown {
   lib: any;
   extensions: any[];
+  theme = "";
   _marked: any;
 
   constructor(lib: any) {
