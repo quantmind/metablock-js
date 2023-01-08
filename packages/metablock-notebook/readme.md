@@ -10,7 +10,7 @@ A library for
 
 ```js
 import { Notebook } from "@metablock/notebook";
-const el = document;
+const el = document.querySelector("body");
 const markdown_text = `
 # Title
 
