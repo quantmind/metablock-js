@@ -8,7 +8,6 @@ export default (ctx: Context, req?: Request) => {
   //const init = JSON.stringify({ ...web, csrfToken });
   const init = JSON.stringify(ctx.web);
   const title = ctx.web.title || ctx.web.name || "metablock";
-  const description = ctx.web.description || title;
   const scripts = [
     `<script type="application/javascript">__bundle_url__="${ctx.web.deployUrl}/";</script>`,
   ].concat(
@@ -16,7 +15,6 @@ export default (ctx: Context, req?: Request) => {
   );
   const head = [
     `<title>${title}</title>`,
-    `<meta name="description" content="${description}">`,
     ...ctx.html.head,
     `<meta name="mb:state" content="${btoa(init)}">`,
   ];

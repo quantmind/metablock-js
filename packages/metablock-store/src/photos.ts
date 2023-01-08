@@ -16,10 +16,15 @@ class PhotoStore {
     return this.commonStore.cli;
   }
 
-  async getPhoto(photoId: string): Promise<Record<string, any>> {
+  fromStore(photoId: string): any | undefined {
     const jsonStr = window.localStorage.getItem(`photo-${photoId}`);
-    if (jsonStr) {
-      return JSON.parse(jsonStr);
+    if (jsonStr) return JSON.parse(jsonStr);
+  }
+
+  async getPhoto(photoId: string): Promise<Record<string, any>> {
+    const data = this.fromStore(photoId);
+    if (data) {
+      return data;
     } else {
       const photo = await this.cli.photos.get(photoId);
       window.localStorage.setItem(`photo-${photoId}`, JSON.stringify(photo));

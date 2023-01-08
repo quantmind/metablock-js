@@ -1,4 +1,5 @@
 import config from "./config";
+import loadJs from "./loadJs";
 import Markdown from "./markdown";
 import style from "./style";
 
@@ -13,13 +14,9 @@ const after = async (mkd: Markdown, root: any, options: any): Promise<void> => {
   const elements = root.querySelectorAll("pre code[class]");
   if (elements.length > 0) {
     const hls = options.highlightStyle || config.defaultHighlightStyle;
-    loadStyle(mkd, `${config.HL_CSS}/${hls}.css`);
-    const [hl, purify] = await Promise.all([
-      mkd.require(`${config.HL_ROOT}/highlight.min.js`),
-      mkd.require(config.PURIFY),
-    ]);
+    loadStyle(mkd, `${config.HL_CSS}/${hls}.min.css`);
     const blocks = await Promise.all(
-      Array.from(elements, (element: Element) => getCode(element, hl, purify))
+      Array.from(elements, (element: Element) => getCode(mkd, element))
     );
     blocks.forEach((block: any) => {
       if (block.lang === "js" && block.classes.has("javascript"))
@@ -29,25 +26,33 @@ const after = async (mkd: Markdown, root: any, options: any): Promise<void> => {
 };
 
 const getCode = async (
-  element: any,
-  hl: any,
-  purify: any
+  mkd: Markdown,
+  element: any
 ): Promise<Record<string, any>> => {
+  const purify = await mkd.require(config.PURIFY);
   const code = purify.sanitize(element.innerText);
+  return await renderCode(mkd, element, code);
+};
+
+export const renderCode = async (
+  mkd: Markdown,
+  element: any,
+  code: string,
+  lang?: string
+): Promise<Record<string, any>> => {
+  await loadJs(`${config.HL_ROOT}/highlight.min.js`);
+  // @ts-ignore
+  const hl = window.hljs;
   const classes = new Set(element.classList.values());
-  let language = hl.getLanguage(element.className);
+  const lang_ = lang || element.className;
+  let language = hl.getLanguage(lang_);
   if (!language) {
-    const index = await require(`${config.HL_ROOT}/async-languages/index.js`);
-    if (index.has(element.className)) {
-      language = await require(`${config.HL_ROOT}/async-languages/${index.get(
-        element.className
-      )}`);
-      hl.registerLanguage(element.className, language);
-    }
+    language = await mkd.require(`${config.HL_ROOT}/languages/${lang_}.min.js`);
+    hl.registerLanguage(lang_, lang);
   }
   hl.highlightBlock(element);
-  const lang = language && language.aliases ? language.aliases[0] : "";
-  return { lang, code, element, classes };
+  const langu = language && language.aliases ? language.aliases[0] : "";
+  return { lang: langu, code, element, classes };
 };
 
 export default { after };

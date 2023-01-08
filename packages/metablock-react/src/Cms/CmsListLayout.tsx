@@ -25,10 +25,10 @@ const EntryImage = (props: any) => {
   const image = imageProvider(props);
   if (image.provider === "unsplash")
     return (
-      <UnsplashImage photoId={image.id} alt={title} fit="width" {...extra} />
+      <UnsplashImage photoId={image.id} alt={title} fit="cover" {...extra} />
     );
   else if (image.urls)
-    return <Image fit="width" {...image} {...extra} alt={title} />;
+    return <Image fit="cover" {...image} {...extra} alt={title} />;
   else return <Box {...extra}></Box>;
 };
 
