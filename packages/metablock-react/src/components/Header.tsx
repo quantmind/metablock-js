@@ -11,6 +11,7 @@ import React from "react";
 
 interface HeaderComponentProps {
   colorChange: boolean;
+  mobileOpen: boolean;
 }
 
 export interface HeaderProps {
@@ -104,7 +105,9 @@ const Header = (props: HeaderProps) => {
     setMobileOpen(!mobileOpen);
   };
 
-  const brand = <BrandComponent colorChange={colorChange} />;
+  const brand = (
+    <BrandComponent colorChange={colorChange} mobileOpen={mobileOpen} />
+  );
 
   return (
     <AppBar ref={ref} sx={sxAppBar}>
@@ -114,7 +117,7 @@ const Header = (props: HeaderProps) => {
           <Typography sx={{ flex: 1 }} color={colors.color} component="div">
             {LeftLinks ? (
               <Hidden {...hiddenProps}>
-                <LeftLinks colorChange={colorChange} />
+                <LeftLinks colorChange={colorChange} mobileOpen={mobileOpen} />
               </Hidden>
             ) : (
               brand
@@ -123,7 +126,7 @@ const Header = (props: HeaderProps) => {
           {RightLinks ? (
             <Hidden {...hiddenProps}>
               <Typography color={colors.color} component="div">
-                <RightLinks colorChange={colorChange} />
+                <RightLinks colorChange={colorChange} mobileOpen={mobileOpen} />
               </Typography>
             </Hidden>
           ) : null}
@@ -151,8 +154,12 @@ const Header = (props: HeaderProps) => {
                 margin: "20px 10px",
               }}
             >
-              {LeftLinks ? <LeftLinks colorChange={colorChange} /> : null}
-              {RightLinks ? <RightLinks colorChange={colorChange} /> : null}
+              {LeftLinks ? (
+                <LeftLinks colorChange={colorChange} mobileOpen={true} />
+              ) : null}
+              {RightLinks ? (
+                <RightLinks colorChange={colorChange} mobileOpen={true} />
+              ) : null}
             </Typography>
           </Drawer>
         </Hidden>

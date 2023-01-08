@@ -23,6 +23,7 @@ interface ListProps {
   underline?: any;
   direction?: Direction;
   align?: Align;
+  primaryTypographyProps?: Record<string, any>;
 }
 
 const styling: Record<string, any> = {
@@ -62,6 +63,7 @@ const List = (props: ListProps) => {
     align = "left",
     color = "inherit",
     underline = "always",
+    primaryTypographyProps = { variant: "body1" },
   } = props;
   const name = `${direction}${align
     .substring(0, 1)
@@ -79,6 +81,7 @@ const List = (props: ListProps) => {
                 <ListItemIcon sx={styling.icon}>{icon}</ListItemIcon>
               ) : null}
               <ListItemText
+                primaryTypographyProps={primaryTypographyProps}
                 primary={
                   href ? (
                     <MuiLink
