@@ -5,11 +5,6 @@ export default {
   HL_CSS: "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles",
   KATEX: "https://cdn.jsdelivr.net/npm/katex@0.16.0",
   CODEMIRROR: "https://cdn.jsdelivr.net/npm/codemirror@5.59.0",
+  OKTOKIT: "https://cdn.skypack.dev/octokit",
   defaultHighlightStyle: "default",
 };
-
-export interface Library {
-  require: any;
-  loadStyle: (stylesheet: string) => Promise<void>;
-  resolvers: any[];
-}

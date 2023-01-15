@@ -1,4 +1,5 @@
-import config, { Library } from "../config";
+import config from "../config";
+import Notebook from "../notebook";
 
 const MODE: Record<string, string | Record<string, any>> = {
   html: "htmlmixed",
@@ -15,12 +16,12 @@ const resolve = (name: string): string | void => {
 };
 
 class Editor {
-  lib: Library;
+  notebook: Notebook;
   defaults: Record<string, any>;
 
-  constructor(lib: Library, defaults?: any) {
-    this.lib = lib;
-    this.lib.resolvers.push(resolve);
+  constructor(notebook: Notebook, defaults?: any) {
+    this.notebook = notebook;
+    this.notebook.resolvers.push(resolve);
     this.defaults = { theme: "neo", mode: "javascript", ...defaults };
   }
 
@@ -44,12 +45,12 @@ class Editor {
         ? codeMirrorMode
         : codeMirrorMode.name;
     const modeUrl = `${config.CODEMIRROR}/mode/${language}/${language}.js`;
-    await this.lib.loadStyle(`${config.CODEMIRROR}/lib/codemirror.css`);
-    await this.lib.loadStyle(`${config.CODEMIRROR}/theme/${theme}.css`);
-    this.lib
+    await this.notebook.loadStyle(`${config.CODEMIRROR}/lib/codemirror.css`);
+    await this.notebook.loadStyle(`${config.CODEMIRROR}/theme/${theme}.css`);
+    this.notebook
       .require(`${config.CODEMIRROR}/lib/codemirror.min.js`)
       .then((Codemirror: any) => {
-        this.lib.require(modeUrl).then(() => {
+        this.notebook.require(modeUrl).then(() => {
           const instance = Codemirror(element, {
             lineNumbers: this.lineNumbers(mode, lineNumbers),
             tabSize: this.tabSize(mode, tabSize),

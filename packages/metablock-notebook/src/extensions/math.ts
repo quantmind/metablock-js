@@ -1,5 +1,5 @@
 import config from "../config";
-import Markdown from "../markdown";
+import Notebook from "../notebook";
 import style from "../style";
 
 const math = async (require: any) => {
@@ -22,11 +22,11 @@ const renderer = {
   },
 };
 
-const after = async (mkd: Markdown, root: any) => {
+const after = async (notebook: Notebook, root: any) => {
   const blocks = root.querySelectorAll("span.math");
   if (blocks.length > 0) {
-    if (!mkd.cache.katex) mkd.cache.katex = await math(mkd.require);
-    const katex = mkd.cache.katex;
+    if (!notebook.cache.katex) notebook.cache.katex = await math(notebook.require);
+    const katex = notebook.cache.katex;
     Array.from(blocks, (element: any) => {
       const classes = new Set(element.classList);
       const text = element.innerText;

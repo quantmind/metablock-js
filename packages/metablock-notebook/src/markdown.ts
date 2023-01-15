@@ -1,25 +1,26 @@
 import config from "./config";
+import Notebook from "./notebook";
 
 export const defaultMarkdownExtensions: any[] = [];
 
 class Markdown {
-  lib: any;
+  notebook: Notebook;
   extensions: any[];
   theme = "";
   _marked: any;
 
-  constructor(lib: any) {
-    this.lib = lib;
+  constructor(notebook: Notebook) {
+    this.notebook = notebook;
     this.extensions = defaultMarkdownExtensions.slice();
     this._marked = null;
   }
 
   get cache(): any {
-    return this.lib.cache;
+    return this.notebook.cache;
   }
 
   get require(): any {
-    return this.lib.require;
+    return this.notebook.require;
   }
 
   async getMarked() {
@@ -31,6 +32,11 @@ class Markdown {
       const tokenizer = multi(
         this.extensions.filter((e) => e.tokenizer).map((e) => e.tokenizer)
       );
+      this._marked.setOptions({
+        async: true,
+        langPrefix: 'hljs language-',
+        gfm: true,
+      });
       this._marked.use({ tokenizer, renderer });
     }
     return this._marked;
@@ -42,9 +48,10 @@ class Markdown {
     const root = element || document.createElement("div");
     root.innerHTML = markdown.parse(text, { langPrefix: "" }).trim();
     await Promise.all(
-      this.extensions.map((e) => (e.after ? e.after(this, root, opts) : null))
+      this.extensions.map((e) => (e.after ? e.after(this.notebook, root, opts) : null))
     );
   }
+
 }
 
 const multi = (handlers: any[]) => {

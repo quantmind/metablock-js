@@ -1,15 +1,16 @@
+const LoadPromises: Record<string, Promise<void>> = {};
+
 const loadJs = (src: string) => {
-  return new Promise((resolve, reject) => {
-    const script = document.querySelector(`script[src="${src}"]`);
-    if (script) resolve(null);
-    else {
+  if (!LoadPromises[src]) {
+    LoadPromises[src] = new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = src;
       script.onerror = reject;
-      script.onload = resolve;
+      script.onload = () => resolve();
       document.head.appendChild(script);
-    }
-  });
+    });
+  }
+  return LoadPromises[src];
 };
 
 export default loadJs;
