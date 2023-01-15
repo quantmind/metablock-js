@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { Image, Link, UnsplashImage } from "../components";
@@ -21,23 +22,28 @@ const imageProvider = (props: any) => {
   } else return {};
 };
 const EntryImage = (props: any) => {
-  const { title, ...extra } = props;
+  const { title, fit = "cover", ...extra } = props;
   const image = imageProvider(props);
   if (image.provider === "unsplash")
     return (
-      <UnsplashImage photoId={image.id} alt={title} fit="cover" {...extra} />
+      <UnsplashImage photoId={image.id} alt={title} fit={fit} {...extra} />
     );
   else if (image.urls)
-    return <Image fit="cover" {...image} {...extra} alt={title} />;
+    return <Image fit={fit} {...image} {...extra} alt={title} />;
   else return <Box {...extra}></Box>;
 };
 
 const CmsListLayout = (props: CmsListProps) => {
-  const { data, imageWidth = 200, imageHeight = 150, ...extra } = props;
+  const { data, imageHeight = 150, ...extra } = props;
+  const theme = useTheme();
+  const smImageHeight = Math.ceil(0.5 * imageHeight);
   const sxImage = {
-    width: `${imageWidth}px`,
-    height: `${imageHeight}px`,
     position: "relative",
+    width: `100%`,
+    height: `${imageHeight}px`,
+    [theme.breakpoints.down("sm")]: {
+      height: `${smImageHeight}px`,
+    },
   };
   const sx = (entry: any) =>
     entry.private
@@ -48,18 +54,25 @@ const CmsListLayout = (props: CmsListProps) => {
         }
       : { mb: 4 };
 
+  const linkSx = {
+    width: "100%",
+    ":hover": {
+      backgroundColor: "action.hover",
+    },
+  };
+
   return (
     <List>
       {data.map((entry, index) => (
         <ListItem key={index} disablePadding sx={sx(entry)}>
-          <Link to={entry.urlPath} color="inherit" underline="none">
-            <Grid container>
-              <Grid item>
+          <Link to={entry.urlPath} color="inherit" underline="none" sx={linkSx}>
+            <Grid container spacing={2}>
+              <Grid xs={3} item>
                 <EntryImage {...extra} {...entry} sx={sxImage} />
               </Grid>
-              <Grid item xs={12} sm container>
+              <Grid xs={9} item>
                 <ListItemText
-                  sx={{ pl: 3, mt: 0, mb: 0 }}
+                  sx={{ mt: 0, mb: 0 }}
                   disableTypography
                   primary={
                     <Typography component="h2" variant="h5">

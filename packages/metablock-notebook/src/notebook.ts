@@ -1,12 +1,12 @@
 import { require as requireDefault, requireFrom, resolver } from "d3-require";
-import code from "./code";
 import { Library } from "./config";
-import Editor from "./editor";
+import code from "./extensions/code";
+import Editor from "./extensions/editor";
+import math from "./extensions/math";
+import jsmod from "./extensions/module";
 import { asArray } from "./lib/utils";
 import loadJs from "./loadJs";
 import Markdown, { defaultMarkdownExtensions } from "./markdown";
-import math from "./math";
-import jsmod from "./module";
 import style from "./style";
 
 defaultMarkdownExtensions.push(math);

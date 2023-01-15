@@ -1,6 +1,6 @@
-import config from "./config";
-import Markdown from "./markdown";
-import style from "./style";
+import config from "../config";
+import Markdown from "../markdown";
+import style from "../style";
 
 const math = async (require: any) => {
   const katex = await Promise.all([

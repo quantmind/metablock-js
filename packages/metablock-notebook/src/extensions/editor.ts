@@ -1,4 +1,4 @@
-import config, { Library } from "./config";
+import config, { Library } from "../config";
 
 const MODE: Record<string, string | Record<string, any>> = {
   html: "htmlmixed",

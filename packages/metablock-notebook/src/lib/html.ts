@@ -10,12 +10,12 @@ class Html {
   static fromString(html: string, ownerDocument?: any): Html | null {
     const doc = ownerDocument || document;
     const el = doc.createElement("div");
-    el.innerHTML = html;
+    try {
+      el.innerHTML = html;
+    } catch (e) {
+      return null;
+    }
     const children = el.children;
-    if (children.length !== 1)
-      logger.warn(
-        `html function should return one root element only, got ${children.length}`
-      );
     const dom = children[0];
     return dom ? new Html(dom) : null;
   }

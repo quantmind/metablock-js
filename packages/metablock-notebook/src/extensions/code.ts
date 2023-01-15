@@ -1,7 +1,7 @@
-import config from "./config";
-import loadJs from "./loadJs";
-import Markdown from "./markdown";
-import style from "./style";
+import config from "../config";
+import loadJs from "../loadJs";
+import Markdown from "../markdown";
+import style from "../style";
 
 const loadStyle = (mkd: Markdown, url: string) => {
   if (url !== mkd.cache.currentStyleUrl) {
@@ -41,6 +41,8 @@ export const renderCode = async (
   lang?: string
 ): Promise<Record<string, any>> => {
   await loadJs(`${config.HL_ROOT}/highlight.min.js`);
+  const purify = await mkd.require(config.PURIFY);
+  code = purify.sanitize(element.innerText);
   // @ts-ignore
   const hl = window.hljs;
   const classes = new Set(element.classList.values());

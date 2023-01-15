@@ -1,5 +1,5 @@
 export default {
-  MARKED: "marked@1.1.0",
+  MARKED: "marked@v4.2.12",
   PURIFY: "dompurify@2.0.12/dist/purify.min.js",
   HL_ROOT: "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0",
   HL_CSS: "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles",

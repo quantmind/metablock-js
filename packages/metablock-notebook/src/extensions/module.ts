@@ -1,5 +1,5 @@
-import Html from "./lib/html";
-import Markdown from "./markdown";
+import Html from "../lib/html";
+import Markdown from "../markdown";
 
 const renderer = {
   html(raw: string) {

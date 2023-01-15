@@ -1,10 +1,6 @@
 # Metablock Notebook
 
-A library for
-
-* rendering markdow, math, code
-* editing
-* executing code
+A library for rendering markdown, math, code, editing, executing code inline and much more!
 
 ## Usage
 
