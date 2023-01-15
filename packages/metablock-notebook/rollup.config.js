@@ -1,4 +1,4 @@
-import autoExternal from "rollup-plugin-auto-external";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import sourcemaps from "rollup-plugin-sourcemaps";
 import { terser } from "rollup-plugin-terser";
 import typescript from "rollup-plugin-typescript2";
@@ -9,12 +9,12 @@ console.info("Build @metablock/notebook");
 
 const banner = getBanner(pkg);
 const globals = { tslib: "tslib", "d3-require": "d3" };
-const external = Object.keys(globals);
+const external = Object.keys({ tslib: "tslib" });
 
 const config = (prod) => {
   const plugins = [
-    autoExternal(),
     sourcemaps(),
+    nodeResolve(),
     typescript({
       typescript: require("typescript"),
     }),

@@ -40,7 +40,7 @@ class Markdown {
     const opts = options || {};
     const markdown = await this.getMarked();
     const root = element || document.createElement("div");
-    root.innerHTML = markdown(text, { langPrefix: "" }).trim();
+    root.innerHTML = markdown.parse(text, { langPrefix: "" }).trim();
     await Promise.all(
       this.extensions.map((e) => (e.after ? e.after(this, root, opts) : null))
     );
