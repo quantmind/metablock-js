@@ -1,5 +1,3 @@
-import { logger } from "./utils";
-
 class Html {
   dom: HTMLElement;
 
