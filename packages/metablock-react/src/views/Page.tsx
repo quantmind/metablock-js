@@ -1,6 +1,7 @@
 import { getBlock, WebBlock } from "@metablock/core";
 import React from "react";
 import { Helmet } from "react-helmet";
+import MetaImage from "./MetaImage";
 
 function buildTitle(block: WebBlock, text: string, prefix: boolean) {
   if (text) return prefix ? `${block.title} - ${text}` : text;
@@ -55,14 +56,13 @@ const Page = (props: PageProps) => {
         <meta property="og:title" content={title} />
         <meta property="og:site_name" content={title} />
         <meta property="og:type" content={content} />
-        {image ? <meta property="og:image" content={image} /> : null}
         <meta name="twitter:description" content={description} />
         <meta name="twitter:card" content={twitter_card} />
-        {image ? <meta property="twitter:image" content={image} /> : null}
         {statusCode ? (
           <meta name="page-status-code" content={`${statusCode}`} />
         ) : null}
       </Helmet>
+      <MetaImage image={image} />
       {children}
     </>
   );
