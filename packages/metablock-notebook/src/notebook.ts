@@ -3,6 +3,7 @@ import config from "./config";
 import code from "./extensions/code";
 import Editor from "./extensions/editor";
 import math from "./extensions/math";
+import script from "./extensions/script";
 import { asArray } from "./lib/utils";
 import loadJs from "./loadJs";
 import Markdown, { defaultMarkdownExtensions } from "./markdown";
@@ -10,6 +11,7 @@ import style from "./style";
 
 defaultMarkdownExtensions.push(math);
 defaultMarkdownExtensions.push(code);
+defaultMarkdownExtensions.push(script);
 
 const notebookResolver = (notebook: Notebook, resolve?: resolver) => {
   const defaultResolve = resolve || requireDefault.resolve;
@@ -62,8 +64,8 @@ class Notebook {
     }
   }
 
-  async loadJs(src: string): Promise<void> {
-    await loadJs(src);
+  async loadJs(src: string, attrs?: Record<string, any>): Promise<void> {
+    await loadJs(src, attrs);
   }
 
   async importModule(src: string): Promise<any> {

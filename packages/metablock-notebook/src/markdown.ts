@@ -46,7 +46,8 @@ class Markdown {
     const opts = options || {};
     const markdown = await this.getMarked();
     const root = element || document.createElement("div");
-    root.innerHTML = markdown.parse(text, { langPrefix: "" }).trim();
+    const el = markdown.parse(text, { langPrefix: "" }).trim();
+    root.innerHTML = el;
     await Promise.all(
       this.extensions.map((e) => (e.after ? e.after(this.notebook, root, opts) : null))
     );
