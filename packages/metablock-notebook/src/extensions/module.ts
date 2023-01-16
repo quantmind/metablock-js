@@ -1,3 +1,5 @@
+import Notebook from "../notebook";
+
 class Module extends HTMLElement {
   constructor() {
     super();
@@ -20,7 +22,7 @@ class Module extends HTMLElement {
     const module = await import(/* webpackIgnore: true */ src);
     const element = root.querySelector(".module");
     if (element)
-      module.default(element);
+      module.default(Notebook.create(), element);
   }
 }
 
