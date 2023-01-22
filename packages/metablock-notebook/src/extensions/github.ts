@@ -23,7 +23,7 @@ class GithubModule extends HTMLElement {
     });
     const data = result.data;
     if (result.status == 200 && data.type === "file") {
-      this.innerHTML = "<pre><code class='hljs'></code></pre>";
+      this.innerHTML = "<pre><code></code></pre>";
       const code = this.querySelector("code");
       const language = this.getAttribute("lang") || path.split(".").pop();
       await notebook.renderCode(code, atob(data.content), language);

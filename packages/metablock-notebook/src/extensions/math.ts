@@ -1,6 +1,6 @@
 import config from "../config";
+import style from "../lib/style";
 import Notebook from "../notebook";
-import style from "../style";
 
 const math = async (require: any) => {
   const katex = await Promise.all([
@@ -25,7 +25,8 @@ const renderer = {
 const after = async (notebook: Notebook, root: any) => {
   const blocks = root.querySelectorAll("span.math");
   if (blocks.length > 0) {
-    if (!notebook.cache.katex) notebook.cache.katex = await math(notebook.require);
+    if (!notebook.cache.katex)
+      notebook.cache.katex = await math(notebook.require);
     const katex = notebook.cache.katex;
     Array.from(blocks, (element: any) => {
       const classes = new Set(element.classList);

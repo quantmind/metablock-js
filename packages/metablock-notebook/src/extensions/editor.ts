@@ -2,10 +2,6 @@ import config from "../config";
 import Html from "../lib/html";
 import Notebook from "../notebook";
 
-const MODE: Record<string, string | Record<string, any>> = {
-  html: "htmlmixed",
-  json: { name: "javascript", json: true },
-};
 
 const resolve = (name: string): string | void => {
   if (name.substring(0, config.CODEMIRROR.length) == config.CODEMIRROR)
@@ -53,16 +49,7 @@ class Editor {
 
   async render(text: string, element: any, options?: any): Promise<any> {
     const opts = { ...this.defaults, ...options };
-    const {
-      mode,
-      theme,
-      tabSize = 2,
-      lineNumbers,
-      matchBrackets = true,
-      styleActiveLine = true,
-      events,
-      ...extra
-    } = opts;
+    const { tabSize = 2, lineNumbers, events } = opts;
     const extensions: any[] = [];
     const cm = await this.load();
     const { EditorState, Compartment } = cm.state;

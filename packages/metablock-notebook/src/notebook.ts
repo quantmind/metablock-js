@@ -6,9 +6,10 @@ import math from "./extensions/math";
 import script from "./extensions/script";
 import loadJs from "./lib/loadJs";
 import loadJsModule from "./lib/loadJsModule";
+import style from "./lib/style";
+import addStyle from "./lib/addStyle";
 import { asArray } from "./lib/utils";
 import Markdown, { defaultMarkdownExtensions } from "./markdown";
-import style from "./style";
 
 defaultMarkdownExtensions.push(math);
 defaultMarkdownExtensions.push(code);
@@ -52,6 +53,7 @@ class Notebook {
     this.options = {
       mode: "light",
       highlightStyle: "",
+      codeClipboard: true,
     };
     this.md = new Markdown(this);
     this.editor = new Editor(this);
@@ -76,6 +78,10 @@ class Notebook {
   // import a javascript module
   async importModule(src: string): Promise<any> {
     return loadJsModule(src);
+  }
+
+  addStyle(style: string) {
+    addStyle(style);
   }
 
   // Execute Javascript code by creating a new script element
@@ -131,12 +137,24 @@ class Notebook {
       hl.registerLanguage(language, languageObject);
     }
     element.innerHTML = hl.highlight(text, { language }).value;
+    if (this.options.codeClipboard) {
+      const pre = element.parentElement;
+      if (pre && pre.tagName === "PRE") {
+        const clipboard = document.createElement("with-clipboard");
+        clipboard.innerHTML = pre.outerHTML;
+        pre.replaceWith(clipboard);
+      }
+    }
     const langu =
       languageObject && languageObject.aliases ? languageObject.aliases[0] : "";
     return { lang: langu, code: text, element, classes };
   }
 
-  context2d(width: number, height: number, dpi?: number): CanvasRenderingContext2D {
+  context2d(
+    width: number,
+    height: number,
+    dpi?: number
+  ): CanvasRenderingContext2D {
     if (!dpi) dpi = devicePixelRatio;
     const canvas = document.createElement("canvas");
     canvas.width = width * dpi;

@@ -4,3 +4,4 @@ export { default as Markdown } from "./markdown";
 export { default as Notebook } from "./notebook";
 import "./extensions/github";
 import "./extensions/module";
+import "./extensions/clipboard";
