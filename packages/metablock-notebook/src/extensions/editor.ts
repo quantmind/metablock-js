@@ -87,17 +87,13 @@ class Editor {
 }
 
 class EditorComponent extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
-  }
 
   async connectedCallback() {
     const html = new Html(this);
     const editor = Notebook.create().editor;
     const text = this.textContent || "";
     const options = html.getAttrs();
-    await editor.render(text, this.shadowRoot, options);
+    await editor.render(text, this, options);
   }
 }
 

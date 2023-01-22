@@ -1,10 +1,4 @@
-const camelCase = (str: string) => {
-  return str
-    .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
-      return index === 0 ? word.toLowerCase() : word.toUpperCase();
-    })
-    .replace(/\s+/g, "");
-};
+import camelCase from "./camelCase";
 
 class Html {
   dom: HTMLElement;
