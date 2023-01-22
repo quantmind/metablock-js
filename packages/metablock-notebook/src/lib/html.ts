@@ -1,3 +1,5 @@
+const camelCase = require("lodash.camelcase");
+
 class Html {
   dom: HTMLElement;
 
@@ -28,7 +30,7 @@ class Html {
       ? dom
           .getAttributeNames()
           .reduce((o: Record<string, any>, name: string) => {
-            o[name] = dom.getAttribute(name);
+            o[camelCase(name)] = dom.getAttribute(name);
             return o;
           }, {})
       : {};

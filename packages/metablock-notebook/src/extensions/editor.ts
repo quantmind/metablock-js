@@ -1,4 +1,5 @@
 import config from "../config";
+import Html from "../lib/html";
 import Notebook from "../notebook";
 
 const MODE: Record<string, string | Record<string, any>> = {
@@ -18,6 +19,17 @@ const resolve = (name: string): string | void => {
 class Editor {
   notebook: Notebook;
   defaults: Record<string, any>;
+  modules = [
+    "view",
+    "state",
+    "history",
+    "fold",
+    "language",
+    "commands",
+    "search",
+    "autocomplete",
+    "highlight",
+  ];
 
   constructor(notebook: Notebook, defaults?: any) {
     this.notebook = notebook;
@@ -25,46 +37,56 @@ class Editor {
     this.defaults = { theme: "neo", mode: "javascript", ...defaults };
   }
 
+  async load(): Promise<any> {
+    const repo = Object.create(null);
+    const loadToRepo = async (key: string) => {
+      const module = await this.loadModule(key);
+      repo[key] = module;
+    };
+    await Promise.all(this.modules.map(loadToRepo));
+    return repo;
+  }
+
+  async loadModule(module: string): Promise<any> {
+    return await this.notebook.importModule(`${config.CODEMIRROR}/${module}`);
+  }
+
   async render(text: string, element: any, options?: any): Promise<any> {
     const opts = { ...this.defaults, ...options };
     const {
       mode,
       theme,
-      tabSize,
+      tabSize = 2,
       lineNumbers,
       matchBrackets = true,
       styleActiveLine = true,
       events,
       ...extra
     } = opts;
-    extra.value = text || "";
+    const extensions: any[] = [];
+    const cm = await this.load();
+    const { EditorState, Compartment } = cm.state;
+    const { EditorView, keymap } = cm.view;
+    const { indentWithTab } = cm.commands;
 
-    const codeMirrorMode = MODE[mode] || mode;
-    const language =
-      codeMirrorMode.constructor === String
-        ? codeMirrorMode
-        : codeMirrorMode.name;
-    const modeUrl = `${config.CODEMIRROR}/mode/${language}/${language}.js`;
-    await this.notebook.loadStyle(`${config.CODEMIRROR}/lib/codemirror.css`);
-    await this.notebook.loadStyle(`${config.CODEMIRROR}/theme/${theme}.css`);
-    this.notebook
-      .require(`${config.CODEMIRROR}/lib/codemirror.min.js`)
-      .then((Codemirror: any) => {
-        this.notebook.require(modeUrl).then(() => {
-          const instance = Codemirror(element, {
-            lineNumbers: this.lineNumbers(mode, lineNumbers),
-            tabSize: this.tabSize(mode, tabSize),
-            mode: codeMirrorMode,
-            styleActiveLine,
-            matchBrackets,
-            theme,
-            ...extra,
-          });
-          if (events)
-            Object.keys(events).forEach((event) => {
-              instance.on(event, events[event]);
-            });
-        });
+    if (tabSize) {
+      const ts = new Compartment();
+      extensions.push(keymap.of([indentWithTab]));
+      extensions.push(ts.of(EditorState.tabSize.of(+tabSize)));
+    }
+    if (lineNumbers === "") extensions.push(cm.view.lineNumbers());
+    const state = EditorState.create({
+      doc: text,
+      extensions,
+    });
+
+    const instance = new EditorView({
+      state,
+      parent: element,
+    });
+    if (events)
+      Object.keys(events).forEach((event) => {
+        instance.on(event, events[event]);
       });
   }
 
@@ -76,5 +98,22 @@ class Editor {
     return tabSize || mode === "python" ? 4 : 2;
   }
 }
+
+class EditorComponent extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
+
+  async connectedCallback() {
+    const html = new Html(this);
+    const editor = Notebook.create().editor;
+    const text = this.textContent || "";
+    const options = html.getAttrs();
+    await editor.render(text, this.shadowRoot, options);
+  }
+}
+
+customElements.define("editor-component", EditorComponent);
 
 export default Editor;

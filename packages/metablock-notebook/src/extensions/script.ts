@@ -1,5 +1,25 @@
+import attachScript from "../lib/attachScript";
 import Html from "../lib/html";
 import Notebook from "../notebook";
+
+
+const renderer = {
+  html(raw: string) {
+    const html = Html.fromString(raw);
+    if (html && html.tagName === "SCRIPT") {
+      const attrs = html.getAttrs();
+      if (attrs.showCode !== undefined) {
+        const div = document.createElement("div");
+        div.innerHTML = `<pre><code class="html"></code></pre>${raw}`;
+        const code = div.querySelector("code") as HTMLElement;
+        code.textContent = raw;
+        return div.innerHTML;
+      }
+    }
+    return false;
+  },
+};
+
 
 const after = async (
   notebook: Notebook,
@@ -17,10 +37,12 @@ const after = async (
         if (src) {
           delete attrs.src;
           return notebook.loadJs(src, attrs);
+        } else {
+          return attachScript(element);
         }
       }).filter((p: any) => p)
     );
   }
 };
 
-export default { after };
+export default { after, renderer };

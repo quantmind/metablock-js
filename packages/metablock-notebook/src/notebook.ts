@@ -4,8 +4,9 @@ import code from "./extensions/code";
 import Editor from "./extensions/editor";
 import math from "./extensions/math";
 import script from "./extensions/script";
+import loadJs from "./lib/loadJs";
+import loadJsModule from "./lib/loadJsModule";
 import { asArray } from "./lib/utils";
-import loadJs from "./loadJs";
 import Markdown, { defaultMarkdownExtensions } from "./markdown";
 import style from "./style";
 
@@ -37,9 +38,9 @@ class Notebook {
 
   static create(): Notebook {
     // @ts-ignore
-    if (!window.__notebook__) window.__notebook__ = new Notebook();
+    if (!window.notebook) window.notebook = new Notebook();
     // @ts-ignore
-    return window.__notebook__;
+    return window.notebook;
   }
 
   constructor(resolve?: resolver) {
@@ -48,7 +49,10 @@ class Notebook {
     this.models = {};
     this.actions = {};
     this.resolvers = [];
-    this.options = {};
+    this.options = {
+      mode: "light",
+      highlightStyle: "",
+    };
     this.md = new Markdown(this);
     this.editor = new Editor(this);
   }
@@ -64,12 +68,14 @@ class Notebook {
     }
   }
 
+  // load a javascript file
   async loadJs(src: string, attrs?: Record<string, any>): Promise<void> {
     await loadJs(src, attrs);
   }
 
+  // import a javascript module
   async importModule(src: string): Promise<any> {
-    return await import(/* webpackIgnore: true */ src);
+    return loadJsModule(src);
   }
 
   // Execute Javascript code by creating a new script element
@@ -107,7 +113,9 @@ class Notebook {
     code?: string,
     lang?: string
   ): Promise<Record<string, any>> {
-    const hls = this.options.highlightStyle || config.defaultHighlightStyle;
+    const mode: string = this.options.mode || "light";
+    const hls =
+      this.options.highlightStyle || config.defaultHighlightStyle[mode];
     await this.loadStyle(`${config.HL_CSS}/${hls}.min.css`);
     await loadJs(`${config.HL_ROOT}/highlight.min.js`);
     const text = code || element.innerText;
@@ -126,6 +134,17 @@ class Notebook {
     const langu =
       languageObject && languageObject.aliases ? languageObject.aliases[0] : "";
     return { lang: langu, code: text, element, classes };
+  }
+
+  context2d(width: number, height: number, dpi?: number): CanvasRenderingContext2D {
+    if (!dpi) dpi = devicePixelRatio;
+    const canvas = document.createElement("canvas");
+    canvas.width = width * dpi;
+    canvas.height = height * dpi;
+    canvas.style.width = width + "px";
+    const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+    context.scale(dpi, dpi);
+    return context;
   }
 }
 

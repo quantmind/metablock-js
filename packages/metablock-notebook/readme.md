@@ -1,6 +1,8 @@
 # Metablock Notebook
 
-A library for rendering markdown, math, code, editing, executing code inline and much more!
+ [![npm version](https://img.shields.io/npm/v/@metablock/notebook.svg?style=flat)](https://www.npmjs.com/package/@metablock/notebook)
+
+A library for rendering markdown, math, code, editing, executing code inline, and much more!
 
 ## Usage
 

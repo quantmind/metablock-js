@@ -16,14 +16,16 @@
     "notebook"
   ],
   "dependencies": {
-    "d3-require": "^1.2.4"
+    "d3-require": "^1.2.4",
+    "lodash.camelcase": "^4.3.0"
   },
   "scripts": {
     "build": "export NODE_ENV=production && rollup -c --bundleConfigAsCjs",
     "watch": "rollup -c -w --bundleConfigAsCjs"
   },
   "devDependencies": {
-    "@types/d3-require": "^1.2.0"
+    "@types/d3-require": "^1.2.0",
+    "@types/lodash.camelcase": "^4.3.7"
   },
   "homepage": "https://metablock.io"
 }
