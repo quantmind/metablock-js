@@ -16,9 +16,10 @@ const after = async (
 class RawCode extends HTMLElement {
 
   connectedCallback() {
-    const code = this.textContent || "";
-    const root = this.shadowRoot || this;
-    root.innerHTML = `<pre><code class="markdown">${code}</code></pre>`;
+    const inline = this.hasAttribute("inline");
+    const text = this.textContent || "";
+    const html = inline ? `<span>${text}</span>` : `<pre><code class="markdown">${text}</code></pre>`;
+    this.innerHTML = html;
   }
 }
 

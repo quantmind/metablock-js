@@ -11,7 +11,7 @@ const math = async (require: any) => {
 };
 
 const renderer = {
-  code(code: string, info: string, escaped: boolean) {
+  code(code: string, info: string) {
     if (info === "math") return `<span class="math">${code}</span>`;
     return false;
   },
