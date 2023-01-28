@@ -4,14 +4,8 @@ import compileMarkdown from "./md";
 
 mime.types["svelte"] = "application/svelte";
 
-export const contentCompilers: Record<string, any> = {
+const contentCompilers: Record<string, any> = {
   "text/markdown": compileMarkdown,
-  "text/html": copyFile,
-  "text/plain": copyFile,
-  "application/javascript": copyFile,
-  "application/svelte": copyFile,
-  "image/png": copyFile,
-  "image/svg+xml": copyFile,
 };
 
 export const contentType = (fileName: string): any => {
@@ -20,7 +14,7 @@ export const contentType = (fileName: string): any => {
 
 const getCompiler = (fileName: string) => {
   const type = contentType(fileName);
-  return contentCompilers[type];
+  return contentCompilers[type] || copyFile;
 };
 
 export default getCompiler;

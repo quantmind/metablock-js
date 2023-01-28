@@ -4,9 +4,8 @@ const attachScript = (script: any) => {
   const text = script.textContent;
   if (!ScriptPromises[text]) {
     ScriptPromises[text] = new Promise((resolve, reject) => {
-      script.onerror = reject;
-      script.onload = () => resolve();
       document.head.appendChild(script);
+      resolve();
     });
   }
   return ScriptPromises[text];

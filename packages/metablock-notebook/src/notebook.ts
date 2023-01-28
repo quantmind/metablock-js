@@ -77,7 +77,7 @@ class Notebook {
 
   // import a javascript module
   async importModule(src: string): Promise<any> {
-    return loadJsModule(src);
+    return await loadJsModule(src);
   }
 
   addStyle(style: string) {
