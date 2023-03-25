@@ -1,6 +1,6 @@
 {
   "name": "@metablock/server",
-  "version": "0.22.6",
+  "version": "0.23.0",
   "description": "Metablock dev server",
   "main": "dist/index.js",
   "license": "ISC",
@@ -12,7 +12,7 @@
     "dev"
   ],
   "dependencies": {
-    "@metablock/core": "^0.22.6",
+    "@metablock/core": "^0.23.0",
     "async-lock": "^1.2.4",
     "body-parser": "^1.19.0",
     "btoa": "^1.2.1",
@@ -32,7 +32,7 @@
     "@types/mustache": "^4.0.1",
     "@types/on-finished": "^2.3.1",
     "@types/supertest": "^2.0.10",
-    "jest-puppeteer": "^6.0.3",
+    "jest-puppeteer": "^7.0.0",
     "path-to-regexp": "^6.1.0",
     "supertest": "^6.0.1",
     "webpack-require-from": "^1.8.1"

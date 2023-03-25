@@ -3,6 +3,7 @@ import config from "./config";
 import code from "./extensions/code";
 import Editor from "./extensions/editor";
 import math from "./extensions/math";
+import mermaid from "./extensions/mermaid";
 import script from "./extensions/script";
 import loadJs from "./lib/loadJs";
 import loadJsModule from "./lib/loadJsModule";
@@ -12,6 +13,7 @@ import { asArray } from "./lib/utils";
 import Markdown, { defaultMarkdownExtensions } from "./markdown";
 
 defaultMarkdownExtensions.push(math);
+defaultMarkdownExtensions.push(mermaid);
 defaultMarkdownExtensions.push(code);
 defaultMarkdownExtensions.push(script);
 
@@ -54,6 +56,7 @@ class Notebook {
       mode: "light",
       highlightStyle: "",
       codeClipboard: true,
+      mermaidTheme: "",
     };
     this.md = new Markdown(this);
     this.editor = new Editor(this);

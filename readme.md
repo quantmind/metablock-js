@@ -16,8 +16,8 @@ To create a new release
 - edit the version in the [package.json](package.json) file
 - run `make version`, this will update the version in all the sub-packages
 - run `yarn install` to update the lock file
-- commit with the `Release <version>` message and push to master
-- to force commit after a merge to master you can use
+- commit with the `Release <version>` message and push to main
+- to force commit after a merge to main you can use
   ```
   git commit -m "Release <version>" --allow-empty
   ```

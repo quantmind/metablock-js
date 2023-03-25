@@ -1,5 +1,6 @@
 const config: Record<string, any> = {
   MARKED: "marked@v4.2.12",
+  MERMAID: "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs",
   PURIFY: "dompurify@2.0.12/dist/purify.min.js",
   HL_ROOT: "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0",
   HL_CSS: "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles",
