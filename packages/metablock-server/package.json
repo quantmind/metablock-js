@@ -32,7 +32,7 @@
     "@types/mustache": "^4.0.1",
     "@types/on-finished": "^2.3.1",
     "@types/supertest": "^2.0.10",
-    "jest-puppeteer": "^7.0.0",
+    "jest-puppeteer": "^8.0.0",
     "path-to-regexp": "^6.1.0",
     "supertest": "^6.0.1",
     "webpack-require-from": "^1.8.1"

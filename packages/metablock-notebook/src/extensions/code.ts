@@ -25,6 +25,6 @@ class RawCode extends HTMLElement {
   }
 }
 
-customElements.define("raw-code", RawCode);
+customElements.get("raw-code") || customElements.define("raw-code", RawCode);
 
 export default { after };

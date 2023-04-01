@@ -1,6 +1,6 @@
 {
   "name": "@metablock/cli",
-  "version": "0.23.0",
+  "version": "0.23.1",
   "description": "A node client for interacting with metablock cloud",
   "main": "dist/index.js",
   "type": "module",
@@ -12,7 +12,7 @@
   "author": "Quantmind",
   "license": "ISC",
   "dependencies": {
-    "@metablock/core": "^0.23.0",
+    "@metablock/core": "^0.23.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "archiver": "^5.1.0",
     "colors": "^1.4.0",

@@ -14,7 +14,6 @@
       "rootDir": "./packages/metablock-server",
       "automock": false,
       "displayName": "@metablock/server",
-      "testEnvironment": "jsdom",
       "testMatch": ["<rootDir>/tests/*.test.ts"],
       "setupFiles": ["./setupTests.ts"],
       "transformIgnorePatterns": ["/node_modules/(?!@metablock)"]
