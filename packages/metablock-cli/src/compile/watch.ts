@@ -10,11 +10,11 @@ const watch = async (targets: Record<string, any>) => {
   if (sourcePaths.length) {
     info(`:eyes: watching ${sourcePaths.length} paths for changes...`);
     sourcePaths.forEach((sourcePath) => {
-      fs.watch(sourcePath, async (type, file) => {
+      fs.watch(sourcePath, async (file) => {
         const sourceFile = fs.lstatSync(sourcePath).isDirectory()
           ? resolve(sourcePath, file)
           : sourcePath;
-        info(`:keyboard:  ${type} on ${sourceFile}`);
+        info(`:keyboard:  ${sourceFile}`);
         const { config, srcPath, index, outputDir } = targets[sourcePath];
         const isIndex = sourceFile === srcPath ? index : false;
         const compiler = getCompiler(sourceFile);
