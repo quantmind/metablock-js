@@ -38,11 +38,7 @@ const getColours = (
   defaults: any,
   changed?: any
 ): Record<string, any> => {
-  const colors = colorChange ? changed || defaults : defaults;
-  return {
-    color: colors.color,
-    backgroundColor: `${colors.backgroundColor} !important`,
-  };
+  return colorChange ? changed || defaults : defaults;
 };
 
 const Header = (props: HeaderProps) => {
@@ -76,7 +72,6 @@ const Header = (props: HeaderProps) => {
     position: "relative",
     zIndex: "unset",
     boxShadow: "none",
-    backgroundColor: colors.backgroundColor,
   };
   if (absolute) sxAppBar = { ...sxAppBar, position: "absolute", zIndex: 1100 };
   else if (fixed) sxAppBar = { ...sxAppBar, position: "fixed", zIndex: 1100 };
@@ -110,7 +105,7 @@ const Header = (props: HeaderProps) => {
   );
 
   return (
-    <AppBar ref={ref} sx={sxAppBar}>
+    <AppBar ref={ref} sx={sxAppBar} color={colors.backgroundColor}>
       <Container maxWidth={maxWidth}>
         <Toolbar sx={{ width: "100%" }} disableGutters={true}>
           {LeftLinks ? brand : null}

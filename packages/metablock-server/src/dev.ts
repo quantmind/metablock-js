@@ -26,7 +26,6 @@ export const devBlockMiddleware = (blockUrl: string, metaOptions: any) => {
     const { mode } = compiler.options;
     const publicPath = options.static[0].publicPath[0];
     const services = new DevServices(blockUrl, removeSlash(publicPath));
-    log("");
     log(
       "== metablock dev server == serving bundle from local path",
       `"${services.bundleUrl}"`

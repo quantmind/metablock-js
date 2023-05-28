@@ -20,8 +20,7 @@ class Clipboard extends HTMLElement {
       margin: 8px !important;
       opacity: 0.4;
     }`);
-    this.innerHTML = (
-      `<div class="notebook-clipboard-content">
+    this.innerHTML = `<div class="notebook-clipboard-content">
       ${this.innerHTML}
       <div class="notebook-clipboard">
         <button class="notebook-clipboard-button">
@@ -30,14 +29,19 @@ class Clipboard extends HTMLElement {
     </svg>
         </button>
       </div>
-      </div>`
+      </div>`;
+    this.querySelector(".notebook-clipboard-button")?.addEventListener(
+      "click",
+      (event: Event) => {
+        const el = event.currentTarget as HTMLElement;
+        const content =
+          el.parentElement?.previousElementSibling?.textContent || "";
+        navigator.clipboard.writeText(content);
+      }
     );
-    this.querySelector(".notebook-clipboard-button")?.addEventListener("click", (event: Event) => {
-      const el = event.currentTarget as HTMLElement;
-      const content = el.parentElement?.previousElementSibling?.textContent || "";
-      navigator.clipboard.writeText(content);
-    });
   }
 }
 
-customElements.define("with-clipboard", Clipboard);
+if (customElements.get("with-clipboard") === undefined) {
+  customElements.define("with-clipboard", Clipboard);
+}

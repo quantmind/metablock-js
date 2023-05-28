@@ -2,7 +2,6 @@ import config from "../config";
 import Html from "../lib/html";
 import Notebook from "../notebook";
 
-
 const resolve = (name: string): string | void => {
   if (name.substring(0, config.CODEMIRROR.length) == config.CODEMIRROR)
     return name;
@@ -87,7 +86,6 @@ class Editor {
 }
 
 class EditorComponent extends HTMLElement {
-
   async connectedCallback() {
     const html = new Html(this);
     const editor = Notebook.create().editor;
@@ -97,6 +95,8 @@ class EditorComponent extends HTMLElement {
   }
 }
 
-customElements.define("editor-component", EditorComponent);
+if (customElements.get("editor-component") === undefined) {
+  customElements.define("editor-component", EditorComponent);
+}
 
 export default Editor;
