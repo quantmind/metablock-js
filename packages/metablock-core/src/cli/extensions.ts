@@ -12,6 +12,12 @@ class Extensions extends HttpComponent {
     );
   }
 
+  async testDelivery(name_or_id: string, body: any): Promise<any> {
+    const url = `${this.cli.apiUrl}/extensions/${name_or_id}/deliveries/test`;
+    const response = await this.cli.post(url, { body });
+    return response.data;
+  }
+
   async get(name_or_id: string): Promise<Extension> {
     const url = `${this.cli.apiUrl}/extensions/${name_or_id}`;
     const response = await this.cli.get(url);

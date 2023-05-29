@@ -12,8 +12,7 @@ const EditorSchema = (props: SchemaEntryProps) => {
   const mode = bits.length === 2 ? bits[1] : "html";
 
   const events = {
-    change: (cm: any) => {
-      const text = cm.getValue();
+    change: (text: string) => {
       if (form && name) {
         try {
           const data = mode === "json" ? JSON.parse(text) : text;

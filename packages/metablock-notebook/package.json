@@ -1,6 +1,6 @@
 {
   "name": "@metablock/notebook",
-  "version": "0.23.3",
+  "version": "0.23.4",
   "description": "Metablock Notebook",
   "main": "dist/index.js",
   "module": "esm/index.js",

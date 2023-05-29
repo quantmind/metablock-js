@@ -18,6 +18,7 @@ class Editor {
     "view",
     "state",
     "history",
+    "gutter",
     "fold",
     "language",
     "commands",
@@ -43,37 +44,40 @@ class Editor {
   }
 
   async loadModule(module: string): Promise<any> {
-    return await this.notebook.importModule(`${config.CODEMIRROR}/${module}`);
+    return await this.notebook.importModule(
+      `${config.CODEMIRROR}/${module}?min`
+    );
   }
 
-  async render(text: string, element: any, options?: any): Promise<any> {
+  async render(text: string, parent: HTMLElement, options?: any): Promise<any> {
     const opts = { ...this.defaults, ...options };
-    const { tabSize = 2, lineNumbers, events } = opts;
+    const { tabSize = 2, lineNumbers, events = {} } = opts;
     const extensions: any[] = [];
     const cm = await this.load();
-    const { EditorState, Compartment } = cm.state;
+
     const { EditorView, keymap } = cm.view;
     const { indentWithTab } = cm.commands;
 
     if (tabSize) {
-      const ts = new Compartment();
+      //const ts = new Compartment();
       extensions.push(keymap.of([indentWithTab]));
-      extensions.push(ts.of(EditorState.tabSize.of(+tabSize)));
+      //extensions.push(ts.of(EditorState.tabSize.of(+tabSize)));
     }
-    if (lineNumbers === "") extensions.push(cm.view.lineNumbers());
-    const state = EditorState.create({
+    if (lineNumbers === "") extensions.push(cm.gutter.lineNumbers());
+
+    extensions.push(
+      EditorView.updateListener.of((update: any) => {
+        const { docChanged } = update;
+        if (docChanged && events.change)
+          events.change(update.state.doc.toString());
+      })
+    );
+
+    new EditorView({
       doc: text,
       extensions,
+      parent,
     });
-
-    const instance = new EditorView({
-      state,
-      parent: element,
-    });
-    if (events)
-      Object.keys(events).forEach((event) => {
-        instance.on(event, events[event]);
-      });
   }
 
   lineNumbers(mode: string, lineNumbers: any) {
