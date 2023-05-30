@@ -80,6 +80,11 @@ class Blocks extends HttpComponent {
     return response.data as BlockPlugin;
   }
 
+  async deletePlugin(block_id: string, plugin_name: string): Promise<void> {
+    const url = `${this.cli.apiUrl}/services/${block_id}/plugins/${plugin_name}`;
+    await this.cli.delete(url);
+  }
+
   deploymentsLoader(block_id: string): DataApi<Deployment> {
     return this.cli.loader(
       `${this.cli.apiUrl}/services/${block_id}/deployments`
