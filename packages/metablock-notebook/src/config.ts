@@ -5,8 +5,8 @@ const config: Record<string, any> = {
   HL_ROOT: "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0",
   HL_CSS: "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles",
   KATEX: "https://cdn.jsdelivr.net/npm/katex@0.16.0",
-  CODEMIRROR: "https://cdn.skypack.dev/@codemirror",
-  OKTOKIT: "https://cdn.skypack.dev/octokit",
+  CODEMIRROR: "https://esm.sh/codemirror@6.0.1",
+  OKTOKIT: "https://esm.sh/octokit@2.0.19",
   defaultHighlightStyle: {
     light: "github",
     dark: "base16/classic-dark",

@@ -44,26 +44,23 @@ class Editor {
   }
 
   async loadModule(module: string): Promise<any> {
-    return await this.notebook.importModule(
-      `${config.CODEMIRROR}/${module}?min`
-    );
+    return await this.notebook.importModule(`${config.CODEMIRROR}/${module}`);
   }
 
   async render(text: string, parent: HTMLElement, options?: any): Promise<any> {
     const opts = { ...this.defaults, ...options };
-    const { tabSize = 2, lineNumbers, events = {} } = opts;
+    const { tabSize = 2, events = {} } = opts;
     const extensions: any[] = [];
-    const cm = await this.load();
+    const cm = await this.notebook.importModule(config.CODEMIRROR);
 
-    const { EditorView, keymap } = cm.view;
-    const { indentWithTab } = cm.commands;
+    const { EditorView } = cm;
 
     if (tabSize) {
       //const ts = new Compartment();
-      extensions.push(keymap.of([indentWithTab]));
+      // extensions.push(keymap.of([indentWithTab]));
       //extensions.push(ts.of(EditorState.tabSize.of(+tabSize)));
     }
-    if (lineNumbers === "") extensions.push(cm.gutter.lineNumbers());
+    // if (lineNumbers === "") extensions.push(cm.gutter.lineNumbers());
 
     extensions.push(
       EditorView.updateListener.of((update: any) => {
