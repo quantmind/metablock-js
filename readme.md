@@ -1,4 +1,9 @@
-# [Metablock](https://Metablock.io/) &middot; [![GitHub license](https://img.shields.io/badge/license-IOC-blue.svg)](https://github.com/quantmind/metablock-js/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/@metablock/core.svg?style=flat)](https://www.npmjs.com/package/@metablock/core) [![build](https://github.com/quantmind/metablock-js/workflows/build/badge.svg)](https://github.com/quantmind/metablock-js/actions?query=workflow%3Abuild) [![![codecov](https://codecov.io/gh/quantmind/metablock-js/branch/main/graph/badge.svg?token=WNBTV2MFZP)](https://codecov.io/gh/quantmind/metablock-js)
+# [Metablock](https://Metablock.io/)
+
+[![GitHub license](https://img.shields.io/badge/license-IOC-blue.svg)](https://github.com/quantmind/metablock-js/blob/master/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@metablock/core.svg?style=flat)](https://www.npmjs.com/package/@metablock/core)
+[![build](https://github.com/quantmind/metablock-js/workflows/build/badge.svg)](https://github.com/quantmind/metablock-js/actions?query=workflow%3Abuild)
+[![codecov](https://codecov.io/gh/quantmind/metablock-js/branch/main/graph/badge.svg?token=WNBTV2MFZP)](https://codecov.io/gh/quantmind/metablock-js)
 
 Tooling for metablock cloud.
 
