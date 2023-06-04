@@ -64,6 +64,11 @@ class Orgs extends HttpComponent {
     return response.data as OrgRole;
   }
 
+  async getRole(orgId: string, roleName: string): Promise<OrgRole> {
+    const response = await this.cli.get(`${this.url}/${orgId}/roles/${roleName}`);
+    return response.data as OrgRole;
+  }
+
   async updateRole(
     orgId: string,
     roleName: any,

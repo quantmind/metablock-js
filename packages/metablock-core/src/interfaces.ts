@@ -87,14 +87,16 @@ export interface OrgMember {
   last_name: string;
 }
 
+export interface Permission {
+  allow: boolean;
+}
+
 export interface OrgRole {
-  user_id: string;
-  roles: string[];
-  org_name: string;
+  id: string;
+  name: string;
   org_id: string;
-  email: string;
-  first_name: string;
-  last_name: string;
+  description: string;
+  permissions: Permission[];
 }
 
 export interface Block {
@@ -137,6 +139,7 @@ export interface Extension {
   schema: Record<string, any>;
   org_id: string;
   org_name: string;
+  docs: string;
 }
 
 export interface SpaceExtension {
