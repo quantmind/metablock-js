@@ -1,54 +1,115 @@
-import { DataApi } from "@metablock/core";
 import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import React from "react";
-import { HeaderRendererProps } from "react-data-grid";
-import { ApiDataGridActionsRef } from "./types";
+import { RenderHeaderCellProps } from "react-data-grid";
 
-interface HeaderFilterProps<DataType, SR>
-  extends HeaderRendererProps<DataType, SR> {
-  api: DataApi<DataType>;
-  actions: ApiDataGridActionsRef;
+interface HeaderFilter<R> extends RenderHeaderCellProps<R> {
   sx?: Record<string, any>;
+  dataGridFilters: any;
 }
 
-interface HeaderProps<DataType, SR> extends HeaderRendererProps<DataType, SR> {
-  children: React.ReactElement;
+interface HeaderChildrenFilter<R> extends RenderHeaderCellProps<R> {
   sx?: Record<string, any>;
+  children: (args: { tabIndex: number }) => React.ReactElement | null;
 }
 
-export const DataGridHeaderFilter = <DataType, SR>(
-  props: HeaderProps<DataType, SR>
+export const useFocusRef = <T extends HTMLOrSVGElement>(
+  isSelected: boolean
 ) => {
-  const { column, children, sx } = props;
+  const ref = React.useRef<T>(null);
+
+  React.useEffect(() => {
+    if (!isSelected) return;
+    ref.current?.focus({ preventScroll: true });
+  }, [isSelected]);
+
+  return {
+    ref,
+    tabIndex: isSelected ? 0 : -1,
+  };
+};
+
+export const DataGridHeaderFilter = <R,>({
+  tabIndex,
+  column,
+  children,
+  sx,
+}: HeaderChildrenFilter<R>) => {
   const sxx = { padding: 0, lineHeight: "35px", ...sx };
+
   return (
-    <>
+    <Box>
       <Box sx={sxx}>{column.name}</Box>
-      <Box sx={sxx}>{children}</Box>
-    </>
+      <Box sx={sxx}>{children({ tabIndex })}</Box>
+    </Box>
   );
 };
 
-export const DataGridBoolFilter = <DataType, SR>(
-  props: HeaderFilterProps<DataType, SR>
-) => {
-  const { api, actions, column, ...extra } = props;
-  const [value, setValue] = React.useState(api.query[column.key] || "");
-  const handleChange = async (event: any) => {
-    if (actions.current) {
-      await actions.current.filter(column.key, event.target.value);
-      setValue(api.query[column.key] || "");
-    }
+export const DataGridNoFilter = <R,>(props: HeaderChildrenFilter<R>) => {
+  return <DataGridHeaderFilter {...props}>{() => null}</DataGridHeaderFilter>;
+};
+
+export const DataGridTextFilter = <R,>({
+  dataGridFilters,
+  column,
+  ...props
+}: HeaderFilter<R>) => {
+  const value = dataGridFilters.filters[column.key] || "";
+  const handleChange = (event: any) => {
+    dataGridFilters.set(column.key, event.target.value);
   };
   return (
-    <DataGridHeaderFilter column={column} {...extra}>
-      <TextField select value={value} size="small" onChange={handleChange}>
-        <MenuItem value="">all</MenuItem>
-        <MenuItem value="false">no</MenuItem>
-        <MenuItem value="true">yes</MenuItem>
-      </TextField>
+    <DataGridHeaderFilter column={column} {...props}>
+      {() => (
+        <TextField
+          hiddenLabel
+          value={value}
+          size="small"
+          fullWidth
+          onChange={handleChange}
+        />
+      )}
     </DataGridHeaderFilter>
   );
 };
+
+export const DataGridSelectFilter = <R,>({
+  dataGridFilters,
+  column,
+  options,
+  emptyOption,
+  ...props
+}: HeaderFilter<R> & {
+  options: string[];
+  emptyOption?: string;
+}) => {
+  const value = dataGridFilters.filters[column.key] || "";
+  const empty = emptyOption || "all";
+  const handleChange = (event: any) => {
+    dataGridFilters.set(column.key, event.target.value);
+  };
+  return (
+    <DataGridHeaderFilter column={column} {...props}>
+      {() => (
+        <TextField
+          select
+          fullWidth
+          value={value}
+          size="small"
+          onChange={handleChange}
+        >
+          {options.map((value: string, index: number) => (
+            <MenuItem value={value} key={index}>
+              {value || empty}
+            </MenuItem>
+          ))}
+        </TextField>
+      )}
+    </DataGridHeaderFilter>
+  );
+};
+
+export const DataGridBoolFilter = <R,>(props: HeaderFilter<R>) => (
+  <DataGridSelectFilter options={["", "yes", "no"]} {...props} />
+);
