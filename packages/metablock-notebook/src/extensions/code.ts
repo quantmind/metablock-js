@@ -15,7 +15,7 @@ const after = async (
   }
 };
 
-class RawCode extends HTMLElement {
+export class RawCode extends HTMLElement {
 
   connectedCallback() {
     const inline = this.hasAttribute("inline");
@@ -24,7 +24,5 @@ class RawCode extends HTMLElement {
     this.innerHTML = html;
   }
 }
-
-customElements.get("raw-code") || customElements.define("raw-code", RawCode);
 
 export default { after };

@@ -1,9 +1,8 @@
-import Notebook from "../notebook";
+import addStyle from "../lib/addStyle";
 
 class Clipboard extends HTMLElement {
   connectedCallback() {
-    const notebook = Notebook.create();
-    notebook.addStyle(`
+    addStyle(`
     .notebook-clipboard-content {
       position: relative !important;
       overflow: auto !important;
@@ -42,6 +41,4 @@ class Clipboard extends HTMLElement {
   }
 }
 
-if (customElements.get("with-clipboard") === undefined) {
-  customElements.define("with-clipboard", Clipboard);
-}
+export default Clipboard;

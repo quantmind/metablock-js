@@ -1,0 +1,27 @@
+export default [
+  "@metablock/server",
+  "@typescript-eslint/eslint-plugin",
+  "@typescript-eslint/parser",
+  "css-loader",
+  "dotenv",
+  "eslint",
+  "eslint-config-prettier",
+  "eslint-plugin-markdown",
+  "eslint-plugin-prettier",
+  "husky",
+  "jest",
+  "lint-staged",
+  "prettier",
+  "prettier-plugin-organize-imports",
+  "source-map-loader",
+  "style-loader",
+  "ts-loader",
+  "typescript",
+  "webpack",
+  "webpack-cli",
+  "webpack-dev-server",
+  "webpack-hot-middleware",
+  "webpack-require-from",
+];
+
+export const reactDev = ["eslint-plugin-react", "eslint-plugin-react-hooks"];

@@ -2,14 +2,6 @@ import config from "../config";
 import Html from "../lib/html";
 import Notebook from "../notebook";
 
-const resolve = (name: string): string | void => {
-  if (name.substring(0, config.CODEMIRROR.length) == config.CODEMIRROR)
-    return name;
-  else if (name === "../../lib/codemirror")
-    return `${config.CODEMIRROR}/lib/codemirror.min.js`;
-  else if (name.substring(0, 3) === "../")
-    return `${config.CODEMIRROR}/mode/${name.substring(3)}.js`;
-};
 
 class Editor {
   notebook: Notebook;
@@ -29,7 +21,6 @@ class Editor {
 
   constructor(notebook: Notebook, defaults?: any) {
     this.notebook = notebook;
-    this.notebook.resolvers.push(resolve);
     this.defaults = { theme: "neo", mode: "javascript", ...defaults };
   }
 
@@ -86,7 +77,7 @@ class Editor {
   }
 }
 
-class EditorComponent extends HTMLElement {
+export class EditorComponent extends HTMLElement {
   async connectedCallback() {
     const html = new Html(this);
     const editor = Notebook.create().editor;
@@ -94,10 +85,6 @@ class EditorComponent extends HTMLElement {
     const options = html.getAttrs();
     await editor.render(text, this, options);
   }
-}
-
-if (customElements.get("editor-component") === undefined) {
-  customElements.define("editor-component", EditorComponent);
 }
 
 export default Editor;

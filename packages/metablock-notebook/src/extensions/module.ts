@@ -21,9 +21,8 @@ class Module extends HTMLElement {
       : `<div class="module"></div>`;
     const module = await import(/* webpackIgnore: true */ src);
     const element = root.querySelector(".module");
-    if (element)
-      module.default(Notebook.create(), element);
+    if (element) module.default(Notebook.create(), element);
   }
 }
 
-customElements.define("module-component", Module);
+export default Module;

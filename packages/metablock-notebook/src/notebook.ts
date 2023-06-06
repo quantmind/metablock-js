@@ -2,13 +2,14 @@ import { require as requireDefault, requireFrom, resolver } from "d3-require";
 import config from "./config";
 import code from "./extensions/code";
 import Editor from "./extensions/editor";
+import installElements from "./extensions/elements";
 import math from "./extensions/math";
 import mermaid from "./extensions/mermaid";
 import script from "./extensions/script";
+import addStyle from "./lib/addStyle";
 import loadJs from "./lib/loadJs";
 import loadJsModule from "./lib/loadJsModule";
 import style from "./lib/style";
-import addStyle from "./lib/addStyle";
 import { asArray } from "./lib/utils";
 import Markdown, { defaultMarkdownExtensions } from "./markdown";
 
@@ -41,7 +42,11 @@ class Notebook {
 
   static create(): Notebook {
     // @ts-ignore
-    if (!window.notebook) window.notebook = new Notebook();
+    if (!window.notebook) {
+      // @ts-ignore
+      window.notebook = new Notebook();
+      installElements();
+    }
     // @ts-ignore
     return window.notebook;
   }

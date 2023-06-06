@@ -2,8 +2,8 @@
 ///
 /// Usage: <github owner="quantmind" repo="metablock-js" path="packages/notebook/github.ts" lang="ts"></github>
 ///
-import Notebook from "../notebook";
 import config from "../config";
+import Notebook from "../notebook";
 
 class GithubModule extends HTMLElement {
   async connectedCallback() {
@@ -31,4 +31,5 @@ class GithubModule extends HTMLElement {
   }
 }
 
-customElements.define("github-repo", GithubModule);
+
+export default GithubModule;
