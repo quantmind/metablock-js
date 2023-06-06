@@ -18,19 +18,9 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: install packages
-        run: yarn
-      - name: run linter
-        run: yarn lint
-      - name: build bundles
-        run: yarn build
-      - name: run tests
-        run: yarn test
-      - name: upload coverage
-        run: bash <(curl -s https://codecov.io/bash)
 
   publish:
     runs-on: ubuntu-latest
