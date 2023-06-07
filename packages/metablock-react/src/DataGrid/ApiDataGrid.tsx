@@ -1,16 +1,14 @@
 import { DataApi } from "@metablock/core";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
-import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import debounce from "lodash.debounce";
 import React from "react";
 import DataGrid, { Column } from "react-data-grid";
 import { useAsync } from "react-use";
+import SearchBox from "../Components/SearchBox";
 import { DataGridFilters, useDataGridFilters } from "./hooks";
 import { ApiDataGridActions, Maybe } from "./types";
 
@@ -37,27 +35,6 @@ const isAtBottom = ({
   return (
     currentTarget.scrollTop + 10 >=
     currentTarget.scrollHeight - currentTarget.clientHeight
-  );
-};
-
-const SearchBox = (props: any) => {
-  const extra = {
-    variant: "outlined",
-    size: "small",
-    color: "primary",
-    ...props,
-  };
-  return (
-    <TextField
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}
-      {...extra}
-    />
   );
 };
 

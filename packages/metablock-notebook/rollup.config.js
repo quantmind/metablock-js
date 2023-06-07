@@ -20,39 +20,32 @@ const config = (prod) => {
     }),
   ];
   if (prod) plugins.push(terser({ output: { preamble: banner } }));
-  return [
-    {
-      input: "src/index.ts",
-      output: {
-        file: prod ? pkg.main : pkg.main.replace(".min.", "."),
-        format: "umd",
-        name: "metablock",
+  return {
+    input: "src/index.ts",
+    output: [
+      {
+        file: pkg.module,
+        format: "es",
+        generatedCode: "es2015",
         sourcemap: true,
         banner,
         globals,
       },
-      external,
-      plugins,
-      watch: {
-        clearScreen: false,
-      },
-    },
-    {
-      input: "src/index.ts",
-      output: {
-        file: pkg.module,
-        format: "esm",
-        name: "metablock",
+      {
+        file: pkg.main,
+        format: "cjs",
+        generatedCode: "es2015",
         sourcemap: true,
+        banner,
         globals,
       },
-      external,
-      plugins,
-      watch: {
-        clearScreen: false,
-      },
+    ],
+    external,
+    plugins,
+    watch: {
+      clearScreen: false,
     },
-  ];
+  };
 };
 
 export default config();

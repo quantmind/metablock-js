@@ -3,10 +3,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { useAsync } from "react-use";
-import { FormErrorMessage, TextField, useForm } from "../forms";
+import { FormErrorMessage, TextField, useForm } from "../Forms";
 import AppForm from "../views/AppForm";
 import NotFound from "../views/NotFound";
-
 
 const DefaultHeader = () => (
   <Typography component="h1" variant="h5" paragraph>
@@ -76,12 +75,7 @@ const WaitingList = (props: any) => {
           autoComplete="email"
           autoFocus
         />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-        >
+        <Button type="submit" fullWidth variant="contained" color="primary">
           {submitText}
         </Button>
       </form>

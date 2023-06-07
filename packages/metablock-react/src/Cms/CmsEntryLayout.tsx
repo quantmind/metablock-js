@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import React from "react";
-import { Parallax } from "../components";
+import { Parallax } from "../Components";
 import { Page } from "../views";
 import { CmsData } from "./interfaces";
 import { dateFormat } from "./op";

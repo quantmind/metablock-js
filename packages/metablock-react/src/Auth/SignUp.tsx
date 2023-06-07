@@ -5,8 +5,8 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import React from "react";
-import Link from "../components/Link";
-import { CheckBoxField, TextField, useForm } from "../forms";
+import Link from "../Components/Link";
+import { CheckBoxField, TextField, useForm } from "../Forms";
 import AppForm from "../views/AppForm";
 
 const SignUp = (props: any) => {

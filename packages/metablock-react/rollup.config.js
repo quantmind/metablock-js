@@ -23,37 +23,28 @@ const onwarn = (warning, warn) => {
   warn(warning);
 };
 
-export default [
-  {
-    input: "src/index.ts",
-    onwarn,
-    output: {
+export default {
+  input: "src/index.ts",
+  onwarn,
+  output: [
+    {
+      file: pkg.module,
+      format: "es",
+      sourcemap: true,
+      generatedCode: "es2015",
+      globals,
+    },
+    {
       file: pkg.main,
       format: "cjs",
-      name: "MetablockReact",
       sourcemap: true,
+      generatedCode: "es2015",
       globals,
     },
-    external,
-    plugins,
-    watch: {
-      clearScreen: false,
-    },
+  ],
+  external,
+  plugins,
+  watch: {
+    clearScreen: false,
   },
-  {
-    input: "src/index.ts",
-    onwarn,
-    output: {
-      file: pkg.module,
-      format: "esm",
-      name: "MetablockReact",
-      sourcemap: true,
-      globals,
-    },
-    external,
-    plugins,
-    watch: {
-      clearScreen: false,
-    },
-  },
-];
+};

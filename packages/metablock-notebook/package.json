@@ -1,9 +1,12 @@
 {
   "name": "@metablock/notebook",
-  "version": "0.24.2",
+  "version": "0.25.0",
   "description": "Metablock Notebook",
-  "main": "dist/index.js",
-  "module": "esm/index.js",
+  "type": "module",
+  "browser": "dist/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/quantmind/metablock-js.git",

@@ -1,4 +1,5 @@
 export { default as Breadcrumbs } from "./Breadcrumbs";
+export { default as Buttons } from "./Buttons";
 export { default as Copyright } from "./Copyright";
 export { default as Header } from "./Header";
 export { default as Image } from "./Image";

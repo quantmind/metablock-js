@@ -1,6 +1,8 @@
 export interface Crumb {
   text: string;
   to?: string;
+  icon?: any;
+  onClick?: () => void;
 }
 
 export const breadcrumbs = (...texts: string[]): Crumb[] => {

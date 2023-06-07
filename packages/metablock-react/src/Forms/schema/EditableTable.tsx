@@ -1,6 +1,6 @@
 import { StaticData } from "@metablock/core";
 import React from "react";
-import { ApiDataGrid } from "../../table";
+import { ApiDataGrid } from "../../DataGrid";
 import { SchemaEntryProps } from "./interfaces";
 
 const copyData = (data: any[]) => {
