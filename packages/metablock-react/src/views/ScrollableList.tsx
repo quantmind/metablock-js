@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import React from "react";
 import { useAsync } from "react-use";
-import Link from "../components/Link";
+import Link from "../Components/Link";
 
 interface ListEntryProps {
   title: any;

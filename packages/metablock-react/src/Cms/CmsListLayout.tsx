@@ -3,10 +3,10 @@ import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
 import React from "react";
-import { Image, Link, UnsplashImage } from "../components";
+import { Image, Link, UnsplashImage } from "../Components";
 import { CmsListProps } from "./interfaces";
 import { dateFormat } from "./op";
 

@@ -1,5 +1,4 @@
 import Menu from "@mui/icons-material/Menu";
-import { Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -7,6 +6,7 @@ import Drawer from "@mui/material/Drawer";
 import Hidden from "@mui/material/Hidden";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import React from "react";
 
 interface HeaderComponentProps {

@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import React from "react";
-import { Breadcrumbs, PillTabs } from "../components";
-import { breadcrumbs, Crumb } from "../utils";
+import { Breadcrumbs, PillTabs } from "../Components";
+import { Crumb, breadcrumbs } from "../utils";
 import Page from "./Page";
 
 interface TitleProps {

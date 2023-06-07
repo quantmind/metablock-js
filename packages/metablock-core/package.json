@@ -1,8 +1,11 @@
 {
   "name": "@metablock/core",
-  "version": "0.24.2",
+  "version": "0.25.0",
   "description": "Metablock core library",
-  "main": "dist/index.min.js",
+  "type": "module",
+  "browser": "dist/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",

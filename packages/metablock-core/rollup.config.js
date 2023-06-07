@@ -1,7 +1,7 @@
 import { terser } from "rollup-plugin-terser";
 import typescript from "rollup-plugin-typescript2";
 import getBanner from "../../scripts/banner.js";
-import pkg from "./package.json";
+import pkg from "./package.json" assert { type: 'json' };
 
 console.info("Build @metablock/core");
 
@@ -20,14 +20,24 @@ const config = (prod) => {
   if (prod) plugins.push(terser({ output: { preamble: banner } }));
   return {
     input: "src/index.ts",
-    output: {
-      file: prod ? pkg.main : pkg.main.replace(".min.", "."),
-      format: "umd",
-      name: "metablock",
-      sourcemap: true,
-      banner,
-      globals,
-    },
+    output: [
+      {
+        file: pkg.module,
+        format: "es",
+        generatedCode: "es2015",
+        sourcemap: true,
+        banner,
+        globals,
+      },
+      {
+        file: pkg.main,
+        format: "cjs",
+        generatedCode: "es2015",
+        sourcemap: true,
+        banner,
+        globals,
+      },
+    ],
     external,
     plugins,
     watch: {
@@ -36,4 +46,4 @@ const config = (prod) => {
   };
 };
 
-export default [config(), config(true)];
+export default config();

@@ -1,6 +1,6 @@
+import { Metablock } from "@metablock/core";
 import React from "react";
-import { useAsync } from "react-use";
-import { useStores } from "../../store";
+import { useImage } from "../../hooks";
 import UnsplashCredits from "../UnsplashCredits";
 import Parallax from "./Parallax";
 import ParallaxProps from "./props";
@@ -8,19 +8,13 @@ import ParallaxProps from "./props";
 interface UnsplashProps extends ParallaxProps {
   photoId: string;
   credit: boolean;
+  metablock?: Metablock;
 }
 
 const Unsplash = (props: UnsplashProps) => {
-  const { photoId, credit, maxWidth, ...extra } = props;
-  const { photoStore } = useStores();
-  const { loading, value } = useAsync(async () => {
-    return await photoStore.getPhoto(photoId);
-  }, [photoId]);
-  let urls: string[] = [];
-  if (!loading && value) {
-    const d = value.urls;
-    urls = [d.thumb, d.small, d.regular, d.full];
-  }
+  const { photoId, credit, maxWidth, metablock, ...extra } = props;
+  const { value } = useImage(photoId, metablock);
+  const urls = value || [];
   return (
     <>
       <Parallax urls={urls} maxWidth={maxWidth} {...extra} />

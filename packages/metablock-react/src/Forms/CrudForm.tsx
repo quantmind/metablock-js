@@ -7,7 +7,6 @@ import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { useAsync } from "react-use";
-import { useStores } from "../store";
 import { Page } from "../views";
 import FormErrorMessage from "./ErrorMessage";
 import {
@@ -16,22 +15,20 @@ import {
   SchemaEntry,
   unFlattenData,
 } from "./schema";
-import useForm, {FieldCallbackType} from "./useForm";
+import useForm, { FieldCallbackType } from "./useForm";
 
 type SchemaPromiseFunction = () => Promise<SchemaEntry>;
 
-export type CrudFormSubmitType = (
-  stores: any,
-  body: Record<string, any>,
-) => Promise<void>;
+export type CrudFormSubmitType = (body: Record<string, any>) => Promise<void>;
 
 interface CrudFormBaseProps {
   submit: CrudFormSubmitType;
   fieldCallback?: FieldCallbackType;
   defaults?: any;
+  onSuccess?: (result: any) => void;
+  onError?: (error: string) => void;
   [key: string]: any;
 }
-
 
 interface CrudFormProps extends CrudFormBaseProps {
   schema: SchemaPromiseFunction;
@@ -80,11 +77,10 @@ const InnerForm = (props: InnerFormProps) => {
     fieldCallback,
     changesOnly = true,
     label = "submit",
-    successMessage = "Success",
+    onSuccess = () => {},
+    onError = (error: string) => {},
     ...extra
   } = props;
-  const stores = useStores();
-  const { messageStore } = stores;
 
   const form = useForm({
     defaultValues: flattenData(schema, defaults),
@@ -95,8 +91,8 @@ const InnerForm = (props: InnerFormProps) => {
     ) => {
       const body = unFlattenData(changesOnly ? changedData : formData);
       try {
-        await submit(stores, body);
-        messageStore.success(successMessage, 3000);
+        const result = await submit(body);
+        onSuccess(result);
       } catch (errors: any) {
         if (errors.status === 422) {
           const fields = new Map<string, string>(
@@ -106,7 +102,7 @@ const InnerForm = (props: InnerFormProps) => {
           if (fields.has("config"))
             form.setErrorMessage(fields.get("config") || "", false);
         } else
-          messageStore.error(
+          onError(
             errors.message ||
               `Could not update parameters: status code ${errors.status}`
           );
