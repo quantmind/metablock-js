@@ -1,10 +1,10 @@
+import getWindow from "./window";
 export type QueryType = Record<string, any>;
 
 const urlQuery = (url: string, query: QueryType): string => {
   if (query) {
-    const u = global.window
-      ? new URL(url, global.window.location.origin)
-      : new URL(url);
+    const w = getWindow();
+    const u = w ? new URL(url, w.location.origin) : new URL(url);
     Object.keys(query).forEach((key) => {
       let values = query[key];
       if (!Array.isArray(values)) values = [values];

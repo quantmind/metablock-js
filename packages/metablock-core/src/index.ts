@@ -1,4 +1,4 @@
-export { default as getBlock, WebBlock } from "./block";
+export { WebBlock, default as getBlock } from "./block";
 export * from "./cli";
 export * from "./data";
 export * from "./headers";
@@ -9,3 +9,4 @@ export { default as compileOptions } from "./options";
 export { default as HttpResponse } from "./response";
 export { default as urlQuery } from "./url";
 export * from "./urls";
+export { default as getWindow } from "./window";

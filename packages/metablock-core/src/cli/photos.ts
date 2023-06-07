@@ -1,3 +1,4 @@
+import getWindow from "../window";
 import HttpComponent from "./httpComponent";
 
 class Photos extends HttpComponent {
@@ -7,8 +8,9 @@ class Photos extends HttpComponent {
   }
 
   fromStore(photoId: string): any | undefined {
-    if (global.window) {
-      const jsonStr = window.localStorage.getItem(`photo-${photoId}`);
+    const w = getWindow();
+    if (w) {
+      const jsonStr = w.localStorage.getItem(`photo-${photoId}`);
       if (jsonStr) return JSON.parse(jsonStr);
     }
   }
@@ -19,7 +21,8 @@ class Photos extends HttpComponent {
       return data;
     } else {
       const photo = await this.get(photoId);
-      if (global.window) {
+      const w = getWindow();
+      if (w) {
         window.localStorage.setItem(`photo-${photoId}`, JSON.stringify(photo));
       }
       return photo;

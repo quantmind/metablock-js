@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 
-const NoSsr = (props: { children: ReactNode }) => {
-  const { children } = props;
+const NoSsr = ({ children }: { children?: ReactNode }) => {
+  if (!children) return null;
   return <>{isSsr() ? null : children}</>;
 };
 
