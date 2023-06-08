@@ -1,5 +1,5 @@
 import colors from "colors";
-import ne from "node-emoji";
+import { emojify } from "node-emoji";
 
 export const info = (msg: any) => {
   console.info(colors.green(asMessage(msg)));
@@ -14,6 +14,6 @@ export const error = (exc: any) => {
 };
 
 const asMessage = (msg: any, emoji = ""): string => {
-  if (msg.constructor === String) return ne.emojify(`${emoji}${msg}`);
+  if (msg.constructor === String) return emojify(`${emoji}${msg}`);
   else return JSON.stringify(msg, null, 2);
 };

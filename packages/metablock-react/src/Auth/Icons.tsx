@@ -1,6 +1,5 @@
-import GitHubIcon from "@mui/icons-material/GitHub";
 import React from "react";
-import GoogleIcon from "../icons/Google";
+import { GitHubIcon, GoogleIcon } from "../Icons";
 
 const Icons: any = {
   github: <GitHubIcon />,

@@ -1,5 +1,6 @@
-import { Button, Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import React from "react";
+import { DeleteIcon } from "../Icons";
 
 const columnDeleteEntry = (action: any, tooltip?: any) => {
   return {
@@ -9,9 +10,9 @@ const columnDeleteEntry = (action: any, tooltip?: any) => {
       const title = tooltip ? tooltip(row) : `Delete ${row.id}`;
       return (
         <Tooltip title={title}>
-          <Button size="small" color="error" onClick={() => action(row)}>
-            delete
-          </Button>
+          <IconButton size="small" color="error" onClick={() => action(row)}>
+            <DeleteIcon />
+          </IconButton>
         </Tooltip>
       );
     },

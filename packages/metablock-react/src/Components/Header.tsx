@@ -1,4 +1,3 @@
-import Menu from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -8,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import React from "react";
+import { MenuIcon } from "../Icons";
 
 interface HeaderComponentProps {
   colorChange: boolean;
@@ -72,6 +72,7 @@ const Header = (props: HeaderProps) => {
     position: "relative",
     zIndex: "unset",
     boxShadow: "none",
+    color: colors.color,
   };
   if (absolute) sxAppBar = { ...sxAppBar, position: "absolute", zIndex: 1100 };
   else if (fixed) sxAppBar = { ...sxAppBar, position: "fixed", zIndex: 1100 };
@@ -132,7 +133,7 @@ const Header = (props: HeaderProps) => {
               onClick={handleDrawerToggle}
               size="large"
             >
-              <Menu />
+              <MenuIcon />
             </IconButton>
           </Hidden>
         </Toolbar>
