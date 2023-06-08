@@ -19,7 +19,7 @@ import useForm, { FieldCallbackType } from "./useForm";
 
 type SchemaPromiseFunction = () => Promise<SchemaEntry>;
 
-export type CrudFormSubmitType = (body: Record<string, any>) => Promise<void>;
+export type CrudFormSubmitType = (body: Record<string, any>) => Promise<any>;
 
 interface CrudFormBaseProps {
   submit: CrudFormSubmitType;

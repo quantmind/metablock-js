@@ -20,14 +20,22 @@ const plugins = [
 
 export default {
   input: "src/index.ts",
-  output: {
-    file: pkg.main,
-    format: "umd",
-    name: "metablock",
-    extend: true,
-    sourcemap: true,
-    globals,
-  },
+  output: [
+    {
+      file: pkg.module,
+      format: "es",
+      sourcemap: true,
+      generatedCode: "es2015",
+      globals,
+    },
+    {
+      file: pkg.main,
+      format: "cjs",
+      sourcemap: true,
+      generatedCode: "es2015",
+      globals,
+    },
+  ],
   external,
   plugins,
   watch: {
