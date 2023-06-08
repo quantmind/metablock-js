@@ -1,4 +1,4 @@
-import { DataLoader } from "@metablock/core";
+import { DataApi } from "@metablock/core";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -14,7 +14,7 @@ interface ListEntryProps {
 }
 
 interface ScrollableListProps<DataType> {
-  api: DataLoader<DataType>;
+  api: DataApi<DataType>;
   listEntry: (entry: DataType) => ListEntryProps;
 }
 
@@ -30,7 +30,7 @@ const ListEntry = ({ title, url, children }: ListEntryProps) => {
   );
 };
 
-export const ScrollableList = <DataType = any,>({
+export const ScrollableList = <DataType,>({
   api,
   listEntry,
 }: ScrollableListProps<DataType>) => {

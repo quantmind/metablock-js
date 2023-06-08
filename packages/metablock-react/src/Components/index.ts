@@ -12,4 +12,4 @@ export { default as PillTabs } from "./PillTabs";
 export { default as Section } from "./Section";
 export { default as TabRoutes } from "./TabRoutes";
 export { default as UnsplashCredits } from "./UnsplashCredits";
-export { default as UnsplashImage } from "./UnsplashImage";
+export { default as ImageStore } from "./ImageStore";

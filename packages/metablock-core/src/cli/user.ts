@@ -59,6 +59,10 @@ class MbUser extends HttpComponent {
     });
     return response.data as Block;
   }
+
+  blockLoader(query?: Record<string, any>): DataApi<Block> {
+    return this.cli.loader(`${this.cli.apiUrl}/user/services`, query);
+  }
 }
 
 export default MbUser;
