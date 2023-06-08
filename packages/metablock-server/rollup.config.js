@@ -19,9 +19,7 @@ export default {
   output: {
     file: pkg.main,
     format: "cjs",
-    // format: "es",
-    name: "metablock",
-    sourcemap: true,
+    generatedCode: "es2015",
     globals,
   },
   external,
