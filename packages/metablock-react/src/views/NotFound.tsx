@@ -1,6 +1,4 @@
-import Home from "@mui/icons-material/Home";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import React from "react";
@@ -36,14 +34,6 @@ const PageNotFound = () => {
         <Box sx={styling.container}>
           <Typography variant="h4">404</Typography>
           <Typography variant="subtitle1">Page Not Fund</Typography>
-          <Button
-            color="secondary"
-            aria-label="home"
-            href="/"
-            sx={styling.button}
-          >
-            <Home />
-          </Button>
         </Box>
       </Paper>
     </Page>
