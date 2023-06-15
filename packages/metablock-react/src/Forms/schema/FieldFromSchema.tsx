@@ -21,7 +21,6 @@ const FieldFromSchema = (props: SchemaEntryProps) => {
     }
   }
   if (!SchemaComponent) SchemaComponent = MissingSchema;
-  if (!extraProps) return null;
   return (
     <SchemaComponent name={name} form={form} schema={schema} {...extraProps} />
   );

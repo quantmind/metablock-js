@@ -13,13 +13,12 @@ interface UnsplashProps extends ParallaxProps {
 
 const Unsplash = (props: UnsplashProps) => {
   const { photoId, credit, maxWidth, metablock, ...extra } = props;
-  const { value } = useImage(`unsplash-${photoId}`, metablock);
-  const urls = value || [];
+  const { urls, ...info } = useImage(`unsplash-${photoId}`, metablock);
   return (
     <>
       <Parallax urls={urls} maxWidth={maxWidth} {...extra} />
-      {credit && value ? (
-        <UnsplashCredits {...value} maxWidth={maxWidth} />
+      {credit && urls.length ? (
+        <UnsplashCredits {...info} maxWidth={maxWidth} />
       ) : null}
     </>
   );

@@ -4,7 +4,7 @@ import React from "react";
 export type FieldCallbackType = (
   name: string,
   props: Record<string, any>,
-  schema: any,
+  schema: any
 ) => Record<string, any>;
 
 export type FormSubmitType = (
@@ -16,6 +16,12 @@ interface FormOptions {
   handleSubmit: FormSubmitType;
   defaultValues?: Record<string, any>;
   fieldCallback?: FieldCallbackType;
+  margin?: "none" | "dense" | "normal";
+}
+
+interface FieldError {
+  field: string;
+  message: string;
 }
 
 const passThrough = (ignored: string, props: Record<string, any>) => props;
@@ -29,10 +35,11 @@ export class FormData {
   success: boolean;
   handleSubmit: FormSubmitType;
   fieldCallback: FieldCallbackType;
+  margin: "none" | "dense" | "normal";
   private _render: any;
 
   constructor(render: any, options: FormOptions) {
-    const { defaultValues = {}, fieldCallback, handleSubmit } = options;
+    const { defaultValues = {}, fieldCallback, handleSubmit, margin="normal" } = options;
     this.handleSubmit = handleSubmit;
     this._render = render;
     this.defaults = { ...defaultValues };
@@ -41,6 +48,7 @@ export class FormData {
     this.errors = new Map();
     this.errorMessage = "";
     this.success = false;
+    this.margin = margin;
     this.fieldCallback = fieldCallback || passThrough;
   }
 
@@ -86,9 +94,9 @@ export class FormData {
     if (render) this._render({});
   }
 
-  setErrors(records: Array<any>, clear = true) {
+  setErrors(records: Array<FieldError>, clear = true) {
     if (clear) this.clearErrors();
-    records.forEach((e) => this.errors.set(e.field, e.message));
+    records.forEach((e: FieldError) => this.errors.set(e.field, e.message));
     this._render({});
   }
 
@@ -124,7 +132,7 @@ export class FormData {
   }
 }
 
-const useForm = (options: FormOptions, deps?: any[]) => {
+const useForm = (options: FormOptions, deps?: any[]): FormData => {
   const [, render] = React.useState();
   const form = new FormData(render, options);
   const ref = React.useRef({ deps, form });

@@ -3,6 +3,7 @@ import { FormData } from "../useForm";
 export interface SchemaEntry {
   type: string;
   format?: string;
+  title?: string;
   description?: string;
   required?: string[];
   default?: any;
@@ -24,6 +25,7 @@ export interface SchemaEntryProps {
   name: string;
   required?: boolean;
   options?: SelectOption[];
+  enum?: string[];
   [key: string]: any;
 }
 

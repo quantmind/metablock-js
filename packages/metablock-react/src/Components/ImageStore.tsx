@@ -4,9 +4,8 @@ import { useImage } from "../hooks";
 import Image from "./Image";
 
 const ImageStore = (props: any) => {
-  const { photoId, metablock, ...extra } = props;
-  const { value } = useImage(photoId, metablock);
-  const urls = value || [];
+  const { image, metablock, ...extra } = props;
+  const { urls } = useImage(image, metablock);
   return <Image urls={urls} {...extra} />;
 };
 

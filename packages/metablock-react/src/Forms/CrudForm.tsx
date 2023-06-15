@@ -15,7 +15,7 @@ import {
   SchemaEntry,
   unFlattenData,
 } from "./schema";
-import useForm, { FieldCallbackType } from "./useForm";
+import useForm, { FieldCallbackType, FormData } from "./useForm";
 
 type SchemaPromiseFunction = () => Promise<SchemaEntry>;
 
@@ -25,8 +25,9 @@ interface CrudFormBaseProps {
   submit: CrudFormSubmitType;
   fieldCallback?: FieldCallbackType;
   defaults?: any;
-  onSuccess?: (result: any) => void;
-  onError?: (error: string) => void;
+  onSuccess?: (result: any, form: FormData) => void;
+  onError422?: (errors: any, form: FormData) => void;
+  onError?: (error: string, form: FormData) => void;
   [key: string]: any;
 }
 
@@ -41,8 +42,7 @@ interface InnerFormProps extends CrudFormBaseProps {
 
 export const CrudForm = (props: CrudFormProps) => {
   const { title, schema, maxWidth = "md", ...extra } = props;
-  const result = useAsync(schema);
-  const { loading, value } = result;
+  const { loading, value } = useAsync(schema);
   return title ? (
     <Page title={title}>
       <Container maxWidth={maxWidth}>
@@ -78,6 +78,14 @@ const InnerForm = (props: InnerFormProps) => {
     changesOnly = true,
     label = "submit",
     onSuccess = () => {},
+    onError422 = (errors: any, form: FormData) => {
+      const fields = new Map<string, string>(
+        errors.errors.map((e: any) => [e.field, e.message])
+      );
+      form.setErrors(errors.errors, true);
+      if (fields.has("config"))
+        form.setErrorMessage(fields.get("config") || "", false);
+    },
     onError = (error: string) => {},
     ...extra
   } = props;
@@ -92,19 +100,15 @@ const InnerForm = (props: InnerFormProps) => {
       const body = unFlattenData(changesOnly ? changedData : formData);
       try {
         const result = await submit(body);
-        onSuccess(result);
+        onSuccess(result, form);
       } catch (errors: any) {
         if (errors.status === 422) {
-          const fields = new Map<string, string>(
-            errors.errors.map((e: any) => [e.field, e.message])
-          );
-          form.setErrors(errors.errors, true);
-          if (fields.has("config"))
-            form.setErrorMessage(fields.get("config") || "", false);
+          onError422(errors, form);
         } else
           onError(
             errors.message ||
-              `Could not update parameters: status code ${errors.status}`
+              `Could not update parameters: status code ${errors.status}`,
+            form
           );
       }
     },

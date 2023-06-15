@@ -12,6 +12,7 @@ const TextField = (props: FormControlProps) => {
       onChange={form.onChange()}
       helperText={form.helperText(name, helperText)}
       defaultValue={form.defaults[name]}
+      margin={form.margin}
       {...extra}
     />
   );

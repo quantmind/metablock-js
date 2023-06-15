@@ -1,4 +1,5 @@
 import { Metablock } from "@metablock/core";
+import { useState } from "react";
 import { useAsync } from "react-use";
 
 const imageProvider = (image: string, defaultUnsplash?: string) => {
@@ -12,16 +13,23 @@ const imageProvider = (image: string, defaultUnsplash?: string) => {
   } else return {};
 };
 
+interface ImageData {
+  urls: string[];
+  [key: string]: any;
+}
+
 const useImage = (image: string, metablock?: Metablock) => {
   const cli = metablock || new Metablock();
+  const [data, setUrls] = useState<ImageData>({ urls: [] });
   const info = imageProvider(image);
-  return useAsync(async () => {
+  useAsync(async () => {
     if (info.provider === "unsplash") {
       const r = await cli.photos.getPhoto(info.id);
       const d = r.urls;
-      return [d.thumb, d.small, d.regular, d.full];
-    } else return info.urls;
+      setUrls({ ...r, urls: [d.thumb, d.small, d.regular, d.full] });
+    } else return setUrls({ urls: info.urls || [] });
   }, [image]);
+  return data;
 };
 
 export default useImage;
