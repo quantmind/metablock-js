@@ -7,7 +7,7 @@ import Notebook from "../notebook";
 
 class GithubModule extends HTMLElement {
   async connectedCallback() {
-    const notebook = Notebook.create();
+    const notebook = Notebook.installed();
     const module = await notebook.importModule(config.OKTOKIT);
     // @ts-ignore
     const octokit = new module.Octokit();

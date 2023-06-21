@@ -1,8 +1,7 @@
 import { require as requireDefault, requireFrom, resolver } from "d3-require";
 import config from "./config";
 import code from "./extensions/code";
-import Editor from "./extensions/editor";
-import installElements from "./extensions/elements";
+import Editor from "./components/editor";
 import math from "./extensions/math";
 import mermaid from "./extensions/mermaid";
 import script from "./extensions/script";
@@ -40,17 +39,6 @@ class Notebook {
   md: Markdown;
   editor: Editor;
 
-  static create(): Notebook {
-    // @ts-ignore
-    if (!window.notebook) {
-      // @ts-ignore
-      window.notebook = new Notebook();
-      installElements();
-    }
-    // @ts-ignore
-    return window.notebook;
-  }
-
   constructor(resolve?: resolver) {
     this.require = requireFrom(notebookResolver(this, resolve));
     this.cache = {};
@@ -67,6 +55,11 @@ class Notebook {
     this.editor = new Editor(this);
   }
 
+  static installed(): Notebook {
+    // @ts-ignore
+    return window.notebook as Notebook;
+  }
+
   get resolve(): resolver {
     return this.require.resolve;
   }
@@ -80,7 +73,7 @@ class Notebook {
 
   // load a javascript file
   async loadJs(src: string, attrs?: Record<string, any>): Promise<void> {
-    await loadJs(src, attrs);
+    await loadJs({...attrs, src});
   }
 
   // import a javascript module
@@ -112,7 +105,7 @@ class Notebook {
       });
     if (opts.js)
       asArray(opts.js).forEach((js: string) => {
-        promises.push(loadJs(js));
+        promises.push(this.loadJs(js));
       });
     if (promises.length) await Promise.all(promises);
     return await this.md.render(text, element, opts);
@@ -131,7 +124,7 @@ class Notebook {
     const hls =
       this.options.highlightStyle || config.defaultHighlightStyle[mode];
     await this.loadStyle(`${config.HL_CSS}/${hls}.min.css`);
-    await loadJs(`${config.HL_ROOT}/highlight.min.js`);
+    await this.loadJs(`${config.HL_ROOT}/highlight.min.js`);
     const text = code || element.innerText;
     // @ts-ignore
     const hl = window.hljs;

@@ -80,7 +80,7 @@ class Editor {
 export class EditorComponent extends HTMLElement {
   async connectedCallback() {
     const html = new Html(this);
-    const editor = Notebook.create().editor;
+    const editor = Notebook.installed().editor;
     const text = this.textContent || "";
     const options = html.getAttrs();
     await editor.render(text, this, options);

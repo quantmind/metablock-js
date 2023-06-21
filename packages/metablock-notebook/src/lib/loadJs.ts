@@ -1,20 +1,16 @@
-const LoadPromises: Record<string, Promise<void>> = {};
-
-const loadJs = (src: string, attrs?: Record<string, any>) => {
-  if (!LoadPromises[src]) {
-    LoadPromises[src] = new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = src;
-      const attributes = attrs || {};
-      Object.keys(attributes).forEach((key) => {
-        script.setAttribute(key, attributes[key]);
-      });
-      script.onerror = reject;
-      script.onload = () => resolve();
-      document.head.appendChild(script);
+const loadScript = (options: Record<string, any>, parent?: HTMLElement) => {
+  return new Promise((resolve, reject) => {
+    const { content, ...attrs } = options;
+    const script = document.createElement("script");
+    const attributes = attrs || {};
+    Object.keys(attributes).forEach((key) => {
+      script.setAttribute(key, attributes[key]);
     });
-  }
-  return LoadPromises[src];
+    if (content) script.innerHTML = JSON.stringify(content);
+    script.onerror = reject;
+    script.onload = resolve;
+    (parent || document.head).appendChild(script);
+  });
 };
 
-export default loadJs;
+export default loadScript;
