@@ -2,6 +2,7 @@ export interface Crumb {
   text: string;
   to?: string;
   icon?: any;
+  color?: string;
   onClick?: () => void;
 }
 

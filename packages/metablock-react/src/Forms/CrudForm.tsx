@@ -9,17 +9,15 @@ import React from "react";
 import { useAsync } from "react-use";
 import { Page } from "../views";
 import FormErrorMessage from "./ErrorMessage";
-import {
-  flattenData,
-  FormFromSchema,
-  SchemaEntry,
-  unFlattenData,
-} from "./schema";
+import { flattenData, FormFromSchema, SchemaEntry } from "./schema";
 import useForm, { FieldCallbackType, FormData } from "./useForm";
 
 type SchemaPromiseFunction = () => Promise<SchemaEntry>;
 
-export type CrudFormSubmitType = (body: Record<string, any>) => Promise<any>;
+export type CrudFormSubmitType = (
+  body: Record<string, any>,
+  changed: Record<string, any>
+) => Promise<any>;
 
 interface CrudFormBaseProps {
   submit: CrudFormSubmitType;
@@ -75,7 +73,6 @@ const InnerForm = (props: InnerFormProps) => {
     defaults,
     submit,
     fieldCallback,
-    changesOnly = true,
     label = "submit",
     onSuccess = () => {},
     onError422 = (errors: any, form: FormData) => {
@@ -97,9 +94,8 @@ const InnerForm = (props: InnerFormProps) => {
       formData: Record<string, any>,
       changedData: Record<string, any>
     ) => {
-      const body = unFlattenData(changesOnly ? changedData : formData);
       try {
-        const result = await submit(body);
+        const result = await submit(formData, changedData);
         onSuccess(result, form);
       } catch (errors: any) {
         if (errors.status === 422) {
