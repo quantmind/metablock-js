@@ -76,10 +76,11 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
   const [loadingText, setLoading] = React.useState<string>("Loading data...");
   const defaultDataGridFilters = useDataGridFilters();
   const dgFilters = dataGridFilters || defaultDataGridFilters;
-  api.reset(dgFilters.filters);
+  api.query = dgFilters.filters;
 
   // do the first loading
   useAsync(async () => {
+    api.reset(dgFilters.filters);
     await api.loadData();
   }, [api, dgFilters.filters]);
 
