@@ -18,6 +18,10 @@ export class StaticData<T> implements DataApi<T> {
     return false;
   }
 
+  get searchText(): string {
+    return this.query.search || "";
+  }
+
   async loadData() {}
 
   reset(query: Record<string, any>) {
