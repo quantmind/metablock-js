@@ -98,9 +98,10 @@ class HttpClient implements HttpClientInterface {
 
   loader<DataType>(
     url: string,
-    query?: Record<string, any>
+    query?: Record<string, any>,
+    options?: Record<string, any>
   ): DataApi<DataType> {
-    return new DataLoader<DataType>(this, url, query || {});
+    return new DataLoader<DataType>(this, url, query, options);
   }
 
   async jsonBody(response: any) {

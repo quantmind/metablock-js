@@ -48,16 +48,19 @@ export class DataLoader<DataType> implements DataApi<DataType> {
   query: Record<string, any>;
   url: string;
   links: Record<string, string> | void;
+  options: Record<string, any>;
   loading = false;
 
   constructor(
     cli: HttpClientInterface,
     url: string,
-    query?: Record<string, any>
+    query?: Record<string, any>,
+    options?: Record<string, any>
   ) {
     this.cli = cli;
     this.url = url;
     this.query = query || {};
+    this.options = options || {};
     this.data = [];
     this.links = undefined;
   }
@@ -106,7 +109,7 @@ export class DataLoader<DataType> implements DataApi<DataType> {
     this.loading = true;
     try {
       const url = this.links ? this.links.next : urlQuery(this.url, this.query);
-      paginated = await this.cli.getList(url);
+      paginated = await this.cli.getList(url, this.options);
     } finally {
       this.loading = false;
     }
