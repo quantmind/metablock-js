@@ -68,11 +68,14 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
     dataGridFilters,
     searchWait = 500,
     resizable = false,
+    fullHeight = false,
+    style = {},
     ...gridProps
   } = props;
   const [ignored, render] = React.useState<any>({});
   const [full, setFullScreen] = React.useState<boolean>(false);
-  const targetRef = React.useRef<HTMLDivElement>(null);
+  const outerRef = React.useRef<HTMLDivElement>(null);
+  const toolbarRef = React.useRef<HTMLDivElement>(null);
   const [loadingText, setLoading] = React.useState<string>("Loading data...");
   const defaultDataGridFilters = useDataGridFilters();
   const dgFilters = dataGridFilters || defaultDataGridFilters;
@@ -107,6 +110,9 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
     ...sx,
   };
 
+  let gridStyle = style;
+  if (style instanceof Function) gridStyle = style(api.data.length);
+
   if (full)
     container = {
       position: "absolute",
@@ -118,6 +124,12 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
       zIndex: 99999,
       ...container,
     };
+  else if (fullHeight && outerRef.current) {
+    container.height = "100%";
+    const top = toolbarRef.current ? toolbarRef.current.clientHeight : 0;
+    const height = outerRef.current.clientHeight - top;
+    gridStyle.height = `${height}px`;
+  }
 
   const handleFullScreen = () => {
     setFullScreen(!full);
@@ -164,15 +176,13 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
   if (fullScreen)
     toolbar.push(<FullScreen onClick={handleFullScreen} full={full} />);
 
-  if (gridProps.style && gridProps.style instanceof Function)
-    gridProps.style = gridProps.style(api.data.length);
-
   return (
-    <Box sx={container} ref={targetRef}>
+    <Box sx={container} ref={outerRef}>
       {toolbar.length ? (
         <Box
           pb={1}
           pt={1}
+          ref={toolbarRef}
           sx={{
             display: "flex",
             flexDirection: "row-reverse",
@@ -189,6 +199,7 @@ export const ApiDataGrid = <DataType, TSummaryRow = unknown>(
         rows={api.data}
         onRowsChange={onRowsChange}
         onScroll={handleScroll}
+        style={gridStyle}
         {...gridProps}
       />
       <Loading text={loadingText} api={api} />
