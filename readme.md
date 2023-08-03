@@ -27,3 +27,24 @@ To create a new release
   git commit -m "Release <version>" --allow-empty
   ```
 - the publish job will publish to npm and create a github tag
+
+As of Aug 2023
+
+```
+make cloc
+   28063 text files.
+    1225 unique files.
+   88908 files ignored.
+
+github.com/AlDanial/cloc v 1.90  T=2.83 s (78.9 files/s, 3210.3 lines/s)
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+TypeScript                     195            833            109           7135
+JSON                            14              0              0            332
+Markdown                         7            125              0            279
+JavaScript                       7             27              0            238
+-------------------------------------------------------------------------------
+SUM:                           223            985            109           7984
+-------------------------------------------------------------------------------
+```

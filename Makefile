@@ -27,3 +27,11 @@ update:		## update dependencies
 
 outdated:	## outdated dependencies
 	@yarn outdated
+
+
+cloc:		## Count lines of code
+	@cloc \
+		--fullpath \
+		--not-match-d=packages/.*/node-modules \
+		--not-match-d=packages/.*/dist \
+		packages
