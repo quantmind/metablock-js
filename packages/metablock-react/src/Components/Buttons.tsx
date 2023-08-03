@@ -8,18 +8,24 @@ const Buttons = ({
   path,
   size,
   color,
+  spacing,
+  variant,
 }: {
   tabs: Crumb[];
   path?: string;
   size?: any;
   color?: any;
+  spacing?: number;
+  variant?: any;
 }) => {
   const defaultColor = color ? color : "inherit";
+  const defaultvariant = variant ? variant : "outlined";
+  spacing = spacing === undefined ? 1 : spacing;
   return (
-    <Stack direction="row" spacing={1}>
+    <Stack direction="row" spacing={spacing}>
       {tabs.map((item: Crumb, index: number) => {
         const props: any = {
-          variant: "outlined",
+          variant: defaultvariant,
           color: item.color || defaultColor,
         };
         if (item.onClick) {
@@ -27,7 +33,7 @@ const Buttons = ({
         } else if (item.to) {
           props.component = RouterLink;
           props.to = item.to;
-          props.variant = item.to === path ? "contained" : "outlined";
+          props.variant = item.to === path ? "contained" : defaultvariant;
         } else {
           return null;
         }

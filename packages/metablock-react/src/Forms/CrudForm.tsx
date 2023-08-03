@@ -39,7 +39,7 @@ interface InnerFormProps extends CrudFormBaseProps {
 }
 
 export const CrudForm = (props: CrudFormProps) => {
-  const { title, schema, maxWidth = "md", ...extra } = props;
+  const { title, schema, maxWidth = null, ...extra } = props;
   const { loading, value } = useAsync(schema);
   return title ? (
     <Page title={title}>
