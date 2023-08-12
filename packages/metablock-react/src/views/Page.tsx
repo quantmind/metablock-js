@@ -35,7 +35,7 @@ const Page = (props: PageProps) => {
     children,
     image,
     keywords,
-    twitter_card = "summary",
+    twitter_card = "summary_large_image",
     content = "website",
     prefix = false,
     statusCode,
@@ -56,6 +56,7 @@ const Page = (props: PageProps) => {
         <meta property="og:title" content={title} />
         <meta property="og:site_name" content={title} />
         <meta property="og:type" content={content} />
+        <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:card" content={twitter_card} />
         {statusCode ? (
