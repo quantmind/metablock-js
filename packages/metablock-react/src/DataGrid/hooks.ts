@@ -53,7 +53,13 @@ export const useDataGridFilters = (
 
     set(key: string, value: any) {
       const newFilters = { ...currentFilters, [key]: value };
-      if (!value || !value.length) delete newFilters[key];
+      if (
+        value === null ||
+        value === undefined ||
+        value === "" ||
+        (Array.isArray(value) && value.length === 0)
+      )
+        delete newFilters[key];
       this.setAll(newFilters);
     }
 

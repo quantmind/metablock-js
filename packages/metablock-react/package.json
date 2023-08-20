@@ -1,6 +1,6 @@
 {
   "name": "@metablock/react",
-  "version": "0.26.7",
+  "version": "0.26.8",
   "description": "React Components for Metablock",
   "type": "module",
   "browser": "dist/index.js",
@@ -22,8 +22,8 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@loadable/component": "^5.14.1",
-    "@metablock/core": "^0.26.7",
-    "@metablock/notebook": "^0.26.7",
+    "@metablock/core": "^0.26.8",
+    "@metablock/notebook": "^0.26.8",
     "@mui/icons-material": "~5.14.1",
     "@mui/lab": "~5.0.0-alpha.50",
     "@mui/material": "~5.14.1",

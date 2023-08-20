@@ -4,6 +4,11 @@ import TextField from "@mui/material/TextField";
 import React from "react";
 import { RenderHeaderCellProps } from "react-data-grid";
 
+interface Option {
+  value: string;
+  label: string;
+}
+
 interface HeaderFilter<R> extends RenderHeaderCellProps<R> {
   sx?: Record<string, any>;
   dataGridFilters: any;
@@ -81,7 +86,7 @@ export const DataGridSelectFilter = <R,>({
   emptyOption,
   ...props
 }: HeaderFilter<R> & {
-  options: string[];
+  options: string[] | Option[];
   emptyOption?: string;
 }) => {
   const value = dataGridFilters.filters[column.key] || "";
@@ -99,11 +104,15 @@ export const DataGridSelectFilter = <R,>({
           size="small"
           onChange={handleChange}
         >
-          {options.map((value: string, index: number) => (
-            <MenuItem value={value} key={index}>
-              {value || empty}
-            </MenuItem>
-          ))}
+          {options.map((option: string | Option, index: number) => {
+            if (typeof option === "string")
+              option = { value: option, label: option };
+            return (
+              <MenuItem value={option.value} key={index}>
+                {option.label || empty}
+              </MenuItem>
+            );
+          })}
         </TextField>
       )}
     </DataGridHeaderFilter>
