@@ -1,6 +1,6 @@
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import sourcemaps from "rollup-plugin-sourcemaps";
-import { terser } from "rollup-plugin-terser";
+import { terser } from "@rollup/plugin-terser";
 import typescript from "rollup-plugin-typescript2";
 import getBanner from "../../scripts/banner";
 import pkg from "./package.json";
